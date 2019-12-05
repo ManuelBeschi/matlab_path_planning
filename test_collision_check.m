@@ -9,7 +9,7 @@ end
 % crea un'instanza di collision checking. Richede che ci sia MoveIt attivo
 checker=CollisionChecker;
 % inizializza il nome del gruppo (insieme di link) da usare
-checker.init('cembre');
+checker.init('cembre',true);
 
 
 
