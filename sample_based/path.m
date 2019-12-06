@@ -1,23 +1,39 @@
-classdef path
-    %PATH Summary of this class goes here
-    %   Detailed explanation goes here
+classdef path < handle
     
     properties
-        Property1
+        connections
     end
     
     methods
-        function obj = path(inputArg1,inputArg2)
-            %PATH Construct an instance of this class
-            %   Detailed explanation goes here
-            obj.Property1 = inputArg1 + inputArg2;
+        function obj = path(connections)
+            obj.connections= connections;
         end
         
-        function outputArg = method1(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
+        function cost = cost(obj)
+            cost=0;
+            if length(obj.connections)<1
+                return
+            end
+            q0=obj.connections(1).getParent.q;
+            for idx=1:length(obj.connections)
+                q1=obj.connections(idx).getChild.q;
+                cost=cost+norm(q1-q0);
+                q0=q1;
+            end
         end
+        
+        function waypoints=getWaypoints(obj)
+            waypoints=[];
+            if length(obj.connections)<1
+                return
+            end
+            waypoints(:,end+1)=obj.connections(1).getParent.q;
+            for idx=1:length(obj.connections)
+                waypoints(:,end+1)=obj.connections(idx).getChild.q;
+            end
+        end
+
+        
     end
 end
 

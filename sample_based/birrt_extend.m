@@ -28,8 +28,8 @@ classdef birrt_extend < handle
             obj.sampler=sampler;
         end
         
-        function [solved,path] = step(obj)
-            path=[];
+        function [solved,opt_path] = step(obj)
+            opt_path=[];
             solved=false;
             q=obj.sampler.sample;
             [add_to_start,new_t1_node]=obj.start_tree.extend(q);
@@ -40,14 +40,15 @@ classdef birrt_extend < handle
             end
             if (add_to_goal && add_to_start && isequal(new_t1_node,new_t2_node))
                 solved=true;
-                path=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+                connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+                opt_path=path(connections);
             end
         end
         
-        function [solved,path] = solve(obj)
+        function [solved,opt_path] = solve(obj)
             solved=false;
             for idx=1:1000
-                [solved,path]=obj.step;
+                [solved,opt_path]=obj.step;
                 if (solved)
                     return;
                 end

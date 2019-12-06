@@ -62,8 +62,14 @@ classdef CollisionChecker < handle
         end
         function names=getNames(obj)
             if (obj.fake)
-                names={'joint1','joint2'};
-                return
+                names={'ur10_shoulder_pan_joint',
+                    'ur10_shoulder_lift_joint',
+                    'ur10_elbow_joint',
+                    'ur10_wrist_1_joint',
+                    'ur10_wrist_2_joint',
+                    'ur10_wrist_3_joint', 
+                    'linear_joint'};
+                    return
             end
             names=obj.js_msg.Name;
         end
