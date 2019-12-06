@@ -1,4 +1,4 @@
-classdef connection
+classdef Connection < handle
     %CONNECTION Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -13,7 +13,7 @@ classdef connection
             obj.child.addParentConnection(obj);
         end
 
-        function obj = connection(parent,child)
+        function obj = Connection(parent,child)
             obj.parent= parent;
             obj.child=child;
             obj.register;

@@ -1,4 +1,4 @@
-classdef node < handle
+classdef Node < handle
     %NODE Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -10,7 +10,7 @@ classdef node < handle
     end
     
     methods
-        function obj = node(q)
+        function obj = Node(q)
             obj.q= q;
             obj.njnt=length(q);
         end
@@ -38,6 +38,10 @@ classdef node < handle
         
         
         function success=removeParentConnection(obj,connection)
+            if (~isvalid(obj))
+                success=true;
+                return;
+            end
             for ic=1:length(obj.parent_connections)
                 if (isequal(connection,obj.parent_connections(ic)))
                     obj.parent_connections(ic)=[];
@@ -50,6 +54,10 @@ classdef node < handle
         
         
         function success=removeChildConnection(obj,connection)
+            if (~isvalid(obj))
+                success=true;
+                return;
+            end
             for ic=1:length(obj.child_connections)
                 if (isequal(connection,obj.child_connections(ic)))
                     obj.child_connections(ic)=[];

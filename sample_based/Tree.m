@@ -1,4 +1,4 @@
-classdef tree < handle
+classdef Tree < handle
     
     properties
         root
@@ -10,7 +10,7 @@ classdef tree < handle
     end
     
     methods
-        function obj = tree(root,direction,max_distance,collision_checker)
+        function obj = Tree(root,direction,max_distance,collision_checker)
             obj.root=root;
             obj.nodes=[root];
             obj.direction=direction;
@@ -53,11 +53,11 @@ classdef tree < handle
                 return;
             end
             
-            new_node=node(qnext);
+            new_node=Node(qnext);
             if (obj.direction)
-                new_conn=connection(closest_node,new_node);
+                new_conn=Connection(closest_node,new_node);
             else
-                new_conn=connection(new_node,closest_node);
+                new_conn=Connection(new_node,closest_node);
             end
             obj.nodes=[obj.nodes;new_node];
             
@@ -75,12 +75,12 @@ classdef tree < handle
             if norm(n.q-qnext)<obj.tol
                 new_node=n;
             else
-                new_node=node(qnext);
+                new_node=Node(qnext);
             end
             if (obj.direction)
-                new_conn=connection(closest_node,new_node);
+                new_conn=Connection(closest_node,new_node);
             else
-                new_conn=connection(new_node,closest_node);
+                new_conn=Connection(new_node,closest_node);
             end
             obj.nodes=[obj.nodes;new_node];
         end
