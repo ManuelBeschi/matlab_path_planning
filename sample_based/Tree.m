@@ -11,6 +11,9 @@ classdef Tree < handle
     
     methods
         function obj = Tree(root,direction,max_distance,collision_checker)
+            if (~isa(root,'Node'))
+                error('root has to be a Node object')
+            end
             obj.root=root;
             obj.nodes=[root];
             obj.direction=direction;
@@ -84,6 +87,36 @@ classdef Tree < handle
             end
             obj.nodes=[obj.nodes;new_node];
         end
+        
+        function [success,new_node] = connect(obj,q)
+            success=true;
+            new_node=[];
+            while success
+                [success,tmp_node]=obj.extend(q);
+                if (success)
+                    new_node=tmp_node;
+                    if norm(new_node.q-q)<obj.tol
+                        return;
+                    end
+                end
+            end
+            
+        end
+        
+        function [success,new_node]=connectToNode(obj,n)
+            success=true;
+            new_node=[];
+            while success
+                [success,tmp_node]=obj.extendToNode(n);
+                if (success)
+                    new_node=tmp_node;
+                     if norm(new_node.q-n.q)<obj.tol
+                        return;
+                    end
+                end
+            end
+        end
+        
         
         function closest_node=findCloserNode(obj,q)
             min_distance=inf;

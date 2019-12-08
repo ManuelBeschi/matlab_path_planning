@@ -90,7 +90,11 @@ classdef Path < handle
             for idx=1:length(obj.connections)
                if norm(node.q-obj.connections(idx).getChild.q)<1e-6
                     subpath=Path(obj.connections(idx+1:end));
-                    return;
+                    return;p
+                    
+                    
+                    
+                    
                end
             end
             error('the node is not part of the path');
