@@ -46,14 +46,14 @@ classdef InformedSampler < handle
         
         function q = sample(obj)
             if (obj.cost<inf)
-               flag=true;
-               while flag
-                   r=nthroot(rand,length(obj.lb));
-                   sphere=rand(length(obj.lb),1);
-                   unit_sphere=r*sphere/norm(sphere);
-                   q=obj.ellipse_center+obj.ellipse_axis.*unit_sphere;
-                   flag=~all((obj.lb<=q).*(q<=obj.ub));
-               end
+                flag=true;
+                while flag
+                    r=nthroot(rand,length(obj.lb));
+                    sphere=rand(length(obj.lb),1);
+                    unit_sphere=r*sphere/norm(sphere);
+                    q=obj.ellipse_center+obj.ellipse_axis.*unit_sphere;
+                    flag=~all((obj.lb<=q).*(q<=obj.ub));
+                end
             else
                 q=obj.lb+(obj.ub-obj.lb).*rand(length(obj.lb),1);
             end
@@ -73,6 +73,17 @@ classdef InformedSampler < handle
             obj.ellipse_axis(1)=obj.ellipse_max_radius;
         end
         
+        function plotEllipsoid(obj)
+            if (obj.ndof>3)
+                error('plot ellipsoid is available only with 3 or less joints')
+            end
+            if (obj.ndof==3)
+                [x,y,z] = ellipsoid(obj.ellipse_center(1),obj.ellipse_center(2),obj.ellipse_center(3),...
+                    obj.ellipse_axis(1),obj.ellipse_axis(2),obj.ellipse_axis(3));
+                s=surf(x,y,z,'FaceAlpha',0.5);
+            end
+            
+        end
     end
 end
 

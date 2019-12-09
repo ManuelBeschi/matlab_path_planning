@@ -9,6 +9,8 @@ classdef BirrtExtend < handle
         checker
         start_tree
         goal_tree
+        start_node
+        goal_node;
         sampler
     end
     
@@ -19,22 +21,22 @@ classdef BirrtExtend < handle
             
             if isobject(start_conf)
                 obj.start_conf=start_conf.q;
-                start_node=start_conf;
+                obj.start_node=start_conf;
             else 
                 obj.start_conf = start_conf;
-                start_node=Node(start_conf);
+                obj.start_node=Node(start_conf);
             end
             
-            if isobject(start_conf)
+            if isobject(goal_conf)
                 obj.goal_conf=goal_conf.q;
-                goal_node=goal_conf;
+                obj.goal_node=goal_conf;
             else 
                 obj.goal_conf=goal_conf;
-                goal_node=Node(goal_conf);
+                obj.goal_node=Node(goal_conf);
             end
             
-            obj.start_tree=Tree(start_node,1,max_distance,checker);
-            obj.goal_tree=Tree(goal_node,0,max_distance,checker);
+            obj.start_tree=Tree(obj.start_node,1,max_distance,checker);
+            obj.goal_tree=Tree(obj.goal_node,0,max_distance,checker);
             
             obj.sampler=sampler;
         end
@@ -57,6 +59,8 @@ classdef BirrtExtend < handle
         end
         
         function [solved,opt_path] = solve(obj)
+            obj.start_tree=Tree(obj.start_node,1,obj.max_distance,obj.checker);
+            obj.goal_tree=Tree(obj.goal_node,0,obj.max_distance,obj.checker);
             solved=false;
             for idx=1:1000
                 [solved,opt_path]=obj.step;

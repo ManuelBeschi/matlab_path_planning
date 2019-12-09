@@ -7,6 +7,7 @@ classdef CollisionChecker < handle
         fake
         fake_obj=[-0.5000   -3.1414    2   -0.5000    1.5708   -0.0001   -0.000]';;
         fake_obj_radius=0.3;
+        min_distance=0.01;
     end
     methods
         function r = init(obj,group_name,fake)
@@ -45,11 +46,20 @@ classdef CollisionChecker < handle
             r=col_res.Valid;
         end
         function r = checkPath(obj,path)
-            for idx=1:size(path,2)
-                r=check(obj,path(:,idx));
-                if (r==0)
-                    break;
+            for idx=1:size(path,2)-1
+                dist=norm(path(:,idx+1)-path(:,idx));
+                npnt=ceil(dist/obj.min_distance);
+                idxs=0:npnt;
+                % randomize for speed up
+                idxs=idxs(randperm(length(idxs)));
+                for ip=idxs
+                    pos=path(:,idx)+(path(:,idx+1)-path(:,idx))*(ip)/npnt;
+                    r=check(obj,pos);
+                    if (r==0)
+                        break;
+                    end
                 end
+                
             end
         end
         function pos=getActualPosition(obj)

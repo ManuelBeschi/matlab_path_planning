@@ -1,4 +1,4 @@
-clear all;close all;clc;
+clear all;close all;
 
 % inizializza ROS (se non lo è già')
 try
@@ -24,10 +24,16 @@ p1   = [-0.5000   -3.1414    2.5708   -1.0000    1.5708   -0.0001   -0.000]';
 
 max_distance=0.5;
 
-sampler = informed_sampler(home,down,lb,ub);
-solver=birrt_extend(home,down,max_distance,checker,sampler);
+sampler = InformedSampler(home,down,lb,ub);
+solver = BirrtExtend(home,down,max_distance,checker,sampler);
+solver1 = BirrtConnect(home,down,max_distance,checker,sampler);
 
-[success,opt_path]=solver.solve;
+[success,path]=solver1.solve;
+fprintf('cost=%f\n',path.cost);
+sampler.setCost(path.cost);
+[success,path]=solver.solve;
+fprintf('cost=%f\n',path.cost);
+
 
 if (~success)
     fprintf('failed');
@@ -35,14 +41,14 @@ if (~success)
 end
 
 %%
-joints=opt_path.getWaypoints;
+joints=path.getWaypoints;
 
 figure(1)
 plot(joints')
 xlabel('nodes');
 ylabel('joint configuration');
 %%
-xyz=zeros(length(opt_path)+1,3);
+xyz=zeros(length(path)+1,3);
 for ij=1:size(joints,2)
     for iax=1:length(home_conf)
         conf(iax).JointName=names{iax};
