@@ -14,7 +14,7 @@ lb(7,1)=-0.6;
 ub(7,1)=0.6;
 
 checker=CollisionChecker;
-checker.init('cembre',0);
+checker.init('cembre',1);
 names=checker.getNames;
 
 
@@ -28,12 +28,23 @@ sampler = InformedSampler(home,down,lb,ub);
 solver = BirrtExtend(home,down,max_distance,checker,sampler);
 solver1 = BirrtConnect(home,down,max_distance,checker,sampler);
 
+figure(3)
 [success,path]=solver1.solve;
-fprintf('cost=%f\n',path.cost);
+fprintf('BiRRT Connect: cost=%f\n',path.cost);
+path.plot
+hold on
 sampler.setCost(path.cost);
 [success,path]=solver.solve;
-fprintf('cost=%f\n',path.cost);
-
+path.plot
+fprintf('BiRRT Extend cost=%f\n',path.cost);
+cost_iter=[];
+for idx=1:10
+    cost_iter=[cost_iter;path.warp(checker)];
+    cost_iter=[cost_iter;path.slipParent(checker)];
+    cost_iter=[cost_iter;path.slipChild(checker)];
+end
+fprintf('Local Opt: cost=%f\n',path.cost);
+path.plot
 
 if (~success)
     fprintf('failed');

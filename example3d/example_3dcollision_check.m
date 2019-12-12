@@ -22,7 +22,7 @@ sampler = InformedSampler(home,down,lb,ub);
 solver1 = BirrtConnect(home,down,max_distance,checker,sampler);
 solver2 = BirrtExtend(home,down,max_distance,checker,sampler);
 
-for itrial=1:10
+for itrial=1:1
     if itrial==1
         [success,path]=solver1.solve;
     else
@@ -45,12 +45,16 @@ for itrial=1:10
     plot3(home(1),home(2),home(3),'ob','MarkerFaceColor','b','MarkerSize',5)
     plot3(down(1),down(2),down(3),'or','MarkerFaceColor','r','MarkerSize',5)
     
+    cost_iter=path.localOptimization;
+    joints=path.getWaypoints;
+    plot3(joints(1,:)',joints(2,:)',joints(3,:)','k','LineWidth',2)
+    
     axis equal
     xlabel('q1');
     ylabel('q2');
     zlabel('q3');
     hold off
     
-    pause
+    pause(1)
 end
 %%
