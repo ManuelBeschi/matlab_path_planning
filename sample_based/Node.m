@@ -52,6 +52,18 @@ classdef Node < handle
             success=false;
         end
         
+        function delete(obj)
+            for ic=1:length(obj.parent_connections)
+                if isvalid(obj.parent_connections(ic))
+                    delete(obj.parent_connections(ic));
+                end
+            end
+            for ic=1:length(obj.child_connections)
+                if isvalid(obj.child_connections(ic))
+                    delete(obj.child_connections(ic));
+                end
+            end
+        end
         
         function success=removeChildConnection(obj,connection)
             if (~isvalid(obj))
@@ -66,6 +78,19 @@ classdef Node < handle
                 end
             end
             success=false;
+        end
+        
+        function line_handle=plot(obj)
+            line_handle=[];
+            if (length(obj.q)==3)
+                line_handle=[line_handle plot3(obj.q(1),obj.q(2),obj.q(3),'o','Color',[1 1 1]*0.5)];
+                for ic=1:length(obj.child_connections)
+                    c=obj.child_connections(ic).getChild.q;
+                    v=c-obj.q;
+                    line_handle=[line_handle plot3(obj.q(1)+[0 v(1)],obj.q(2)+[0 v(2)],obj.q(3)+[0 v(3)],'Color',[1 1 1]*0.5)];
+                end
+            end
+            
         end
         
     end

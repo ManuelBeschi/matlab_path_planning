@@ -180,9 +180,7 @@ classdef Path < handle
                             dir=dir/norm(dir);
                             continue;
                         end
-                        obj.connections(ip-1).delete;
                         obj.connections(ip).delete,
-                        node.delete;
                         node=Node(qp);
                         obj.connections(ip-1)=Connection(parent,node);
                         obj.connections(ip)=Connection(node,child);
@@ -251,67 +249,59 @@ classdef Path < handle
         
         function cost_evolution=slipChild(obj,checker)
             
-             cost_evolution=[];
-            for itrial=1:1
-                idxs=2:length(obj.connections);
-                for ip=idxs
-                    
-                    parent=obj.connections(ip-1).getParent;
-                    node=obj.connections(ip).getParent;
-                    child=obj.connections(ip).getChild;
-                    
-                    c=child.q;
-                    dir=node.q-c;
-                    max_distance=norm(dir);
-                    
-                    min_length=0.01;
-                    if (norm(max_distance)<min_length)
-                        continue;
-                    end
-                    
-                    v=dir/max_distance;
-                    
-%                     p=node.q;
-%                     quiver3(p(1),p(2),p(3),v(1),v(2),v(3));
-                    
-                    iter=0;
-                    min_distance=0;
-                    distance=0.5*max_distance;
-                    cost=norm(node.q-parent.q)+norm(child.q-node.q); % usa costo generico
-                    while (iter<100 && (max_distance-min_distance)>min_length)
-                        iter=iter+1;
-                        p=c+v*distance;
-                        costn=norm(parent.q-p)+norm(p-child.q);
-                        if costn>cost
-                            min_distance=distance;
-                        else
-                            is_valid=checker.checkPath([parent.q p]) && checker.checkPath([p child.q]);
-                            if (~is_valid)
-                                min_distance=distance;
-                            else
-                                max_distance=distance;
-                                cost=costn;
-                                obj.connections(ip-1).delete;
-                                obj.connections(ip).delete,
-                                node.delete;
-                                node=Node(p);
-                                obj.connections(ip-1)=Connection(parent,node);
-                                obj.connections(ip)=Connection(node,child);
-                                cost_evolution(end+1,1)=obj.cost;
-                            end
-                        end
-                        distance=0.5*(max_distance+min_distance);
-                    end
+            cost_evolution=[];
+            idxs=2:length(obj.connections);
+            for ip=idxs
+                
+                parent=obj.connections(ip-1).getParent;
+                node=obj.connections(ip).getParent;
+                child=obj.connections(ip).getChild;
+                
+                c=child.q;
+                dir=node.q-c;
+                max_distance=norm(dir);
+                
+                min_length=0.01;
+                if (norm(max_distance)<min_length)
+                    continue;
                 end
                 
+                v=dir/max_distance;
+                
+                iter=0;
+                min_distance=0;
+                distance=0.5*max_distance;
+                cost=norm(node.q-parent.q)+norm(child.q-node.q); % usa costo generico
+                while (iter<100 && (max_distance-min_distance)>min_length)
+                    iter=iter+1;
+                    p=c+v*distance;
+                    costn=norm(parent.q-p)+norm(p-child.q);
+                    if costn>cost
+                        min_distance=distance;
+                    else
+                        is_valid=checker.checkPath([parent.q p]) && checker.checkPath([p child.q]);
+                        if (~is_valid)
+                            min_distance=distance;
+                        else
+                            max_distance=distance;
+                            cost=costn;
+                            obj.connections(ip).delete,
+                            node=Node(p);
+                            obj.connections(ip-1)=Connection(parent,node);
+                            obj.connections(ip)=Connection(node,child);
+                        end
+                    end
+                    distance=0.5*(max_distance+min_distance);
+                end
+                cost_evolution(end+1,1)=obj.cost;
             end
+            
         end
         
         
         function cost_evolution=slipParent(obj,checker)
             
-             cost_evolution=[];
-            for itrial=1:1
+            cost_evolution=[];
                 idxs=2:length(obj.connections);
                 for ip=idxs
                     
@@ -330,8 +320,8 @@ classdef Path < handle
                     
                     v=dir/max_distance;
                     
-%                     p=node.q;
-%                     quiver3(p(1),p(2),p(3),v(1),v(2),v(3));
+                    %                     p=node.q;
+                    %                     quiver3(p(1),p(2),p(3),v(1),v(2),v(3));
                     
                     iter=0;
                     min_distance=0;
@@ -350,26 +340,22 @@ classdef Path < handle
                             else
                                 max_distance=distance;
                                 cost=costn;
-                                obj.connections(ip-1).delete;
                                 obj.connections(ip).delete,
-                                node.delete;
                                 node=Node(p);
                                 obj.connections(ip-1)=Connection(parent,node);
                                 obj.connections(ip)=Connection(node,child);
-                                cost_evolution(end+1,1)=obj.cost;
                             end
                         end
                         distance=0.5*(max_distance+min_distance);
                     end
-                end
-                
+                                   cost_evolution(end+1,1)=obj.cost;
+             
             end
         end
         
         function cost_evolution=spiral(obj,checker)
             
-             cost_evolution=[];
-            for itrial=1:1
+            cost_evolution=[];
                 idxs=2:length(obj.connections);
                 for ip=idxs
                     
@@ -412,18 +398,15 @@ classdef Path < handle
                             else
                                 max_distance=distance;
                                 cost=costn;
-                                obj.connections(ip-1).delete;
                                 obj.connections(ip).delete,
-                                node.delete;
                                 node=Node(p);
                                 obj.connections(ip-1)=Connection(parent,node);
                                 obj.connections(ip)=Connection(node,child);
-                                cost_evolution(end+1,1)=obj.cost;
                             end
                         end
                         distance=0.5*(max_distance+min_distance);
                     end
-                end
+                                cost_evolution(end+1,1)=obj.cost;
                 
             end
         end
@@ -432,56 +415,51 @@ classdef Path < handle
         function cost_evolution=warp(obj,checker)
             
             cost_evolution=[];
-            for itrial=1:1
-                idxs=2:length(obj.connections);
-                %idxs=idxs(randperm(length(idxs)));
-                for ip=idxs
-                    
-                    parent=obj.connections(ip-1).getParent;
-                    node=obj.connections(ip).getParent;
-                    child=obj.connections(ip).getChild;
-                    
-                    c=(parent.q+child.q)*0.5;
-                    dir=node.q-c;
-                    max_distance=norm(dir);
-                    min_length=0.01;
-                    if (norm(max_distance)<min_length)
-                        continue;
-                    end
-                    
-                    v=dir/max_distance;
-
-                    iter=0;
-                    min_distance=0;
-                    distance=0.5*max_distance;
-                    cost=norm(node.q-parent.q)+norm(child.q-node.q); % usa costo generico
-                    while (iter<100 && (max_distance-min_distance)>min_length)
-                        iter=iter+1;
-                        p=c+v*distance;
-                        costn=norm(parent.q-p)+norm(p-child.q);
-                        if costn>cost
-                            min_distance=distance;
-                        else
-                            is_valid=checker.checkPath([parent.q p]) && checker.checkPath([p child.q]);
-                            if (~is_valid)
-                                min_distance=distance;
-                            else
-                                max_distance=distance;
-                                cost=costn;
-                                obj.connections(ip-1).delete;
-                                obj.connections(ip).delete,
-                                node.delete;
-                                node=Node(p);
-                                obj.connections(ip-1)=Connection(parent,node);
-                                obj.connections(ip)=Connection(node,child);
-                                cost_evolution(end+1,1)=obj.cost;
-                            end
-                        end
-                        distance=0.5*(max_distance+min_distance);
-                    end
+            idxs=2:length(obj.connections);
+            for ip=idxs
+                
+                parent=obj.connections(ip-1).getParent;
+                node=obj.connections(ip).getParent;
+                child=obj.connections(ip).getChild;
+                
+                c=(parent.q+child.q)*0.5;
+                dir=node.q-c;
+                max_distance=norm(dir);
+                min_length=0.01;
+                if (norm(max_distance)<min_length)
+                    continue;
                 end
                 
+                v=dir/max_distance;
+                
+                iter=0;
+                min_distance=0;
+                distance=0.5*max_distance;
+                cost=norm(node.q-parent.q)+norm(child.q-node.q); % usa costo generico
+                while (iter<100 && (max_distance-min_distance)>min_length)
+                    iter=iter+1;
+                    p=c+v*distance;
+                    costn=norm(parent.q-p)+norm(p-child.q);
+                    if costn>cost
+                        min_distance=distance;
+                    else
+                        is_valid=checker.checkPath([parent.q p]) && checker.checkPath([p child.q]);
+                        if (~is_valid)
+                            min_distance=distance;
+                        else
+                            max_distance=distance;
+                            cost=costn;
+                            obj.connections(ip).delete,
+                            node=Node(p);
+                            obj.connections(ip-1)=Connection(parent,node);
+                            obj.connections(ip)=Connection(node,child);
+                        end
+                    end
+                    distance=0.5*(max_distance+min_distance);
+                end
             end
+            cost_evolution(end+1,1)=obj.cost;
+            
         end
         
         
@@ -492,7 +470,7 @@ classdef Path < handle
             
             cost_evolution=[];
             cost_evolution(end+1,1)=obj.cost;
-                        
+            
             for igen=1:100
                 
                 for ip=2:length(obj.connections)

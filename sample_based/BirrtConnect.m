@@ -51,7 +51,12 @@ classdef BirrtConnect < handle
             end
             if (add_to_goal && add_to_start && isequal(new_t1_node,new_t2_node))
                 solved=true;
-                connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+                goal_subpath=obj.goal_tree.getConnectionToNode(new_t1_node);
+                obj.goal_tree.keepOnlyThisBranch(goal_subpath);
+                obj.start_tree.addBranch(goal_subpath);
+%                 connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+
+                connections=obj.start_tree.getConnectionToNode(obj.goal_tree.root);
                 opt_path=Path(connections);
             end
         end

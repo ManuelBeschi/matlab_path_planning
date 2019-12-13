@@ -27,6 +27,10 @@ classdef Connection < handle
             child=obj.child;
         end
         
+        function cost=getCost(obj)
+            cost=norm(obj.parent.q-obj.child.q);
+        end
+        
         function delete(obj)
             if (~obj.parent.removeChildConnection(obj))
                 warning('this connection is not registered well')
