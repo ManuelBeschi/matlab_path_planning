@@ -1,9 +1,9 @@
 clear all;close all;
 
 % obstacle='sphere';
-% obstacle='cube';
-obstacle='snowman';
-obstacle='torus';
+obstacle='cube';
+% obstacle='snowman';
+% obstacle='torus';
 opt_type='full';
 
 if strcmp(obstacle,'snowman')

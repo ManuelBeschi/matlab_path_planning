@@ -51,7 +51,7 @@ classdef InformedSampler < handle
                     r=nthroot(rand,length(obj.lb));
                     sphere=randn(length(obj.lb),1);
                     unit_sphere=r*sphere/norm(sphere);
-                    q=obj.ellipse_center+obj.ellipse_axis.*unit_sphere;
+                    q=obj.ellipse_center+obj.rot_matrix*(obj.ellipse_axis.*unit_sphere);
                     flag=~all((obj.lb<=q).*(q<=obj.ub));
                 end
             else

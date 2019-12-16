@@ -265,16 +265,19 @@ classdef Tree < handle
             end
         end
         
-        function res=rewire(obj,q,checker)
+        function improved=rewire(obj,q,checker,r_rewire)
             if (~obj.direction)
                 error('rewiring is available only on forward tree');
             end
             [success,new_node]=extend(obj,q);
             if ~success
-                res=false;
+                improved=false;
                 return
             end
-            r_rewire=1;
+            improved=false;
+            if nargin<4
+                r_rewire=1;
+            end
             near_nodes=obj.near(new_node,r_rewire);
             
             nearest_node=new_node.parent_connections(1).getParent;
@@ -298,6 +301,7 @@ classdef Tree < handle
                 conn=Connection(near_nodes(in),new_node);
                 nearest_node=near_nodes(in);
                 cost_to_new=cost_to_near+cost_near_to_new;
+                improved=true;
             end
             
             for in=1:length(near_nodes)
@@ -315,6 +319,7 @@ classdef Tree < handle
                 
                 near_nodes(in).parent_connections(1).delete;
                 conn=Connection(new_node,near_nodes(in));
+                improved=true;
             end
         end
         

@@ -3,8 +3,8 @@ clear all;close all;
 % obstacle='sphere';
 % obstacle='cube';
 % obstacle='snowman';
-% obstacle='torus';
-obstacle='cubes';
+obstacle='torus';
+% obstacle='cubes';
 opt_type='full';
 informed=true;
 local_opt=true;
@@ -129,8 +129,14 @@ eli=sampler.plotEllipsoid;
 drawnow
 fprintf('BiRRT Connect Local Opt: cost=%f\n',path.cost);
 
+rrt_start=RRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,1);
+
+local_rrt_start=LocalRRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,1);
+
+
 for ii=1:200
-    solver1.start_tree.rewire(sampler.sample,checker);
+    local_rrt_start.step(checker);
+%     solver1.start_tree.rewire(sampler.sample,checker);
     if (solver1.start_tree.costToNode(goal_node)<(cost-1e-6))
         path=Path(solver1.start_tree.getConnectionToNode(goal_node));
         

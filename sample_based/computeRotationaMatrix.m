@@ -6,7 +6,7 @@ v=v/norm(v);
 ndof=length(v);
 M=eye(ndof);
 for ic1=1:ndof
-    if dot(v,M(:,ic1))>1-1e-10
+    if abs(dot(v,M(:,ic1)))>1-1e-10
         % v is a column of eye matrix, put this column as first
         M=M(:,[ic1 1:(ic1-1) (ic1+1):end]);
         return
