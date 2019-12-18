@@ -3,8 +3,8 @@ clear all;close all;
 % obstacle='sphere';
 % obstacle='cube';
 % obstacle='snowman';
-obstacle='torus';
-% obstacle='cubes';
+% obstacle='torus';
+obstacle='cubes';
 opt_type='full';
 informed=true;
 local_opt=true;
@@ -43,20 +43,6 @@ elseif strcmp(obstacle,'snowman')
     start_conf = [0 0.6 1]';
     goal_conf = [0 -0.6 1]';
 elseif strcmp(obstacle,'cubes')
-%     flag=true;
-%     while flag
-%         start_conf = lb+(ub-lb).*rand(3,1);
-%         if checker.check(start_conf)
-%             break;
-%         end
-%     end
-%     
-%     while flag
-%         goal_conf = lb+(ub-lb).*rand(3,1);
-%         if checker.check(goal_conf)
-%             break;
-%         end
-%     end
     start_conf=lb;
     goal_conf=ub;
 else
@@ -78,8 +64,10 @@ drawnow;
 max_distance=0.5;
 
 sampler = InformedSampler(start_conf,goal_conf,lb,ub);
-solver = BirrtExtend(start_conf,goal_conf,max_distance,checker,sampler);
-solver1 = BirrtConnect(start_conf,goal_conf,max_distance,checker,sampler);
+metrics = Metrics;
+
+solver = BirrtExtend(start_conf,goal_conf,max_distance,checker,sampler,metrics);
+solver1 = BirrtConnect(start_conf,goal_conf,max_distance,checker,sampler,metrics);
 
 
 [success,path]=solver1.solve;
@@ -94,27 +82,8 @@ solver1.start_tree.plot
 drawnow
 
 if local_opt
-    
-    cost_iter=[];
-    for idx=1:10
-        if strcmp(opt_type,'slip')
-            cost_iter=[cost_iter;path.slipParent(checker)];
-            cost_iter=[cost_iter;path.slipChild(checker)];
-        elseif strcmp(opt_type,'slipParent')
-            cost_iter=[cost_iter;path.slipParent(checker)];
-        elseif strcmp(opt_type,'slipChild')
-            cost_iter=[cost_iter;path.slipChild(checker)];
-        elseif strcmp(opt_type,'warp')
-            cost_iter=[cost_iter;path.warp(checker)];
-        elseif strcmp(opt_type,'spiral')
-            cost_iter=[cost_iter;path.spiral(checker)];
-        elseif strcmp(opt_type,'full')
-            cost_iter=[cost_iter;path.slipParent(checker)];
-            cost_iter=[cost_iter;path.slipChild(checker)];
-            cost_iter=[cost_iter;path.warp(checker)];
-            cost_iter=[cost_iter;path.spiral(checker)];
-        end
-    end
+    path_optimizer=PathLocalOptimizer(path,opt_type,checker,metrics);
+    path_optimizer.solve;
 end
 
 joints=path.getWaypoints;
@@ -129,14 +98,13 @@ eli=sampler.plotEllipsoid;
 drawnow
 fprintf('BiRRT Connect Local Opt: cost=%f\n',path.cost);
 
-rrt_start=RRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,1);
-
-local_rrt_start=LocalRRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,1);
+rrt_start=RRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,checker,metrics,1);
+local_rrt_start=LocalRRTStar(solver1.start_tree,solver1.goal_tree.root,sampler,checker,metrics,1);
 
 
 for ii=1:200
-    local_rrt_start.step(checker);
-%     solver1.start_tree.rewire(sampler.sample,checker);
+    local_rrt_start.step();
+    rrt_start.step();
     if (solver1.start_tree.costToNode(goal_node)<(cost-1e-6))
         path=Path(solver1.start_tree.getConnectionToNode(goal_node));
         
@@ -144,27 +112,8 @@ for ii=1:200
 
         fprintf('RRT* iter cost=%f\n',path.cost);
         if local_opt
-            
-            cost_iter=[];
-            for idx=1:10
-                if strcmp(opt_type,'slip')
-                    cost_iter=[cost_iter;path.slipParent(checker)];
-                    cost_iter=[cost_iter;path.slipChild(checker)];
-                elseif strcmp(opt_type,'slipParent')
-                    cost_iter=[cost_iter;path.slipParent(checker)];
-                elseif strcmp(opt_type,'slipChild')
-                    cost_iter=[cost_iter;path.slipChild(checker)];
-                elseif strcmp(opt_type,'warp')
-                    cost_iter=[cost_iter;path.warp(checker)];
-                elseif strcmp(opt_type,'spiral')
-                    cost_iter=[cost_iter;path.spiral(checker)];
-                elseif strcmp(opt_type,'full')
-                    cost_iter=[cost_iter;path.slipParent(checker)];
-                    cost_iter=[cost_iter;path.slipChild(checker)];
-                    cost_iter=[cost_iter;path.warp(checker)];
-                    cost_iter=[cost_iter;path.spiral(checker)];
-                end
-            end
+            path_optimizer=PathLocalOptimizer(path,opt_type,checker,metrics);
+            path_optimizer.solve;
         fprintf('RRT* iter-local cost=%f\n',path.cost);
         end
         cost=path.cost;

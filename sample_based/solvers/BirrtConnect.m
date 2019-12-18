@@ -1,4 +1,4 @@
-classdef BirrtConnect < handle
+classdef BirrtConnect < Solver
     %BIRRT_EXTEND Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -6,16 +6,19 @@ classdef BirrtConnect < handle
         start_conf
         goal_conf
         max_distance
-        checker
         start_tree
         goal_tree
-        sampler
     end
     
     methods
-        function obj = BirrtConnect(start_conf,goal_conf,max_distance,checker,sampler)
+        function obj = BirrtConnect(start_conf,goal_conf,max_distance,checker,sampler,metrics)
+            
+            obj=obj@Solver(sampler,checker,metrics);
             obj.max_distance=max_distance;
+            
+            
             obj.checker=checker;
+            obj.metrics=metrics;
             
             if isobject(start_conf)
                 obj.start_conf=start_conf.q;
@@ -25,7 +28,7 @@ classdef BirrtConnect < handle
                 start_node=Node(start_conf);
             end
             
-            if isobject(start_conf)
+            if isobject(goal_conf)
                 obj.goal_conf=goal_conf.q;
                 goal_node=goal_conf;
             else 
@@ -33,14 +36,14 @@ classdef BirrtConnect < handle
                 goal_node=Node(goal_conf);
             end
             
-            obj.start_tree=Tree(start_node,1,max_distance,checker);
-            obj.goal_tree=Tree(goal_node,0,max_distance,checker);
+            obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
+            obj.goal_tree=Tree(goal_node,0,max_distance,checker,metrics);
             
             obj.sampler=sampler;
         end
         
-        function [solved,opt_path] = step(obj)
-            opt_path=[];
+        function [solved,path] = step(obj)
+            path=[];
             solved=false;
             q=obj.sampler.sample;
             [add_to_start,new_t1_node]=obj.start_tree.connect(q);
@@ -54,17 +57,15 @@ classdef BirrtConnect < handle
                 goal_subpath=obj.goal_tree.getConnectionToNode(new_t1_node);
                 obj.goal_tree.keepOnlyThisBranch(goal_subpath);
                 obj.start_tree.addBranch(goal_subpath);
-%                 connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
-
                 connections=obj.start_tree.getConnectionToNode(obj.goal_tree.root);
-                opt_path=Path(connections);
+                path=Path(connections);
             end
         end
         
-        function [solved,opt_path] = solve(obj)
+        function [solved,path] = solve(obj)
             solved=false;
             for idx=1:1000
-                [solved,opt_path]=obj.step;
+                [solved,path]=obj.step;
                 if (solved)
                     return;
                 end

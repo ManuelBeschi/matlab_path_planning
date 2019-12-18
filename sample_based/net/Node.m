@@ -15,8 +15,6 @@ classdef Node < handle
             obj.njnt=length(q);
         end
         
-        
-        
         function success=addParentConnection(obj,connection)
             if (isequal(connection.getChild,obj))
                 obj.parent_connections=[obj.parent_connections;connection];
@@ -26,6 +24,7 @@ classdef Node < handle
                 success=false;
             end
         end
+        
         function success=addChildConnection(obj,connection)
             if (isequal(connection.getParent,obj))
                 obj.child_connections=[obj.child_connections;connection];

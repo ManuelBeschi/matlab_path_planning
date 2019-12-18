@@ -1,4 +1,4 @@
-classdef RRTStar < handle
+classdef RRTStar < Solver
     %RRTSTAR Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -6,23 +6,23 @@ classdef RRTStar < handle
         tree
         start_conf
         goal_node
-        sampler
         r_rewire
     end
     
     methods
-        function obj = RRTStar(tree,goal_node,sampler,r_rewire)
+        function obj = RRTStar(tree,goal_node,sampler,checker,metrics,r_rewire)
+            obj=obj@Solver(sampler,checker,metrics);
+           
             obj.tree=tree;
             obj.goal_node=goal_node;
-            obj.sampler=sampler;
             obj.r_rewire=r_rewire;
         end
         
-        function improved=step(obj,checker)
-            improved=obj.tree.rewire(obj.sampler.sample,checker);
+        function improved=step(obj)
+            improved=obj.tree.rewire(obj.sampler.sample,obj.checker);
         end
         
-        function [improved,path] = solve(obj,checker)
+        function [improved,path] = solve(obj)
             cost=obj.tree.costToNode(obj.goal_node);
             niter=1000;
             stall_gen=0;
@@ -34,7 +34,7 @@ classdef RRTStar < handle
                 obj.sampler.setCost(cost);
             end
             for it=1:niter
-                obj.step(checker);
+                obj.step;
                 if cost>obj.tree.costToNode(obj.goal_node)
                     improved=true;
                     path=Path(obj.tree.getConnectionToNode(obj.goal_node));

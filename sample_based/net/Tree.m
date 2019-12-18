@@ -1,4 +1,33 @@
 classdef Tree < handle
+    % Tree is a basic structure for all the tree-based algorithm
+    % a tree has a root (class Node) connected to branches
+    % in a Forward tree, nodes (excluding the root) have only a parent
+    % in a backward tree, nodes (excluding the root) have only a child
+    %
+    % Tree Methods:
+    % public
+    % Tree - constructor
+    % rewire - rewire tree structure (used in RRT*)
+    % extend - connect a new node to the tree with a bounded distance
+    % connect - connect a new node to the tree
+    % extendToNode - connect an existing node to the tree with a bounded distance
+    % connectToNode - connect an existing  node to the tree
+    % findClosestNode - find the closest no
+    % costToNode - compute the cost from root to node
+    % getConnectionToNode -  return the connection from root to node
+    % addBranch - add a new branch (vector of Connections)
+    % keepOnlyThisBranch -  remove all the other branches
+    % near - find all the nodes in radius r_rewire around a node
+    % plot - plot the tree (only for 3D, 2D is in todo list)
+    %
+    % protected TBD
+    % tryExtend - MOVE TO PROTECTED
+    %
+    % deprecated - deprecated
+    % incorporateLeafs  - deprecated
+    % incorporateLeafFromNode - deprecated
+    % isInTree - deprecated
+    % 
     
     properties
         root
@@ -7,12 +36,20 @@ classdef Tree < handle
         max_distance
         tol
         collision_checker
-        
         tree_plot_handles
+        metrics
     end
     
     methods
-        function obj = Tree(root,direction,max_distance,collision_checker)
+        function obj = Tree(root,direction,max_distance,collision_checker,metrics)
+            % create a tree:
+            % - root is the initial node (class Node)
+            % - direction: true = Forward tree. Branches start with the root as
+            % parent, while the leafs are children.
+            % - direction: false  = Backward tree. Branches start with the root as
+            % child, while the leafs are parents.
+            
+            obj.metrics=metrics;
             if (~isa(root,'Node'))
                 error('root has to be a Node object')
             end
@@ -23,10 +60,9 @@ classdef Tree < handle
             obj.collision_checker=collision_checker;
             obj.tol=1e-6;
         end
-        
-        
+          
         function [success,qnext,closest_node] = tryExtend(obj,q)
-            closest_node=findCloserNode(obj,q);
+            closest_node=findClosestNode(obj,q);
             if (isempty(closest_node))
                 success=false;
                 qnext=[];
@@ -61,9 +97,12 @@ classdef Tree < handle
             
             new_node=Node(qnext);
             if (obj.direction)
-                new_conn=Connection(closest_node,new_node);
+                
+                conn_cost=obj.metrics.cost(closest_node,new_node);
+                new_conn=Connection(closest_node,new_node,conn_cost);
             else
-                new_conn=Connection(new_node,closest_node);
+                conn_cost=obj.metrics.cost(new_node,closest_node);
+                new_conn=Connection(new_node,closest_node,conn_cost);
             end
             obj.nodes=[obj.nodes;new_node];
             
@@ -83,10 +122,14 @@ classdef Tree < handle
             else
                 new_node=Node(qnext);
             end
+            
+            
             if (obj.direction)
-                new_conn=Connection(closest_node,new_node);
+                conn_cost=obj.metrics.cost(closest_node,new_node);
+                new_conn=Connection(closest_node,new_node,conn_cost);
             else
-                new_conn=Connection(new_node,closest_node);
+                conn_cost=obj.metrics.cost(new_node,closest_node);
+                new_conn=Connection(new_node,closest_node,conn_cost);
             end
             obj.nodes=[obj.nodes;new_node];
         end
@@ -119,14 +162,12 @@ classdef Tree < handle
                 end
             end
         end
-        
-        
-        
-        function closest_node=findCloserNode(obj,q)
+       
+        function closest_node=findClosestNode(obj,q)
             min_distance=inf;
             closest_node=[];
             for in=1:length(obj.nodes)
-                dist=obj.computeDistance(obj.nodes(in).q,q);
+                dist=norm(obj.nodes(in).q-q);
                 if (dist<min_distance)
                     min_distance=dist;
                     closest_node=obj.nodes(in);
@@ -134,13 +175,8 @@ classdef Tree < handle
             end
         end
         
-        
         function cost=costToNode(obj,n)
-            if ~obj.isInTree(n)
-                warning('is not in tree');
-                cost=inf;
-                return
-            end
+
             cost=0;
             if obj.direction
                 while (~isempty(n.parent_connections))
@@ -201,7 +237,7 @@ classdef Tree < handle
             end
             res=true;
             branch_nodes=branch_connections(1).getParent;
-            for ib=1:length(branch_connections);
+            for ib=1:length(branch_connections)
                 branch_nodes=[branch_nodes;branch_connections(ib).getChild];
             end
             
@@ -222,7 +258,8 @@ classdef Tree < handle
         end
         
         function res=addBranch(obj,branch_connections)
-            
+        % add a new branch of the tree.
+        % - branch_connections vector of Connections
             start_node=branch_connections(1).getParent;
             res=obj.isInTree(start_node);
             if ~res
@@ -234,38 +271,44 @@ classdef Tree < handle
             end
         end
         
-        function res=incorporateLeafs(obj)
-            res=obj.incorporateLeafFromNode(obj.root);
-        end
-        function res=incorporateLeafFromNode(obj,node)
-            
-%             res=obj.isInTree(node);
-            res=true;
-            if ~res
-                return
-            end
-            
-            if obj.direction
-                for ic=1:length(node.child_connections)
-                    c=node.child_connections(ic).getChild;
-                    if ~obj.isInTree(c)
-                        obj.nodes=[obj.nodes; c];
-                    end
-                    obj.incorporateLeafFromNode(c);
-                end
-            else
-                for ip=1:length(node.parent_connections)
-                    p=node.parent_connections(ip).getParent;
-                    if ~obj.isInTree(p)
-                        obj.nodes=[obj.nodes; p];
-                    end
-                    
-                    obj.incorporateLeafFromNode(p);
-                end
-            end
-        end
+%         function res=incorporateLeafs(obj)
+%             % DEPRECATED
+%             res=obj.incorporateLeafFromNode(obj.root);
+%         end
+%         function res=incorporateLeafFromNode(obj,node)
+%             % DEPRECATED
+%             res=true;
+%             if ~res
+%                 return
+%             end
+%             
+%             if obj.direction
+%                 for ic=1:length(node.child_connections)
+%                     c=node.child_connections(ic).getChild;
+%                     if ~obj.isInTree(c)
+%                         obj.nodes=[obj.nodes; c];
+%                     end
+%                     obj.incorporateLeafFromNode(c);
+%                 end
+%             else
+%                 for ip=1:length(node.parent_connections)
+%                     p=node.parent_connections(ip).getParent;
+%                     if ~obj.isInTree(p)
+%                         obj.nodes=[obj.nodes; p];
+%                     end
+%                     
+%                     obj.incorporateLeafFromNode(p);
+%                 end
+%             end
+%         end
         
         function improved=rewire(obj,q,checker,r_rewire)
+            % rewiring function used in RRT* algorithm: 
+            % - extend tree to configuration q,
+            % - find the list of nodes near the new one
+            % - check if a near node is a better parent for the new node
+            % - check if a near node is a better child for the new node
+            
             if (~obj.direction)
                 error('rewiring is available only on forward tree');
             end
@@ -298,7 +341,8 @@ classdef Tree < handle
                     continue;
                 end
                 new_node.parent_connections(1).delete;
-                conn=Connection(near_nodes(in),new_node);
+                conn_cost=obj.metrics.cost(near_nodes(in),new_node);
+                conn=Connection(near_nodes(in),new_node,conn_cost);
                 nearest_node=near_nodes(in);
                 cost_to_new=cost_to_near+cost_near_to_new;
                 improved=true;
@@ -318,7 +362,8 @@ classdef Tree < handle
                 end
                 
                 near_nodes(in).parent_connections(1).delete;
-                conn=Connection(new_node,near_nodes(in));
+                conn_cost=obj.metrics.cost(new_node,near_nodes(in));
+                conn=Connection(new_node,near_nodes(in),conn_cost);
                 improved=true;
             end
         end
@@ -326,7 +371,7 @@ classdef Tree < handle
         function nodes=near(obj,node,r_rewire)
             nodes=[];
             for in=1:length(obj.nodes)
-                dist=obj.computeDistance(obj.nodes(in).q,node.q);
+                dist=norm(obj.nodes(in).q-node.q);
                 if (dist<r_rewire)
                     nodes=[nodes,obj.nodes(in)];
                 end
@@ -354,9 +399,7 @@ classdef Tree < handle
             end
         end
         
-        function distance=computeDistance(obj,q1,q2)
-            distance=norm(q1-q2);
-        end
+
     end
 end
 

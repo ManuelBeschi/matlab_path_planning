@@ -1,8 +1,8 @@
 clear all;close all;clc;
 
 % obstacle='sphere';
-obstacle='cube';
-% obstacle='snowman';
+% obstacle='cube';
+obstacle='snowman';
 
 % opt_type='slip';
 % opt_type='slipParent';
@@ -12,7 +12,7 @@ obstacle='cube';
 opt_type='full';
 
 % connection_max_length=0.5;
-connection_max_length=2;
+% connection_max_length=2;
 
 if strcmp(obstacle,'snowman')
     checker=Snowman3dCollisionChecker;
@@ -30,6 +30,7 @@ figure('Position',[10 10 1200 600])
 subplot(121)
 checker.plot
 
+metrics=Metrics;
 
 lb=-pi*ones(3,1);
 ub=pi*ones(3,1);
@@ -42,12 +43,12 @@ n1=Node(start_conf);
 n2=Node(pos1);
 n3=Node(pos2);
 n4=Node(goal_conf);
-c12=Connection(n1,n2);
-c23=Connection(n2,n3);
-c34=Connection(n3,n4);
+c12=Connection(n1,n2,metrics.cost(n1,n2));
+c23=Connection(n2,n3,metrics.cost(n2,n3));
+c34=Connection(n3,n4,metrics.cost(n3,n4));
 
 path=Path([c12 c23 c34]);
-path=path.resample(connection_max_length);
+% path=path.resample(connection_max_length,metrics);
 
 
 hold on
@@ -57,27 +58,12 @@ plot3(start_conf(1),start_conf(2),start_conf(3),'ob','MarkerFaceColor','b','Mark
 plot3(goal_conf(1),goal_conf(2),goal_conf(3),'or','MarkerFaceColor','r','MarkerSize',5)
 
 view(135,0)
-cost_iter=[];
 
+path_optimizer=PathLocalOptimizer(path,opt_type,checker,metrics);
+cost=[];
 lines=[];
-for idx=1:80
-    if strcmp(opt_type,'slip')
-        cost_iter=[cost_iter;path.slipParent(checker)];
-        cost_iter=[cost_iter;path.slipChild(checker)];
-    elseif strcmp(opt_type,'slipParent')
-        cost_iter=[cost_iter;path.slipParent(checker)];
-    elseif strcmp(opt_type,'slipChild')
-        cost_iter=[cost_iter;path.slipChild(checker)];
-    elseif strcmp(opt_type,'warp')
-        cost_iter=[cost_iter;path.warp(checker)];
-    elseif strcmp(opt_type,'spiral')
-        cost_iter=[cost_iter;path.spiral(checker)];
-    elseif strcmp(opt_type,'full')
-        cost_iter=[cost_iter;path.slipParent(checker)];
-        cost_iter=[cost_iter;path.slipChild(checker)];
-        cost_iter=[cost_iter;path.warp(checker)];
-        cost_iter=[cost_iter;path.spiral(checker)];
-    end
+for idx=1:100
+    solved=path_optimizer.step;
     joints=path.getWaypoints;
     for il=1:length(lines)
         lines(il).Color=1-(1-lines(il).Color)*0.92;%+[0.05 0.05 0.05];
@@ -86,6 +72,8 @@ for idx=1:80
             delete(lines(il))
         end
     end
+    cost(idx,1)=path.cost;
+    
     subplot(121)
     l=plot3(joints(1,:)',joints(2,:)',joints(3,:)','k','LineWidth',2);
     lines=[lines l];
@@ -96,10 +84,12 @@ for idx=1:80
     zlabel('q3');
     
     subplot(122)
-    
-    subplot(122)
-    stairs(cost_iter)
+    plot(cost)
     xlabel('iteration')
-    ylabel('cost')
+    ylabel('cost');
+     subplot(121)
     drawnow
+    if solved
+        break;
+    end
 end

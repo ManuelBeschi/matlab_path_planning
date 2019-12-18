@@ -5,6 +5,7 @@ classdef Connection < handle
     properties (Access=protected)
         parent
         child
+        cost
     end
     
     methods
@@ -13,10 +14,12 @@ classdef Connection < handle
             obj.child.addParentConnection(obj);
         end
 
-        function obj = Connection(parent,child)
+        function obj = Connection(parent,child,cost)
             obj.parent= parent;
             obj.child=child;
             obj.register;
+            obj.cost=cost;
+            
         end
         
         function parent=getParent(obj)
@@ -27,8 +30,11 @@ classdef Connection < handle
             child=obj.child;
         end
         
+        function setCost(obj,cost)
+            obj.cost=cost;
+        end
         function cost=getCost(obj)
-            cost=norm(obj.parent.q-obj.child.q);
+            cost=obj.cost;
         end
         
         function delete(obj)
