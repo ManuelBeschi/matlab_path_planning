@@ -1,10 +1,10 @@
 clearvars; close all; clc;
 
 connection_max_length=0.5;
-obstacle='sphere';
+%obstacle='sphere';
 %obstacle='cube';
-%obstacle='snowman';
-%obstacle='torus';   %DA ERRORE!!
+obstacle='snowman';
+%obstacle='torus';
 opt_type='full';
 
 if strcmp(obstacle,'snowman')
@@ -62,6 +62,8 @@ path1=path1.resample(connection_max_length,metrics);
 
 path_optimizer=PathLocalOptimizer(path1,opt_type,checker,metrics);
 path_optimizer.solve;
+
+path1.connections(end).setCost(3.7);
 
 fprintf('BiRRT Connect: cost=%f\n',path1.cost);
 
@@ -146,9 +148,9 @@ other_paths = [path2 path3 path4 path5];
 
 succ_node = 1;
 idx_replan=round(length(path1.connections)*0.5);
-q=current_path.connections(:,idx_replan).getChild;
+node=current_path.connections(:,idx_replan).getChild;
 
-[new_path,success] = PathSwitch(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node);
+[new_path,path_cost,success] = PathSwitch(current_path,other_paths,node,lb,ub,max_distance,checker,metrics,opt_type,succ_node);
 if(success == 1)
     joints=new_path.getWaypoints;
     plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1)
