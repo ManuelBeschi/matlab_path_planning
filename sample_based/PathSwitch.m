@@ -20,10 +20,10 @@ function [new_path,path_cost,success] = PathSwitch(current_path,other_paths,node
 
 % Individuo la prima porzione del percorso, che è il tratto che ho percorso
 % fino ad ora
+verbose = 0;
+
 new_path = [];
 success = 0;
-switch2path = 0;
-switch2node = 0;
 
 path1_node = node;
 path1_node2goal = current_path.getSubpathFromNode(path1_node);
@@ -79,67 +79,80 @@ for j = 1:length(other_paths)
                         conn_cost=conn_cost+metrics.cost(connecting_path(i).getParent,connecting_path(i).getChild);
                     end
                     
-%                     disp('path number, node number:')
-%                     disp(j);
-%                     disp(k);
-%                     disp('cost:')
-%                     disp(conn_cost)
+                    if(verbose)
+                        disp('path number, node number:') %#ok<*UNRCH>
+                        disp(j);
+                        disp(k);
+                        disp('cost:')
+                        disp(conn_cost)
+                    end
                     
                     if(conn_cost<path_cost && conn_cost<subpath1_cost && ~isempty(subpath2)) %%DUBBIO %verifico sia che il costo del connecting path sia compatibile con il limite dato da diff_subpath_cost (altrimenti conviene subpath1) e verifico che il costo di questo connecting path sia minore di quelli precedenti
                             
-                        if length(connecting_path)==1
+                        if (length(connecting_path)>1)
+                            
+                            node1 = connecting_path(1).getChild;  %FACCIO QUESTI COLLEGAMENTI SOLO SE IL PATH È CONVENIENTE, ALTRIMENTI È INUTILE
+                            node2 = connecting_path(end).getParent;
+                            conn1_cost = metrics.cost(path1_node,node1);
+                            conn2_cost = metrics.cost(node2,path2_node);
+                            conn1 = Connection(path1_node,node1,conn1_cost);
+                            conn2 = Connection(node2,path2_node,conn2_cost);
+                            
+                            connecting_path = [conn1,connecting_path(2:end-1),conn2];
+                        else %se connecting_path ha dimensione 1 significa che path_node1 e path_node2 sono connessi direttamente da un unico segmento, se non tratti separatamente ti da errore di invalid object
+                            conn1_cost = metrics.cost(path1_node,path2_node);
+                            conn1 = Connection(path1_node,path2_node,conn1_cost);
+                            connecting_path = conn1;
                         end
-                        node1 = connecting_path(1).getChild;  %FACCIO QUESTI COLLEGAMENTI SOLO SE IL PATH È CONVENIENTE, ALTRIMENTI È INUTILE
-                        node2 = connecting_path(end).getParent;
-                        conn1_cost = metrics.cost(path1_node,node1);
-                        conn2_cost = metrics.cost(node2,path2_node);
-                        conn1 = Connection(path1_node,node1,conn1_cost);
-                        conn2 = Connection(node2,path2_node,conn2_cost);
-            
-                        connecting_path = [conn1,connecting_path(2:end-1),conn2];
-
+                        
                         path1_node_fake.delete;
                         path2_node_fake.delete;
                         
                         new_path=Path([connecting_path subpath2]);
-                        switch2path = j;
-                        switch2node = k;
                         path_cost = conn_cost;
                         success = 1;
-%                       disp('Connection  POSSIBLE')
-%                       disp('-------------------------------------------');
+                        if(verbose)
+                            switch2path = j;
+                            switch2node = k;
+                            disp('Connection  POSSIBLE')
+                            disp('-------------------------------------------');
+                        end
                     end 
                 else
-%                     disp('Connection NOT POSSIBLE to the node number:')
-%                     disp(k);
-%                     disp('of the path number:')
-%                     disp(j);
-%                     disp('-------------------------------------------');
+                    if(verbose)
+                        disp('Connection NOT POSSIBLE to the node number:')
+                        disp(k);
+                        disp('of the path number:')
+                        disp(j);
+                        disp('-------------------------------------------');
+                    end
                 end
             else
-%                 disp('It is better subpath1 than subpath2')
-%                 disp('path number:')
-%                 disp(j);
-%                 disp('node number:')
-%                 disp(k);
-%                 disp(diff_subpath_cost)
-%                 disp(distance_path_node)
-%                 disp('-------------------------------------------');
+                if(verbose)
+                    disp('It is better subpath1 than subpath2')
+                    disp('path number:')
+                    disp(j);
+                    disp('node number:')
+                    disp(k);
+                    disp(diff_subpath_cost)
+                    disp(distance_path_node)
+                    disp('-------------------------------------------');
+                end
             end
     end
 
 end
-% disp('Connection to the path number:')
-% disp(switch2path)
-% disp('-------------------------------------------');
-%if(succ_node == 1)
-%     disp('To the node number:')
-%     disp(switch2node)
-%     disp('-------------------------------------------');
-%end
-% disp('cost:')
-% disp(path_cost)
+if(verbose)
+    disp('Connection to the path number:')
+    disp(switch2path)
+    disp('-------------------------------------------');
+    if(succ_node == 1)
+        disp('To the node number:')
+        disp(switch2node)
+        disp('-------------------------------------------');
+    end
+    disp('cost:')
+    disp(path_cost)
 end
-%NB: SEGNALA CHE TALVOLTA QUALCH NODO DELLA RETE NON È CORRETTAMENTE
-%CONNESSO ALLA RETE (es non ha parent_connections)
+end
 
