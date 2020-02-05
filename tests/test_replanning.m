@@ -3,8 +3,8 @@
 
 clear all;close all;
 connection_max_length=0.5;
-% obstacle='sphere';
-obstacle='cube';
+obstacle='sphere';
+% obstacle='cube';
 % obstacle='snowman';
 % obstacle='torus';
 opt_type='full';

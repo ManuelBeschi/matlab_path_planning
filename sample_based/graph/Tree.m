@@ -145,8 +145,7 @@ classdef Tree < handle
                         return;
                     end
                 end
-            end
-            
+            end            
         end
         
         function [success,new_node]=connectToNode(obj,n)
@@ -179,6 +178,7 @@ classdef Tree < handle
 
             cost=0;
             if obj.direction
+                % CAMBIA LA STOP CONDITION IN n==Root
                 while (~isempty(n.parent_connections))
                     if length(n.parent_connections)>1
                         error('a node of forward-direction tree should have only a parent');
@@ -192,7 +192,7 @@ classdef Tree < handle
             else
                 while (~isempty(n.child_connections))
                     if length(n.child_connections)>1
-                        error('a node of forward-direction tree should have only a parent');
+                        error('a node of forward-direction tree should have only a child');
                     end
                     cost=cost+n.parent_connections(1).getCost;
                     n=n.child_connections(1).getChild;
@@ -338,6 +338,7 @@ classdef Tree < handle
                     continue;
                 end
                 if (~checker.checkPath([near_nodes(in).q,new_node.q]))
+             
                     continue;
                 end
                 new_node.parent_connections(1).delete;
