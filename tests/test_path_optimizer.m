@@ -1,17 +1,17 @@
 clear all;close all;clc;
 
 % obstacle='sphere';
-% obstacle='cube';
-obstacle='snowman';
+obstacle='cube';
+% obstacle='snowman';
 
 % opt_type='slip';
 % opt_type='slipParent';
 % opt_type='slipChild';
 % opt_type='warp';
-% opt_type='spiral';
+% opt_type='spiral'; % DEPRECATED
 opt_type='full';
 
-% connection_max_length=0.5;
+connection_max_length=0.2;
 % connection_max_length=2;
 
 if strcmp(obstacle,'snowman')
@@ -48,7 +48,7 @@ c23=Connection(n2,n3,metrics.cost(n2,n3));
 c34=Connection(n3,n4,metrics.cost(n3,n4));
 
 path=Path([c12 c23 c34]);
-% path=path.resample(connection_max_length,metrics);
+path=path.resample(connection_max_length,metrics);
 
 
 hold on
@@ -58,7 +58,7 @@ plot3(start_conf(1),start_conf(2),start_conf(3),'ob','MarkerFaceColor','b','Mark
 plot3(goal_conf(1),goal_conf(2),goal_conf(3),'or','MarkerFaceColor','r','MarkerSize',5)
 
 view(135,0)
-
+% path.verboseDebug(1)
 path_optimizer=PathLocalOptimizer(path,opt_type,checker,metrics);
 cost=[];
 lines=[];

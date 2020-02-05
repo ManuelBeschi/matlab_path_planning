@@ -35,7 +35,6 @@ classdef LocalInformedSampler < InformedSampler
                     flag= norm(x)>1;
                 end
             end
-            
         end
         
         function s=plotEllipsoid(obj)

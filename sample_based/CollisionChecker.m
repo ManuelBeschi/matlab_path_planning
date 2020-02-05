@@ -56,7 +56,7 @@ classdef CollisionChecker < handle
                     pos=path(:,idx)+(path(:,idx+1)-path(:,idx))*(ip)/npnt;
                     r=check(obj,pos);
                     if (r==0)
-                        break;
+                        return;
                     end
                 end
                 

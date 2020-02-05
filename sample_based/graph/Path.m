@@ -24,12 +24,12 @@ classdef Path < handle
             obj.change_warp=ones(length(connections),1);
             obj.change_slipChild=ones(length(connections),1);
             obj.change_slipParent=ones(length(connections),1);
-            obj.change_spiral=ones(length(connections),1);
+            %             obj.change_spiral=ones(length(connections),1);
             if ~isempty(connections)
                 obj.change_warp(1)=0;
                 obj.change_slipChild(1)=0;
                 obj.change_slipParent(1)=0;
-                obj.change_spiral(1)=0;
+                %                 obj.change_spiral(1)=0;
             end
             
             obj.debug_flag=0;
@@ -210,11 +210,11 @@ classdef Path < handle
             if improved
                 obj.change_warp(connection_idx+(-1:0))=1;
                 obj.change_slipChild(connection_idx+(-1:0))=1;
-                obj.change_spiral(connection_idx+(-1:0))=1;
+                %                 obj.change_spiral(connection_idx+(-1:0))=1;
                 obj.change_slipParent(connection_idx+(-1:0))=1;
                 obj.change_slipChild(1)=0;
                 obj.change_slipParent(1)=0;
-                obj.change_spiral(1)=0;
+                %                 obj.change_spiral(1)=0;
             end
         end
         
@@ -292,7 +292,7 @@ classdef Path < handle
                     
                     min_length=0.01;
                     
-                    c=parent.q;
+                    c=(parent.q+child.q)*0.5;
                     dir=node.q-c;
                     max_distance=norm(dir);
                     if (norm(max_distance)<min_length)
@@ -302,8 +302,14 @@ classdef Path < handle
                     
                     v1=dir/max_distance;
                     v2=-(child.q-parent.q)/norm(child.q-parent.q);
-                    v3=cross(v1,v2);
-                    v=0.5*v1+0.5*sign(randn)*v3;
+                    v2=v2-(v2'*v1)*v1;
+                    v2=v2/norm(v2);
+                    v3=randn(length(v1),1);
+                    v3=v3-(v3'*v1)*v1;
+                    v3=v3-(v3'*v2)*v2;
+                    v3=v3/norm(v3);
+                    %v=0.5*v1+0.5*v3;
+                    v=0.1*v1+0.9*v3;
                     v=v/norm(v);
                     min_distance=0;
                     if (~obj.bisection(ip,c,v,max_distance,min_distance,min_length,checker,metrics))
@@ -346,9 +352,9 @@ classdef Path < handle
             stall=~any(obj.change_warp);
         end
         
-        function simplied=simplify(obj,checker,metrics)
+        function simplified=simplify(obj,checker,metrics)
             ic=1;
-            simplied=false;
+            simplified=false;
             while ic<=length(obj.connections)
                 dist=norm(obj.connections(ic).getParent.q-obj.connections(ic).getChild.q);
                 min_length=0.01;
@@ -361,28 +367,62 @@ classdef Path < handle
                     continue;
                 end
                 if checker.checkPath([obj.connections(ic-1).getParent.q,obj.connections(ic).getChild.q])
-                    simplied=true;
+                    simplified=true;
                     conn_cost=metrics.cost(obj.connections(ic-1).getParent.q,obj.connections(ic).getChild.q);
                     new_conn=Connection(obj.connections(ic-1).getParent, obj.connections(ic).getChild,conn_cost);
                     obj.connections(ic).delete
                     obj.connections=[obj.connections(1:(ic-2)) new_conn obj.connections((ic+1):end)];
+                    
+                    obj.change_warp=[obj.change_warp(1:(ic-1)); obj.change_warp((ic+1):end)];
+                    obj.change_warp(ic-1)=1;
+                    obj.change_slipParent=[obj.change_slipParent(1:(ic-1)); obj.change_slipParent((ic+1):end)];
+                    obj.change_slipParent(ic-1)=1;
+                    obj.change_slipChild=[obj.change_slipChild(1:(ic-1)); obj.change_slipChild((ic+1):end)];
+                    obj.change_slipChild(ic-1)=1;
+                    %
+                    %                     obj.change_spiral=[obj.change_spiral(1:(ic-1)) obj.change_spiral((ic+1):end)];
+                    %                     obj.change_spiral(ic-1)=1;
+                    
+                    
                 else
                     ic=ic+1;
                 end
             end
             
-            if simplied
-                obj.change_warp=ones(length(obj.connections),1);
-                obj.change_slipChild=ones(length(obj.connections),1);
-                obj.change_slipParent=ones(length(obj.connections),1);
-                obj.change_spiral=ones(length(obj.connections),1);
-                if ~isempty(obj.connections)
-                    obj.change_warp(1)=0;
-                    obj.change_slipChild(1)=0;
-                    obj.change_slipParent(1)=0;
-                    obj.change_spiral(1)=0;
+            %             if simplified
+            %                 obj.change_warp=ones(length(obj.connections),1);
+            %                 obj.change_slipChild=ones(length(obj.connections),1);
+            %                 obj.change_slipParent=ones(length(obj.connections),1);
+            % %                 obj.change_spiral=ones(length(obj.connections),1);
+            %                 if ~isempty(obj.connections)
+            %                     obj.change_warp(1)=0;
+            %                     obj.change_slipChild(1)=0;
+            %                     obj.change_slipParent(1)=0;
+            % %                     obj.change_spiral(1)=0;
+            %                 end
+            %             end
+        end
+        
+        
+        function [idx] = findConnection(obj,q)
+            
+            conn = obj.connections;
+            idx = 0;
+            
+            for i=1:length(conn)
+                
+                parent = conn(i).getParent.q;
+                child = conn(i).getChild.q;
+                
+                dist = norm(parent-child);
+                dist1 = norm(parent-q);
+                dist2 = norm(q-child);
+                
+                if(abs(dist-dist1-dist2)<1e-06)
+                    idx = i;
                 end
             end
+            
         end
     end
     

@@ -114,7 +114,7 @@ for ii=1:200
         if local_opt
             path_optimizer=PathLocalOptimizer(path,opt_type,checker,metrics);
             path_optimizer.solve;
-        fprintf('RRT* iter-local cost=%f\n',path.cost);
+            fprintf('RRT* iter-local cost=%f\n',path.cost);
         end
         cost=path.cost;
         if informed
