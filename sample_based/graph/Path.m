@@ -24,12 +24,12 @@ classdef Path < handle
             obj.change_warp=ones(length(connections),1);
             obj.change_slipChild=ones(length(connections),1);
             obj.change_slipParent=ones(length(connections),1);
-%             obj.change_spiral=ones(length(connections),1);
+            %             obj.change_spiral=ones(length(connections),1);
             if ~isempty(connections)
                 obj.change_warp(1)=0;
                 obj.change_slipChild(1)=0;
                 obj.change_slipParent(1)=0;
-%                 obj.change_spiral(1)=0;
+                %                 obj.change_spiral(1)=0;
             end
             
             obj.debug_flag=0;
@@ -210,11 +210,11 @@ classdef Path < handle
             if improved
                 obj.change_warp(connection_idx+(-1:0))=1;
                 obj.change_slipChild(connection_idx+(-1:0))=1;
-%                 obj.change_spiral(connection_idx+(-1:0))=1;
+                %                 obj.change_spiral(connection_idx+(-1:0))=1;
                 obj.change_slipParent(connection_idx+(-1:0))=1;
                 obj.change_slipChild(1)=0;
                 obj.change_slipParent(1)=0;
-%                 obj.change_spiral(1)=0;
+                %                 obj.change_spiral(1)=0;
             end
         end
         
@@ -379,9 +379,9 @@ classdef Path < handle
                     obj.change_slipParent(ic-1)=1;
                     obj.change_slipChild=[obj.change_slipChild(1:(ic-1)); obj.change_slipChild((ic+1):end)];
                     obj.change_slipChild(ic-1)=1;
-%                     
-%                     obj.change_spiral=[obj.change_spiral(1:(ic-1)) obj.change_spiral((ic+1):end)];
-%                     obj.change_spiral(ic-1)=1;
+                    %
+                    %                     obj.change_spiral=[obj.change_spiral(1:(ic-1)) obj.change_spiral((ic+1):end)];
+                    %                     obj.change_spiral(ic-1)=1;
                     
                     
                 else
@@ -389,18 +389,40 @@ classdef Path < handle
                 end
             end
             
-%             if simplified
-%                 obj.change_warp=ones(length(obj.connections),1);
-%                 obj.change_slipChild=ones(length(obj.connections),1);
-%                 obj.change_slipParent=ones(length(obj.connections),1);
-% %                 obj.change_spiral=ones(length(obj.connections),1);
-%                 if ~isempty(obj.connections)
-%                     obj.change_warp(1)=0;
-%                     obj.change_slipChild(1)=0;
-%                     obj.change_slipParent(1)=0;
-% %                     obj.change_spiral(1)=0;
-%                 end
-%             end
+            %             if simplified
+            %                 obj.change_warp=ones(length(obj.connections),1);
+            %                 obj.change_slipChild=ones(length(obj.connections),1);
+            %                 obj.change_slipParent=ones(length(obj.connections),1);
+            % %                 obj.change_spiral=ones(length(obj.connections),1);
+            %                 if ~isempty(obj.connections)
+            %                     obj.change_warp(1)=0;
+            %                     obj.change_slipChild(1)=0;
+            %                     obj.change_slipParent(1)=0;
+            % %                     obj.change_spiral(1)=0;
+            %                 end
+            %             end
+        end
+        
+        
+        function [idx] = findConnection(obj,q)
+            
+            conn = obj.connections;
+            idx = 0;
+            
+            for i=1:length(conn)
+                
+                parent = conn(i).getParent.q;
+                child = conn(i).getChild.q;
+                
+                dist = norm(parent-child);
+                dist1 = norm(parent-q);
+                dist2 = norm(q-child);
+                
+                if(abs(dist-dist1-dist2)<1e-06)
+                    idx = i;
+                end
+            end
+            
         end
     end
     
