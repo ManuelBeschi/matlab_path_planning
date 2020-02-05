@@ -47,13 +47,18 @@ classdef InformedSampler < handle
         function q = sample(obj)
             if (obj.cost<inf)
                 flag=true;
-                while flag
+                for iter=1:100
                     r=nthroot(rand,length(obj.lb));
                     sphere=randn(length(obj.lb),1);
                     unit_sphere=r*sphere/norm(sphere);
                     q=obj.ellipse_center+obj.rot_matrix*(obj.ellipse_axis.*unit_sphere);
                     flag=~all((obj.lb<=q).*(q<=obj.ub));
+                    if ~flag
+                        return
+                    end
                 end
+                q=obj.lb+(obj.ub-obj.lb).*rand(length(obj.lb),1);
+                warning('unable to find a feasible point in the ellipse');
             else
                 q=obj.lb+(obj.ub-obj.lb).*rand(length(obj.lb),1);
             end
