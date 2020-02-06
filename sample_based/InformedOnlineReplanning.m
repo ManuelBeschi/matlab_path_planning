@@ -1,4 +1,4 @@
-function [replanned_path,replanned_path_cost,success,connessioni,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed)
+function [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed)
 %function [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed)
 % OUTPUT:
 %> replanned_path: the calculated path that minimizes the cost
@@ -22,17 +22,19 @@ function [replanned_path,replanned_path_cost,success,connessioni,replanned_path_
 %but the node_vector analyzed is not updated with the new nodes of the new
 %path. If 2, the node vector is updated with the new nodes added.
 
-connessioni = 0;
 replanned_path = [];
 replanned_path_vector = [];
 replanned_path_cost = inf;
 success = 0;
+verbose = 1;
 
 
 index = [];
-idx = findConnection(current_path,q);
-disp('idx:')
-disp(idx)
+idx = current_path.findConnection(q);
+if(verbose)
+    disp('idx:')
+    disp(idx)
+end
 
 if(idx>0)
     
@@ -90,8 +92,10 @@ if(idx>0)
         
         available_nodes = 1;
     end
-    disp('Initial replanned_path_cost:')
-    disp(replanned_path_cost); 
+    if(verbose)
+        disp('Initial replanned_path_cost:')
+        disp(replanned_path_cost);
+    end
     
     change_j = 0;
     j = limit;
@@ -100,15 +104,12 @@ if(idx>0)
 
         j = j+change_j;
         change_j = 0;
-%         try
         if(informed>0)
             [new_path,new_path_cost,solved] = PathSwitch(replanned_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         else
             [new_path,new_path_cost,solved] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         end   
-          %catch
-%             warning('path error') 
-%         end
+        
         if(solved==1)
             if(available_nodes==1)
                 if(j>1)
@@ -127,19 +128,24 @@ if(idx>0)
     
             path_cost = actual_node_conn_cost+subpath_cost+new_path_cost;
             
-            disp('replanning from node')
-            disp(j+idx)
-            disp('cost:')
-            disp(path_cost)
-            disp('replanned_path_cost:')
-            disp(replanned_path_cost);            
-            disp('-----------')
+            if(verbose)
+                disp('replanning from node')
+                disp(j+idx)
+                disp('cost:')
+                disp(path_cost)
+                disp('replanned_path_cost:')
+                disp(replanned_path_cost);
+                disp('-----------')
+            end
 
             if(path_cost<replanned_path_cost)
                 replanned_path = path;
                 replanned_path_cost = path_cost;
                 success = 1;
-                number = j;
+                
+                if(verbose)
+                    number = j;
+                end
                 
                 if(length(replanned_path_vector)<10) %li inserisco in modo che siano già ordinati
                     replanned_path_vector = [replanned_path,replanned_path_vector]; %#ok<AGROW>
@@ -150,12 +156,7 @@ if(idx>0)
                 if(informed==2 && available_nodes==1)
                     path1_node_vector = path1_node_vector(1:j-1);
                     for i=2:length(new_path.connections)  %il nodo iniziale l'ho appena analizzato, non analizzo di nuovo
-                        try
                             path1_node_vector = [path1_node_vector,new_path.connections(i).getParent]; %#ok<AGROW>
-                        catch
-                            warning('OGGETTO NON VALIDO')
-                            connessioni = [new_path,new_path.connections(i)];
-                        end
                     end
 
                     subpath1 = replanned_path.getSubpathFromNode(node);
@@ -165,7 +166,7 @@ if(idx>0)
             end
                 
             else
-                if(available_nodes==1)
+                if(available_nodes==1 && verbose)
                     disp('Replanning not possible/convenient from node number:')
                     disp(j+idx)
                 end
@@ -174,15 +175,19 @@ if(idx>0)
     end
     
     if (success==1)
-        disp('replanned from node')
-        disp(number+idx)
-        disp('cost')
-        disp(replanned_path_cost)
+        if(verbose)
+            disp('replanned from node') %#ok<*UNRCH>
+            disp(number+idx)
+            disp('cost')
+            disp(replanned_path_cost)
+        end
     else
         if (available_nodes==1)
             replanned_path = path1;
         else
-            disp('STOP');
+            if(verbose)
+                disp('STOP');
+            end
         end
     end
            

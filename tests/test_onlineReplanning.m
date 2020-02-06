@@ -3,8 +3,8 @@ clearvars; close all; clc;
 connection_max_length=0.5;
 %obstacle='sphere';
 %obstacle='cube';
-%obstacle='snowman';
-obstacle='torus';
+obstacle='snowman';
+%obstacle='torus';
 opt_type='full';
 
 if strcmp(obstacle,'snowman')
@@ -63,7 +63,7 @@ path1=path1.resample(connection_max_length,metrics);
 path_optimizer=PathLocalOptimizer(path1,opt_type,checker,metrics);
 path_optimizer.solve;
 
-path1.connections(end).setCost(100); % NB: così sei sicuro che lo switch avverrà
+path1.connections(end).setCost(30); % NB: così sei sicuro che lo switch avverrà
 
 fprintf('BiRRT Connect: cost=%f\n',path1.cost);
 
@@ -127,10 +127,12 @@ plot3(path1_nodes(1,:)',path1_nodes(2,:)',path1_nodes(3,:)','*b','LineWidth',0.5
 plot3(path2_nodes(1,:)',path2_nodes(2,:)',path2_nodes(3,:)','*r','LineWidth',0.5)
 plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','*g','LineWidth',0.5)
 
-%[replanned_path,replanned_path_cost,success] = OnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node);
-[replanned_path,replanned_path_cost,success,connessioni,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed);
+[replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed);
 
 if(isa(replanned_path,'Path'))
+    replanned_path.verboseDebug(false);
+    path_optimizer=PathLocalOptimizer(replanned_path,opt_type,checker,metrics);
+    path_optimizer.solve;
     joints=replanned_path.getWaypoints;
     plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1)
 else
