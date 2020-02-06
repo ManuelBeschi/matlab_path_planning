@@ -35,6 +35,22 @@ classdef Path < handle
             obj.debug_flag=0;
         end
         
+        function isValid=valid(obj,checker)
+            isValid=true;
+            for ic=1:length(obj.connections)
+                q1=obj.connections(ic).getParent.q;
+                q2=obj.connections(ic).getChild.q;
+                
+                r=checker.checkPath([q1 q2]);
+                if ~r
+                    obj.connections(ic).setCost(inf);
+                    isValid=false;
+                    return;
+                end
+            end
+            return
+        end
+        
         function cost = cost(obj)
             cost=0;
             if length(obj.connections)<1
