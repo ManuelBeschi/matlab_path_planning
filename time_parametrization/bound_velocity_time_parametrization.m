@@ -1,5 +1,7 @@
 function [pos,vel,total_duration]=bound_velocity_time_parametrization(path,max_vel,t)
-
+if nargin<3
+    t=0;
+end
 nc=length(path.connections);
 
 for ic=1:nc
@@ -15,7 +17,7 @@ total_duration=time(end);
 if t<0
     pos=path.connections(1).getParent.q;
     vel=0*max_vel;
-elseif t>time(end)
+elseif t>=time(end)
     pos=path.connections(end).getChild.q;
     vel=0*max_vel;
 else
