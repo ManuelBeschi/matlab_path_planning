@@ -87,10 +87,9 @@ for j = 1:length(other_paths)
                         disp(conn_cost)
                     end
                     
-                    if(conn_cost<path_cost && conn_cost<subpath1_cost && ~isempty(subpath2)) %%DUBBIO %verifico sia che il costo del connecting path sia compatibile con il limite dato da diff_subpath_cost (altrimenti conviene subpath1) e verifico che il costo di questo connecting path sia minore di quelli precedenti
+                    if(conn_cost<path_cost && conn_cost<subpath1_cost && ~isempty(subpath2)) %verifico sia che il costo del connecting path sia compatibile con il limite dato da diff_subpath_cost (altrimenti conviene subpath1) e verifico che il costo di questo connecting path sia minore di quelli precedenti
                             
                         if (length(connecting_path)>1)
-                            
                             node1 = connecting_path(1).getChild;  %FACCIO QUESTI COLLEGAMENTI SOLO SE IL PATH È CONVENIENTE, ALTRIMENTI È INUTILE
                             node2 = connecting_path(end).getParent;
                             conn1_cost = metrics.cost(path1_node,node1);
@@ -99,6 +98,7 @@ for j = 1:length(other_paths)
                             conn2 = Connection(node2,path2_node,conn2_cost);
                             
                             connecting_path = [conn1,connecting_path(2:end-1),conn2];
+                       
                         else %se connecting_path ha dimensione 1 significa che path_node1 e path_node2 sono connessi direttamente da un unico segmento, se non tratti separatamente ti da errore di invalid object
                             conn1_cost = metrics.cost(path1_node,path2_node);
                             conn1 = Connection(path1_node,path2_node,conn1_cost);

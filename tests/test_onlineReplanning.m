@@ -130,6 +130,8 @@ plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','*g','LineWidth',0.5
 [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed);
 
 if(isa(replanned_path,'Path'))
+    joints=replanned_path.getWaypoints;
+    plot3(joints(1,:)',joints(2,:)',joints(3,:)','--y','LineWidth',1)
     replanned_path.verboseDebug(false);
     path_optimizer=PathLocalOptimizer(replanned_path,opt_type,checker,metrics);
     path_optimizer.solve;
