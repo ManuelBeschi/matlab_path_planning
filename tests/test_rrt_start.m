@@ -1,9 +1,9 @@
 clear all;close all;
 
 % obstacle='sphere';
-obstacle='cube';
+% obstacle='cube';
 % obstacle='snowman';
-% obstacle='torus';
+obstacle='torus';
 % obstacle='cubes';
 opt_type='full';
 informed=true;
