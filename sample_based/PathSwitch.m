@@ -18,8 +18,8 @@ function [new_path,path_cost,success] = PathSwitch(current_path,other_paths,node
 % path, the closest node.
 
 
-% Individuo la prima porzione del percorso, che è il tratto che ho percorso
-% fino ad ora
+%Individuo la prima porzione del percorso, che è il tratto che ho percorso
+%fino ad ora
 verbose = 0;
 
 new_path = [];
