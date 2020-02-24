@@ -33,6 +33,7 @@ success = 0;
 
 index = [];
 idx = current_path.findConnection(q);
+admissible_current_path = [];
 
 if(verbose > 0)
     previous_joints = [];
@@ -56,6 +57,25 @@ if(idx>0)
     else
         actual_node = Node(q);
     end
+              
+    z = length(current_path.connections);  %Ora individuo la parte di current_path percorribile e dunque da non scartare
+    while(z>0)
+        if(current_path.connections(z).getCost == inf)
+            if(z == length(current_path.connections))
+                admissible_current_path = [];
+            else
+                admissible_current_path = current_path.getSubpathFromNode(current_path.connections(z).getChild);
+            end
+            z = 0;
+        else
+            z = z-1;
+        end
+    end
+    
+    if(isa(admissible_current_path,'Path'))
+        other_paths = [admissible_current_path,other_paths];  %aggiungo ai possibili path il tratto finale con costo non infinito di current_path
+    end
+    
     
     if(current_path.connections(idx).getCost == inf)
         node = actual_node;

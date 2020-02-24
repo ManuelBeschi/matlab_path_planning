@@ -7,7 +7,7 @@ obstacle='snowman';
 %obstacle='torus';
 opt_type='full';
 
-verbose = 2;
+verbose = 0;
 
 if strcmp(obstacle,'snowman')
     checker=Snowman3dCollisionChecker;
@@ -70,7 +70,8 @@ path1=path1.resample(connection_max_length,metrics);
 path_optimizer=PathLocalOptimizer(path1,opt_type,checker,metrics);
 path_optimizer.solve;
 
-path1.connections(end).setCost(30); % NB: così sei sicuro che lo switch avverrà
+%path1.connections(end).setCost(30); % NB: così sei sicuro che lo switch avverrà
+path1.connections(end).setCost(inf);
 
 fprintf('BiRRT Connect: cost=%f\n',path1.cost);
 
@@ -148,7 +149,7 @@ if(isa(replanned_path,'Path'))
     path_optimizer=PathLocalOptimizer(replanned_path,opt_type,checker,metrics);
     path_optimizer.solve;
     joints=replanned_path.getWaypoints;
-    plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',2)
+    plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1.5)
 else
     warning('replanning not possible!');
 end
