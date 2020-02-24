@@ -156,7 +156,7 @@ if(idx>0)
                 disp(path_cost)
                 disp('replanned_path_cost:')
                 disp(replanned_path_cost);
-                disp('-----------')
+                disp('-------------------')
             end
 
             if(path_cost<replanned_path_cost)
@@ -179,7 +179,7 @@ if(idx>0)
                 end
                 
                 if(informed==2 && available_nodes==1)                
-                    if(verbose == 2)
+                    if(verbose == 2) %To plot the graph at each iteration
                         path1 = current_path;
                         path2 = other_paths(1);
                         path3 = other_paths(2);
@@ -250,7 +250,7 @@ if(idx>0)
                 disp('Replanning not possible/convenient from node number:')
                 disp(node_number)
 
-                if(verbose==2)
+                if(verbose==2)  %To plot the graph at each iteration
                     path1 = current_path;
                     path2 = other_paths(1);
                     path3 = other_paths(2);

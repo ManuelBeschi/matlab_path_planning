@@ -7,7 +7,7 @@ obstacle='snowman';
 %obstacle='torus';
 opt_type='full';
 
-verbose = 0;
+verbose = 2;
 
 if strcmp(obstacle,'snowman')
     checker=Snowman3dCollisionChecker;
