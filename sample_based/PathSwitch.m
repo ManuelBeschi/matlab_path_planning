@@ -1,4 +1,4 @@
-function [new_path,path_cost,success,connected2path_number] = PathSwitch(current_path,other_paths,node,lb,ub,max_distance,checker,metrics,opt_type,succ_node)
+function [new_path,path_cost,success,connected2path_number,subpath_from_path2] = PathSwitch(current_path,other_paths,node,lb,ub,max_distance,checker,metrics,opt_type,succ_node)
 % [new_path,success] = PathSwitch(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node)
 % OUTPUT:
 %> new_path: the calculated path that starts from the current_path node with joints poistion q and moves to another path of other_paths
@@ -24,6 +24,8 @@ verbose = 0;
 
 new_path = [];
 success = 0;
+connected2path_number = 0;
+subpath_from_path2 = [];
 
 path1_node = node;
 path1_node2goal = current_path.getSubpathFromNode(path1_node);
@@ -114,6 +116,9 @@ for j = 1:length(other_paths)
                         if(nargout>3)
                             connected2path_number = j;
                         end
+                        if(nargout>4)
+                            subpath_from_path2 = path2_node2goal;
+                        end
                         if(verbose)
                             switch2path = j;
                             switch2node = k;
@@ -121,8 +126,7 @@ for j = 1:length(other_paths)
                             disp('-------------------------------------------');
                         end
                     end 
-                else
-                    if(verbose)
+                else                    if(verbose)
                         disp('Connection NOT POSSIBLE to the node number:')
                         disp(k);
                         disp('of the path number:')

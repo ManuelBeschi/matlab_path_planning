@@ -7,7 +7,7 @@ obstacle='snowman';
 %obstacle='torus';
 opt_type='full';
 
-verbose = 0;
+verbose = 2;
 
 if strcmp(obstacle,'snowman')
     checker=Snowman3dCollisionChecker;
@@ -71,7 +71,7 @@ path_optimizer=PathLocalOptimizer(path1,opt_type,checker,metrics);
 path_optimizer.solve;
 
 %path1.connections(end).setCost(30); % NB: così sei sicuro che lo switch avverrà
-path1.connections(end).setCost(inf);
+path1.connections(end-2).setCost(inf);
 
 fprintf('BiRRT Connect: cost=%f\n',path1.cost);
 

@@ -59,7 +59,7 @@ if(idx>0)
     end
               
     z = length(current_path.connections);  %Ora individuo la parte di current_path percorribile e dunque da non scartare
-    while(z>0)
+    while(z>idx)  %arrivo massimo alla connessione successiva a quella attuale
         if(current_path.connections(z).getCost == inf)
             if(z == length(current_path.connections))
                 admissible_current_path = [];
@@ -76,6 +76,7 @@ if(idx>0)
         other_paths = [admissible_current_path,other_paths];  %aggiungo ai possibili path il tratto finale con costo non infinito di current_path
     end
     
+    reset_other_paths = other_paths; %serve piu avantu per tornare al vettore completo 
     
     if(current_path.connections(idx).getCost == inf)
         node = actual_node;
@@ -137,11 +138,29 @@ if(idx>0)
     while (j>0)  %il FOR non mi permette di modificare l'indice di iterazione in corso
         j = j+change_j;
         change_j = 0;
+        
         if(informed>0)
-            [new_path,new_path_cost,solved] = PathSwitch(replanned_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
+            other_paths = reset_other_paths;
+            if(success == 1) %success == 1 per essere sicuro che almeno una volta son riuscito a ripianificare per cui mi sono collegato ad un path..altrimenti questi calcoli non servono
+                n = length(confirmed_subpath_from_path2);
+                while(n > 0)
+                    if(isequal(path1_node_vector(j),confirmed_subpath_from_path2.connections(n).getParent))
+                        if(confirmed_connected2path_number<length(reset_other_paths))
+                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2,reset_other_paths(confirmed_connected2path_number+1:end)];
+                        else
+                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2];
+                        end
+                        n = 0;
+                    else
+                        n = n-1;
+                    end
+                end
+            end
+            
+            [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(replanned_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         else
-            [new_path,new_path_cost,solved] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
-        end  
+            [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
+        end
         
         if(verbose > 0)
             for d=1:length(nodesPlot_vector)
@@ -182,6 +201,8 @@ if(idx>0)
             if(path_cost<replanned_path_cost)
                 replanned_path = path;
                 replanned_path_cost = path_cost;
+                confirmed_connected2path_number = connected2PathNumber;
+                confirmed_subpath_from_path2 = subpathFromPath2;
                 success = 1;
                 
                 if(verbose > 0)
@@ -201,8 +222,8 @@ if(idx>0)
                 if(informed==2 && available_nodes==1)                
                     if(verbose == 2) %To plot the graph at each iteration
                         path1 = current_path;
-                        path2 = other_paths(1);
-                        path3 = other_paths(2);
+                        path2 = reset_other_paths(2);
+                        path3 = reset_other_paths(3);
                         path1_nodes = path1.getWaypoints;
                         path2_nodes = path2.getWaypoints;
                         path3_nodes = path3.getWaypoints;
@@ -272,8 +293,8 @@ if(idx>0)
 
                 if(verbose==2)  %To plot the graph at each iteration
                     path1 = current_path;
-                    path2 = other_paths(1);
-                    path3 = other_paths(2);
+                    path2 = reset_other_paths(2);
+                    path3 = reset_other_paths(3);
                     path1_nodes = path1.getWaypoints;
                     path2_nodes = path2.getWaypoints;
                     path3_nodes = path3.getWaypoints;

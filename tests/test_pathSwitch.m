@@ -150,10 +150,10 @@ succ_node = 1;
 idx_replan=round(length(path1.connections)*0.5);
 node=current_path.connections(:,idx_replan).getChild;
 
-[new_path,path_cost,success] = PathSwitch(current_path,other_paths,node,lb,ub,max_distance,checker,metrics,opt_type,succ_node);
+[new_path,path_cost,success,con2path] = PathSwitch(current_path,other_paths,node,lb,ub,max_distance,checker,metrics,opt_type,succ_node);
 if(success == 1)
     joints=new_path.getWaypoints;
-    plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1)
+    plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',2)
 else
     warning('replanning not possible!');
 end
