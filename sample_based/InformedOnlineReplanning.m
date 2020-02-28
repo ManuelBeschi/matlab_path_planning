@@ -172,7 +172,7 @@ if(idx>0)
             [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         end
         
-        path1_node_vector(j).setUsedForReplanning(1); %segnalo che il nodo è stato utilizzato per il replanning così non lo riutilizzero in futuro   ANALYZED FALSO NO ANALIZZATO
+        path1_node_vector(j).setAnalyzed(1); %segnalo che il nodo è stato utilizzato per il replanning così non lo riutilizzero in futuro   ANALYZED FALSO NO ANALIZZATO
         examined_nodes = [examined_nodes,path1_node_vector(j)]; %#ok<AGROW>
         if(verbose == 2)
             examined_nodes_plot = [examined_nodes(1,:).q];
@@ -307,7 +307,7 @@ if(idx>0)
 
                     support = path1_node_vector(1:j-1); %i nodi fino a j-1 sicuramente non sono stati ancora analizzati
                     for r=1:length(new_path.connections)
-                        if(new_path.connections(r).getParent.getUsedForReplanning == 0)% && getNonOptimal
+                        if(new_path.connections(r).getParent.getAnalyzed == 0 && new_path.connections(r).getParent.getNonOptimal == 0)
                             support = [support,new_path.connections(r).getParent]; %#ok<AGROW>
                             change_j = change_j+1;
                         end
@@ -386,7 +386,7 @@ if(idx>0)
     end
     
     for i=1:length(examined_nodes)
-        examined_nodes(i).setUsedForReplanning(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
+        examined_nodes(i).setAnalyzed(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
     end
     
     if (success==1)
