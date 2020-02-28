@@ -1,7 +1,7 @@
 classdef Snowman3dCollisionChecker < CollisionChecker
     
 
-    properties
+    properties (Access = protected)
         rp=1;
         rc=0.5;
         rb=0.3;
