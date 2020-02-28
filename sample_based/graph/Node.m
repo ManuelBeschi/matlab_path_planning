@@ -7,22 +7,30 @@ classdef Node < handle
         child_connections
         q
         njnt
-        usedForReplanning  %richiama come analyzed
-        %nonOptimal
+        analyzed 
+        nonOptimal
     end
     
     methods
         function obj = Node(q)
             obj.q= q;
             obj.njnt=length(q);
-            obj.usedForReplanning = 0;
+            obj.analyzed = 0;
+            obj.nonOptimal = 0;
         end
         
-        function setUsedForReplanning(obj,usedForReplanning)
-            obj.usedForReplanning=usedForReplanning;
+        function setAnalyzed(obj,analyzed)
+            obj.analyzed=analyzed;
         end
-        function usedForReplanning=getUsedForReplanning(obj)
-            usedForReplanning=obj.usedForReplanning;
+        function analyzed=getAnalyzed(obj)
+            analyzed=obj.analyzed;
+        end
+        
+        function setNonOptimal(obj,nonOptimal)
+            obj.nonOptimal=nonOptimal;
+        end
+        function nonOptimal=getNonOptimal(obj)
+            nonOptimal=obj.nonOptimal;
         end
         
         function success=addParentConnection(obj,connection)
