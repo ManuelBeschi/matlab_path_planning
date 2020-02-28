@@ -126,7 +126,8 @@ for j = 1:length(other_paths)
                             disp('-------------------------------------------');
                         end
                     end 
-                else                    if(verbose)
+                else
+                    if(verbose)
                         disp('Connection NOT POSSIBLE to the node number:')
                         disp(k);
                         disp('of the path number:')

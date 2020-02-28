@@ -30,6 +30,8 @@ replanned_path = [];
 replanned_path_vector = [];
 replanned_path_cost = inf;
 success = 0;
+flag_other_paths = 0;
+examined_nodes = [];
 
 index = [];
 idx = current_path.findConnection(q);
@@ -42,6 +44,10 @@ if(verbose > 0)
     node_number = 0;
     disp('idx:')
     disp(idx)
+    
+    if(verbose == 2)
+        examined_nodes_plot = [];
+    end
 end
 
 if(idx>0)
@@ -141,9 +147,12 @@ if(idx>0)
         
         if(informed>0)
             other_paths = reset_other_paths;
-            if(success == 1) %success == 1 per essere sicuro che almeno una volta son riuscito a ripianificare per cui mi sono collegato ad un path..altrimenti questi calcoli non servono
-                n = length(confirmed_subpath_from_path2);
+            if(flag_other_paths == 1) %flag_other_paths == 1 per essere sicuro che almeno una volta son riuscito a ripianificare per cui mi sono collegato ad un path..altrimenti questi calcoli non servono
+                n = length(confirmed_subpath_from_path2.connections);
                 while(n > 0)
+                    if(n == 1)
+                        flag_other_paths = 0;
+                    end
                     if(isequal(path1_node_vector(j),confirmed_subpath_from_path2.connections(n).getParent))
                         if(confirmed_connected2path_number<length(reset_other_paths))
                             other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2,reset_other_paths(confirmed_connected2path_number+1:end)];
@@ -152,6 +161,7 @@ if(idx>0)
                         end
                         n = 0;
                     else
+                        other_paths = reset_other_paths;
                         n = n-1;
                     end
                 end
@@ -160,6 +170,12 @@ if(idx>0)
             [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(replanned_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         else
             [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
+        end
+        
+        path1_node_vector(j).setUsedForReplanning(1); %segnalo che il nodo è stato utilizzato per il replanning così non lo riutilizzero in futuro   ANALYZED FALSO NO ANALIZZATO
+        examined_nodes = [examined_nodes,path1_node_vector(j)]; %#ok<AGROW>
+        if(verbose == 2)
+            examined_nodes_plot = [examined_nodes(1,:).q];
         end
         
         if(verbose > 0)
@@ -204,6 +220,7 @@ if(idx>0)
                 confirmed_connected2path_number = connected2PathNumber;
                 confirmed_subpath_from_path2 = subpathFromPath2;
                 success = 1;
+                flag_other_paths = 1;
                 
                 if(verbose > 0)
                     nodesPlot_vector = [];
@@ -222,8 +239,13 @@ if(idx>0)
                 if(informed==2 && available_nodes==1)                
                     if(verbose == 2) %To plot the graph at each iteration
                         path1 = current_path;
-                        path2 = reset_other_paths(2);
-                        path3 = reset_other_paths(3);
+                        if(isequal(admissible_current_path,[]))
+                            path2 = reset_other_paths(1);
+                            path3 = reset_other_paths(2);
+                        else
+                            path2 = reset_other_paths(2);
+                            path3 = reset_other_paths(3);
+                        end
                         path1_nodes = path1.getWaypoints;
                         path2_nodes = path2.getWaypoints;
                         path3_nodes = path3.getWaypoints;
@@ -262,6 +284,9 @@ if(idx>0)
                         plot3(joints(1,:)',joints(2,:)',joints(3,:)','oy','LineWidth',1)
                         plot3(q(1,:)',q(2,:)',q(3,:)','*c','LineWidth',2)
                         plot3(nodePlot(1,:)',nodePlot(2,:)',nodePlot(3,:)','sr','LineWidth',2)
+                        if(~isempty(examined_nodes))
+                            plot3(examined_nodes_plot(1,:)',examined_nodes_plot(2,:)',examined_nodes_plot(3,:)','ok','LineWidth',1);
+                        end
                         if(~isempty(previous_joints))
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','--c','LineWidth',0.5)
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','*c','LineWidth',0.5)
@@ -275,13 +300,22 @@ if(idx>0)
                         pause
                     end
                     
-                    path1_node_vector = path1_node_vector(1:j-1);
-                    for i=2:length(new_path.connections)  %il nodo iniziale l'ho appena analizzato, non analizzo di nuovo
-                            path1_node_vector = [path1_node_vector,new_path.connections(i).getParent]; %#ok<AGROW>
+%                     path1_node_vector = path1_node_vector(1:j-1);
+%                     for i=2:length(new_path.connections)  %il nodo iniziale l'ho appena analizzato, non analizzo di nuovo
+%                             path1_node_vector = [path1_node_vector,new_path.connections(i).getParent]; %#ok<AGROW>
+%                     end
+
+                    support = path1_node_vector(1:j-1); %i nodi fino a j-1 sicuramente non sono stati ancora analizzati
+                    for r=1:length(new_path.connections)
+                        if(new_path.connections(r).getParent.getUsedForReplanning == 0)% && getNonOptimal
+                            support = [support,new_path.connections(r).getParent]; %#ok<AGROW>
+                            change_j = change_j+1;
+                        end
                     end
+                    path1_node_vector = support;
                     
                     subpath1 = replanned_path.getSubpathFromNode(node);
-                    change_j = length(new_path.connections)-1; %corrisponde al numero di nodi aggiunti dal newpath
+%                    change_j = length(new_path.connections)-1; %corrisponde al numero di nodi aggiunti dal newpath
                 end
                     
             end
@@ -293,8 +327,13 @@ if(idx>0)
 
                 if(verbose==2)  %To plot the graph at each iteration
                     path1 = current_path;
-                    path2 = reset_other_paths(2);
-                    path3 = reset_other_paths(3);
+                    if(isequal(admissible_current_path,[]))
+                        path2 = reset_other_paths(1);
+                        path3 = reset_other_paths(2);
+                    else
+                        path2 = reset_other_paths(2);
+                        path3 = reset_other_paths(3);
+                    end
                     path1_nodes = path1.getWaypoints;
                     path2_nodes = path2.getWaypoints;
                     path3_nodes = path3.getWaypoints;
@@ -333,7 +372,9 @@ if(idx>0)
                     plot3(joints(1,:)',joints(2,:)',joints(3,:)','oy','LineWidth',1)
                     plot3(q(1,:)',q(2,:)',q(3,:)','*c','LineWidth',2)
                     plot3(nodePlot(1,:)',nodePlot(2,:)',nodePlot(3,:)','sr','LineWidth',2)
-                    
+                    if(~isempty(examined_nodes))
+                        plot3(examined_nodes_plot(1,:)',examined_nodes_plot(2,:)',examined_nodes_plot(3,:)','ok','LineWidth',1);
+                    end
                     hold off
                     disp('Pause: press Enter')
                     disp('-------------------')
@@ -342,6 +383,10 @@ if(idx>0)
             end
         end
         j = j-1;
+    end
+    
+    for i=1:length(examined_nodes)
+        examined_nodes(i).setUsedForReplanning(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
     end
     
     if (success==1)
