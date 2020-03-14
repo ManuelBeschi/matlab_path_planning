@@ -155,9 +155,9 @@ if(idx>0)
                     end
                     if(isequal(path1_node_vector(j),confirmed_subpath_from_path2.connections(n).getParent))
                         if(confirmed_connected2path_number<length(reset_other_paths))
-                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2,reset_other_paths(confirmed_connected2path_number+1:end)];
+                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent),reset_other_paths(confirmed_connected2path_number+1:end)];
                         else
-                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2];
+                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent)]; %modificato confirmed_subpath_from_path2 con confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent) qui e la riga sopra
                         end
                         n = 0;
                     else
