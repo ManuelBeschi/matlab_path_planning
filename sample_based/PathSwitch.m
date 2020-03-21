@@ -44,8 +44,10 @@ for j = 1:length(other_paths)
         for t=1:length(path2_conn)  %non mi serve il nodo GOAL
             path2_node_vector = [path2_node_vector,path2_conn(t).getParent]; %#ok<AGROW>
         end
-    else     
+    else
+        
         path2_node_vector = path2.findCloserNode(path1_node.q);
+        
     end
     
     for k=1:length(path2_node_vector)

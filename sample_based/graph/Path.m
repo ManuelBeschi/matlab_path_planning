@@ -83,7 +83,7 @@ classdef Path < handle
             wp=obj.getWaypoints;
             min_dist=inf;
             i_closer=1;
-            for idx=1:length(wp)
+            for idx=1:length(wp(1,:))
                 dist=norm(wp(:,idx)-q);
                 if (dist<min_dist)
                     min_dist=dist;

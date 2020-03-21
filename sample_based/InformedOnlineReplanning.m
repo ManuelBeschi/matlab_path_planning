@@ -398,7 +398,7 @@ if(idx>0)
         end
     else
         if (available_nodes==1)
-            replanned_path = path1;
+            replanned_path = current_path; %path1
         else
             if(verbose > 0)
                 disp('STOP');
