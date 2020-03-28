@@ -1,4 +1,4 @@
-function [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
+function [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
 %function [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
 % OUTPUT:
 %> replanned_path: the calculated path that minimizes the cost
@@ -29,13 +29,18 @@ function [replanned_path,replanned_path_cost,success,replanned_path_vector] = In
 replanned_path = [];
 replanned_path_vector = [];
 replanned_path_cost = inf;
+previous_cost = current_path.cost;
 success = 0;
 flag_other_paths = 0;
 examined_nodes = [];
+cont = 0;
+number_replanning = 0;
 
 index = [];
 idx = current_path.findConnection(q);
 admissible_current_path = [];
+
+%verbose =2; %ELIMINA
 
 if(verbose > 0)
     previous_joints = [];
@@ -49,6 +54,8 @@ if(verbose > 0)
         examined_nodes_plot = [];
     end
 end
+
+%verbose = 0; %ELIMINA
 
 if(idx>0)
     
@@ -134,12 +141,14 @@ if(idx>0)
     change_j = 0;
     j = limit;
     
+    %verbose = 2; %ELIMINA
     if(verbose > 0)
         node_number = limit+idx;
         for n=1:length(replanned_path.connections)
             nodesPlot_vector = [nodesPlot_vector,replanned_path.connections(n).getParent]; %#ok<AGROW>
         end
     end
+    %verbose = 0; %ELIMINA
     
     while (j>0)  %il FOR non mi permette di modificare l'indice di iterazione in corso
         j = j+change_j;
@@ -174,10 +183,13 @@ if(idx>0)
         
         path1_node_vector(j).setAnalyzed(1); %segnalo che il nodo è stato utilizzato per il replanning così non lo riutilizzero in futuro   ANALYZED FALSO NO ANALIZZATO
         examined_nodes = [examined_nodes,path1_node_vector(j)]; %#ok<AGROW>
+        
+        %verbose = 2; %ELIMINA
+        
         if(verbose == 2)
             examined_nodes_plot = [examined_nodes(1,:).q];
         end
-        
+
         if(verbose > 0)
             for d=1:length(nodesPlot_vector)
                 if(nodesPlot_vector(d) == path1_node_vector(j))
@@ -186,7 +198,10 @@ if(idx>0)
             end
         end
         
+        %verbose = 0; %ELIMINA
+        
         if(solved==1)
+            number_replanning=number_replanning+1;
             if(available_nodes==1)
                 if(j>1)
                     subpath = subpath1.getSubpathToNode(path1_node_vector(j)); %path che va dal nodo più vicino a me fino al nodo da cui inizio lo switch
@@ -215,6 +230,7 @@ if(idx>0)
             end
 
             if(path_cost<replanned_path_cost)
+                previous_cost = replanned_path_cost;
                 replanned_path = path;
                 replanned_path_cost = path_cost;
                 confirmed_connected2path_number = connected2PathNumber;
@@ -222,6 +238,7 @@ if(idx>0)
                 success = 1;
                 flag_other_paths = 1;
                 
+                %verbose = 2; %ELIMINA
                 if(verbose > 0)
                     nodesPlot_vector = [];
                     for n=1:length(replanned_path.connections)
@@ -229,6 +246,7 @@ if(idx>0)
                     end
                     number = j;
                 end
+                %verbose = 0; %ELIMINA
                 
                 if(length(replanned_path_vector)<10) %li inserisco in modo che siano già ordinati
                     replanned_path_vector = [replanned_path,replanned_path_vector]; %#ok<AGROW>
@@ -236,57 +254,14 @@ if(idx>0)
                     replanned_path_vector = [replanned_path,replanned_path_vector(1:end-1)];
                 end
                 
-                if(informed==2 && available_nodes==1)                
+                if(informed==2 && available_nodes==1)   
+%                     if(toc>40) %ELIMINA
+%                         verbose = 2;
+%                     else
+%                         verbose = 0;
+%                     end
                     if(verbose == 2) %To plot the graph at each iteration
-                        path1 = current_path;
-                        if(isequal(admissible_current_path,[]))
-                            path2 = reset_other_paths(1);
-                            path3 = reset_other_paths(2);
-                        else
-                            path2 = reset_other_paths(2);
-                            path3 = reset_other_paths(3);
-                        end
-                        path1_nodes = path1.getWaypoints;
-                        path2_nodes = path2.getWaypoints;
-                        path3_nodes = path3.getWaypoints;
-                        joints=replanned_path.getWaypoints;
-                        nodePlot = path1_node_vector(j).q;
-                        
-                        clf
-                        
-                        hold on
-                        obstacle='snowman';
-                        checker=Snowman3dCollisionChecker;
-                        checker.init;
-                        checker.plot
-                        checker.plot
-                        metrics=Metrics;
-                        view(135,0)
-                        lb=-pi*ones(3,1);
-                        ub=pi*ones(3,1);
-                        if strcmp(obstacle,'torus')
-                            start_conf = [0 1.1 0]';
-                            goal_conf = [0.6 -0.7 0]';
-                        else
-                            start_conf = [0.0 -1.1 0]';
-                            goal_conf =  [0.0 1.1 0]';
-                        end
-                        plot3(start_conf(1),start_conf(2),start_conf(3),'sy','MarkerFaceColor','b','MarkerSize',5)
-                        plot3(goal_conf(1),goal_conf(2),goal_conf(3),'oy','MarkerFaceColor','r','MarkerSize',5)
-                        axis equal
-                        xlabel('q1');
-                        ylabel('q2');
-                        zlabel('q3');
-                        plot3(path1_nodes(1,:)',path1_nodes(2,:)',path1_nodes(3,:)','--*b','LineWidth',0.5)
-                        plot3(path2_nodes(1,:)',path2_nodes(2,:)',path2_nodes(3,:)','--*r','LineWidth',0.5)
-                        plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','--*g','LineWidth',0.5)
-                        plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1)
-                        plot3(joints(1,:)',joints(2,:)',joints(3,:)','oy','LineWidth',1)
-                        plot3(q(1,:)',q(2,:)',q(3,:)','*c','LineWidth',2)
-                        plot3(nodePlot(1,:)',nodePlot(2,:)',nodePlot(3,:)','sr','LineWidth',2)
-                        if(~isempty(examined_nodes))
-                            plot3(examined_nodes_plot(1,:)',examined_nodes_plot(2,:)',examined_nodes_plot(3,:)','ok','LineWidth',1);
-                        end
+                        PlotEnv
                         if(~isempty(previous_joints))
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','--c','LineWidth',0.5)
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','*c','LineWidth',0.5)
@@ -295,15 +270,10 @@ if(idx>0)
                         previous_joints = joints;
                         old_node = nodePlot;
                         hold off
-                        disp('Pause: press Enter')
+                        disp(['Pause: press Enter, cost' num2str(replanned_path_cost)])
                         disp('-------------------')
                         pause
                     end
-                    
-%                     path1_node_vector = path1_node_vector(1:j-1);
-%                     for i=2:length(new_path.connections)  %il nodo iniziale l'ho appena analizzato, non analizzo di nuovo
-%                             path1_node_vector = [path1_node_vector,new_path.connections(i).getParent]; %#ok<AGROW>
-%                     end
 
                     support = path1_node_vector(1:j-1); %i nodi fino a j-1 sicuramente non sono stati ancora analizzati
                     for r=1:length(new_path.connections)
@@ -322,59 +292,18 @@ if(idx>0)
                 
         else
             if(available_nodes==1 && verbose>0)
+                
+%                 if(toc>40) %ELIMINA
+%                     verbose = 2;
+%                 else
+%                     verbose = 0;
+%                 end
+                
                 disp('Replanning not possible/convenient from node number:')
                 disp(node_number)
 
                 if(verbose==2)  %To plot the graph at each iteration
-                    path1 = current_path;
-                    if(isequal(admissible_current_path,[]))
-                        path2 = reset_other_paths(1);
-                        path3 = reset_other_paths(2);
-                    else
-                        path2 = reset_other_paths(2);
-                        path3 = reset_other_paths(3);
-                    end
-                    path1_nodes = path1.getWaypoints;
-                    path2_nodes = path2.getWaypoints;
-                    path3_nodes = path3.getWaypoints;
-                    joints=replanned_path.getWaypoints;
-                    nodePlot = path1_node_vector(j).q;
-                    
-                    clf
-                    
-                    hold on
-                    obstacle='snowman';
-                    checker=Snowman3dCollisionChecker;
-                    checker.init;
-                    checker.plot
-                    checker.plot
-                    metrics=Metrics;
-                    view(135,0)
-                    lb=-pi*ones(3,1);
-                    ub=pi*ones(3,1);
-                    if strcmp(obstacle,'torus')
-                        start_conf = [0 1.1 0]';
-                        goal_conf = [0.6 -0.7 0]';
-                    else
-                        start_conf = [0.0 -1.1 0]';
-                        goal_conf =  [0.0 1.1 0]';
-                    end
-                    plot3(start_conf(1),start_conf(2),start_conf(3),'sy','MarkerFaceColor','b','MarkerSize',5)
-                    plot3(goal_conf(1),goal_conf(2),goal_conf(3),'oy','MarkerFaceColor','r','MarkerSize',5)
-                    axis equal
-                    xlabel('q1');
-                    ylabel('q2');
-                    zlabel('q3');
-                    plot3(path1_nodes(1,:)',path1_nodes(2,:)',path1_nodes(3,:)','--*b','LineWidth',0.5)
-                    plot3(path2_nodes(1,:)',path2_nodes(2,:)',path2_nodes(3,:)','--*r','LineWidth',0.5)
-                    plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','--*g','LineWidth',0.5)
-                    plot3(joints(1,:)',joints(2,:)',joints(3,:)','-y','LineWidth',1)
-                    plot3(joints(1,:)',joints(2,:)',joints(3,:)','oy','LineWidth',1)
-                    plot3(q(1,:)',q(2,:)',q(3,:)','*c','LineWidth',2)
-                    plot3(nodePlot(1,:)',nodePlot(2,:)',nodePlot(3,:)','sr','LineWidth',2)
-                    if(~isempty(examined_nodes))
-                        plot3(examined_nodes_plot(1,:)',examined_nodes_plot(2,:)',examined_nodes_plot(3,:)','ok','LineWidth',1);
-                    end
+                    PlotEnv
                     hold off
                     disp('Pause: press Enter')
                     disp('-------------------')
@@ -382,13 +311,26 @@ if(idx>0)
                 end
             end
         end
+        
+        if(toc>30)
+            j = 0;
+        else
+            if(toc>25 && cont>=5) %definisco condizione limite per evitare soluzioni troppo costose in termini di tempo
+                j = 0;    
+            else
+                if((previous_cost-replanned_path_cost) < 0.05*previous_cost)
+                    cont = cont+1;
+                else
+                    cont = 0;
+                end
+            end
+        end  
         j = j-1;
     end
     
     for i=1:length(examined_nodes)
         examined_nodes(i).setAnalyzed(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
     end
-    
     if (success==1)
         if(verbose > 0)
             disp('replanned from node')
