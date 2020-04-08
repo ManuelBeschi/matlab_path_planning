@@ -179,7 +179,7 @@ for j = 1:1:10 %10
         time_vector = [time_vector,time]; %#ok<*AGROW>
         disp(['success: ' num2str(success) ' test n: ' num2str(j) ' coppia s-g: ' num2str(i) ' time: ' num2str(toc) ' nodes:' num2str(number_replanning) ' cost:' num2str(replanned_path_cost)]);
         
-        vector = [j i toc number_replanning replanned_path_cost];
+        vector = [j i time number_replanning replanned_path_cost];
         matrix = [matrix; vector];
         
         if(isa(replanned_path,'Path'))
