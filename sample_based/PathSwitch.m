@@ -52,7 +52,11 @@ for j = 1:length(other_paths)
             end
         end
     else
-        path2_node_vector = path2.findCloserNode(path1_node.q);  
+        path2_node_vector = path2.findCloserNode(path1_node.q); %se il nodo piu vicino è il goal, lo escludi e prendi il 2' piu vicino
+        if(eq(path2_node_vector.q,path2.connections(end).getChild.q))
+            path_support = path2.getSubpathToNode(path2.connections(end).getParent);
+            path2_node_vector = path_support.findCloserNode(path1_node.q);
+        end
     end
     
     for k=1:length(path2_node_vector)
@@ -96,7 +100,7 @@ for j = 1:length(other_paths)
                         disp(conn_cost)
                     end
                     
-                    if(conn_cost<path_cost && conn_cost<subpath1_cost) %&& ~isempty(subpath2)) %verifico sia che il costo del connecting path sia compatibile con il limite dato da diff_subpath_cost (altrimenti conviene subpath1) e verifico che il costo di questo connecting path sia minore di quelli precedenti
+                    if(conn_cost<path_cost && conn_cost<subpath1_cost && ~isempty(subpath2)) %verifico sia che il costo del connecting path sia compatibile con il limite dato da diff_subpath_cost (altrimenti conviene subpath1) e verifico che il costo di questo connecting path sia minore di quelli precedenti
                             
                         if (length(connecting_path)>1)
                             node1 = connecting_path(1).getChild;  %FACCIO QUESTI COLLEGAMENTI SOLO SE IL PATH È CONVENIENTE, ALTRIMENTI È INUTILE
@@ -117,11 +121,11 @@ for j = 1:length(other_paths)
                         path1_node_fake.delete;
                         path2_node_fake.delete;
                         
-                        if(isempty(subpath2)) %HO AGGIUNTO QUESTA PARTE ANZICHE ESCLUDERE NELL'IF SOPRA
-                            new_path=Path(connecting_path);
-                        else
+%                         if(isempty(subpath2)) %HO AGGIUNTO QUESTA PARTE ANZICHE ESCLUDERE NELL'IF SOPRA
+%                             new_path=Path(connecting_path);
+%                         else
                             new_path=Path([connecting_path subpath2]);
-                        end
+%                         end
                         path_cost = conn_cost;
                         success = 1;
                         if(nargout>3)
