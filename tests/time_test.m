@@ -3,7 +3,7 @@ clearvars; close all; clc; warning off;
 matrix = [];
 
 succ_node = 1;
-informed = 2;
+informed = 0;
 
 connection_max_length=0.5;
 obstacle='snowman';
@@ -65,8 +65,8 @@ for j = 1:1:10 %10
     close all
     
     folder_name = ['test_' num2str(j) '_succNode_informed_' num2str(succ_node) num2str(informed)];
-    mkdir('/home/cesare/TESI/prova3/',folder_name);
-    folder_path = ['/home/cesare/TESI/prova3/' folder_name];
+    mkdir('/home/cesare/TESI/test_31_3_2020/',folder_name);
+    folder_path = ['/home/cesare/TESI/test_31_3_2020/' folder_name];
    
     time = [];
     time_vector = [];
@@ -159,6 +159,8 @@ for j = 1:1:10 %10
         idx_replan=round(length(path1.connections)*0.5);
         child=current_path.connections(:,idx_replan).getChild.q;
         parent=current_path.connections(:,idx_replan).getParent.q;
+%         child=current_path.connections(end).getChild.q;
+%         parent=current_path.connections(end).getParent.q;
         q = (child+parent)/2;
         %current_path.connections(:,idx_replan).setCost(inf);
         
@@ -170,15 +172,9 @@ for j = 1:1:10 %10
         %  plot3(path2_nodes(1,:)',path2_nodes(2,:)',path2_nodes(3,:)','*r','LineWidth',0.5)
         %  plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','*g','LineWidth',0.5)
         
-        profile on
         tic
         [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose);
         time = toc;
-        if(toc>40)
-            profile viewer;
-            pause;
-        end
-        profile off
         
         time_vector = [time_vector,time]; %#ok<*AGROW>
         disp(['success: ' num2str(success) ' test n: ' num2str(j) ' coppia s-g: ' num2str(i) ' time: ' num2str(toc) ' nodes:' num2str(number_replanning) ' cost:' num2str(replanned_path_cost)]);

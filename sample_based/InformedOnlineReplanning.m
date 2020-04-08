@@ -52,6 +52,8 @@ if(verbose > 0)
     
     if(verbose == 2)
         examined_nodes_plot = [];
+        start_conf = current_path.connections(1).getParent.q;
+        goal_conf = current_path.connections(end).getChild.q;     
     end
 end
 
@@ -91,7 +93,7 @@ if(idx>0)
     
     reset_other_paths = other_paths; %serve piu avantu per tornare al vettore completo 
     
-    if(current_path.connections(idx).getCost == inf)
+    if(current_path.connections(idx).getCost == inf || idx == length(current_path.connections))
         node = actual_node;
         cost_parent = metrics.cost(parent,node);
         conn_parent=Connection(parent,node,cost_parent);
@@ -158,6 +160,10 @@ if(idx>0)
             other_paths = reset_other_paths;
             if(flag_other_paths == 1) %flag_other_paths == 1 per essere sicuro che almeno una volta son riuscito a ripianificare per cui mi sono collegato ad un path..altrimenti questi calcoli non servono
                 n = length(confirmed_subpath_from_path2.connections);
+                if(n == 0)
+                    flag_other_paths = 0;
+                end
+                
                 while(n > 0)
                     if(n == 1)
                         flag_other_paths = 0;
@@ -201,7 +207,6 @@ if(idx>0)
         %verbose = 0; %ELIMINA
         
         if(solved==1)
-            number_replanning=number_replanning+1;
             if(available_nodes==1)
                 if(j>1)
                     subpath = subpath1.getSubpathToNode(path1_node_vector(j)); %path che va dal nodo più vicino a me fino al nodo da cui inizio lo switch
@@ -255,7 +260,7 @@ if(idx>0)
                 end
                 
                 if(informed==2 && available_nodes==1)   
-%                     if(toc>40) %ELIMINA
+%                     if(toc>25) %ELIMINA
 %                         verbose = 2;
 %                     else
 %                         verbose = 0;
@@ -293,7 +298,7 @@ if(idx>0)
         else
             if(available_nodes==1 && verbose>0)
                 
-%                 if(toc>40) %ELIMINA
+%                 if(toc>25) %ELIMINA
 %                     verbose = 2;
 %                 else
 %                     verbose = 0;
@@ -331,6 +336,9 @@ if(idx>0)
     for i=1:length(examined_nodes)
         examined_nodes(i).setAnalyzed(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
     end
+    
+    number_replanning = length(examined_nodes);
+    
     if (success==1)
         if(verbose > 0)
             disp('replanned from node')
@@ -352,6 +360,7 @@ end
 if(verbose == 2)
     hold on;
 end
+
 end
 
 

@@ -44,8 +44,8 @@ end
 
 if(verbose < 2)
 hold on
-plot3(start_conf(1),start_conf(2),start_conf(3),'sy','MarkerFaceColor','b','MarkerSize',5)
-plot3(goal_conf(1),goal_conf(2),goal_conf(3),'oy','MarkerFaceColor','r','MarkerSize',5)
+plot3(start_conf(1),start_conf(2),start_conf(3),'sw','MarkerFaceColor','w','MarkerSize',5)
+plot3(goal_conf(1),goal_conf(2),goal_conf(3),'ow','MarkerFaceColor','w','MarkerSize',5)
 
 axis equal
 xlabel('q1');
