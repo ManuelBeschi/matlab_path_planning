@@ -15,7 +15,7 @@ elseif strcmp(obstacle,'sphere')
 elseif strcmp(obstacle,'torus')
     checker=Torus3dCollisionChecker;
 else
-    error('invalid ostable')
+    error('invalid ostacle')
 end
 checker.init;
 

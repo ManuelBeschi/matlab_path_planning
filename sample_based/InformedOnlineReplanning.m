@@ -26,6 +26,8 @@ function [replanned_path,replanned_path_cost,success,replanned_path_vector,numbe
 %node analyzed; cyan square: last starting node for replanning; cyan path:
 %last replanned path
 
+tic
+
 replanned_path = [];
 replanned_path_vector = [];
 replanned_path_cost = inf;
@@ -72,23 +74,25 @@ if(idx>0)
     else
         actual_node = Node(q);
     end
-              
-    z = length(current_path.connections);  %Ora individuo la parte di current_path percorribile e dunque da non scartare
-    while(z>idx)  %arrivo massimo alla connessione successiva a quella attuale
-        if(current_path.connections(z).getCost == inf)
-            if(z == length(current_path.connections))
-                admissible_current_path = [];
-            else
-                admissible_current_path = current_path.getSubpathFromNode(current_path.connections(z).getChild);
-            end
-            z = 0;
-        else
-            z = z-1;
-        end
-    end
     
-    if(isa(admissible_current_path,'Path'))
-        other_paths = [admissible_current_path,other_paths];  %aggiungo ai possibili path il tratto finale con costo non infinito di current_path
+    if(current_path.cost == inf)
+        z = length(current_path.connections);  %Ora individuo la parte di current_path percorribile e dunque da non scartare
+        while(z>idx)  %arrivo massimo alla connessione successiva a quella attuale
+            if(current_path.connections(z).getCost == inf)
+                if(z == length(current_path.connections))
+                    admissible_current_path = [];
+                else
+                    admissible_current_path = current_path.getSubpathFromNode(current_path.connections(z).getChild);
+                end
+                z = 0;
+            else
+                z = z-1;
+            end
+        end
+        
+        if(isa(admissible_current_path,'Path'))
+            other_paths = [admissible_current_path,other_paths];  %aggiungo ai possibili path il tratto finale con costo non infinito di current_path
+        end
     end
     
     reset_other_paths = other_paths; %serve piu avantu per tornare al vettore completo 

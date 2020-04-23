@@ -2,7 +2,7 @@ clearvars; close all; clc; warning off;
 
 matrix = [];
 
-succ_node = 1;
+succ_node = 0;
 informed = 0;
 
 connection_max_length=0.5;
@@ -61,12 +61,14 @@ goal20 = [1,1,1]';
 start_conf = [start1,start2,start3,start4,start5,start6,start7,start8,start9,start10,start11,start12,start13,start14,start15,start16,start17,start18,start19,start20];
 goal_conf = [goal1,goal2,goal3,goal4,goal5,goal6,goal7,goal8,goal9,goal10,goal11,goal12,goal13,goal14,goal15,goal16,goal17,goal18,goal19,goal20];
 
+folder = ['test_' num2str(succ_node) num2str(informed) '/'];
+
 for j = 1:1:10 %10
     close all
     
     folder_name = ['test_' num2str(j) '_succNode_informed_' num2str(succ_node) num2str(informed)];
-    mkdir('/home/cesare/TESI/test_31_3_2020/',folder_name);
-    folder_path = ['/home/cesare/TESI/test_31_3_2020/' folder_name];
+    mkdir(['/home/cesare/TESI/test_18_4_2020/' folder],folder_name);
+    folder_path = ['/home/cesare/TESI/test_18_4_2020/' folder folder_name];
    
     time = [];
     time_vector = [];
