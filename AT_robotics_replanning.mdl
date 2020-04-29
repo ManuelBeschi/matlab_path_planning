@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.157"
+    ComputedModelVersion    "1.166"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -19,7 +19,7 @@ Model {
     IsArchitectureModel	    0
     IsAUTOSARArchitectureModel 0
     NumParameterArguments   0
-    NumExternalFileReferences 90
+    NumExternalFileReferences 92
     ExternalFileReference {
       Reference		      "sm_lib/Body Elements/Cylindrical Solid"
       Path		      "AT_robotics_replanning/ATRobotics1/Basamento/Base"
@@ -234,12 +234,6 @@ Model {
       Reference		      "sm_lib/Body Elements/Cylindrical Solid"
       Path		      "AT_robotics_replanning/ATRobotics1/l1y"
       SID		      "231"
-      Type		      "LIBRARY_BLOCK"
-    }
-    ExternalFileReference {
-      Reference		      "sm_lib/Body Elements/Cylindrical Solid"
-      Path		      "AT_robotics_replanning/ATRobotics1/l1z"
-      SID		      "230"
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
@@ -472,12 +466,6 @@ Model {
     }
     ExternalFileReference {
       Reference		      "sm_lib/Body Elements/Cylindrical Solid"
-      Path		      "AT_robotics_replanning/ATRobotics2/l1z"
-      SID		      "686"
-      Type		      "LIBRARY_BLOCK"
-    }
-    ExternalFileReference {
-      Reference		      "sm_lib/Body Elements/Cylindrical Solid"
       Path		      "AT_robotics_replanning/ATRobotics2/l2"
       SID		      "687"
       Type		      "LIBRARY_BLOCK"
@@ -489,15 +477,27 @@ Model {
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
+      Reference		      "sm_lib/Body Elements/Brick Solid"
+      Path		      "AT_robotics_replanning/Brick Solid"
+      SID		      "711"
+      Type		      "LIBRARY_BLOCK"
+    }
+    ExternalFileReference {
       Reference		      "sm_lib/Utilities/Mechanism\nConfiguration"
       Path		      "AT_robotics_replanning/Mechanism Configuration1"
       SID		      "270"
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
-      Reference		      "sm_lib/Utilities/Mechanism\nConfiguration"
-      Path		      "AT_robotics_replanning/Mechanism Configuration2"
-      SID		      "703"
+      Reference		      "sm_lib/Frames and\nTransforms/Rigid\nTransform"
+      Path		      "AT_robotics_replanning/Rigid Transform"
+      SID		      "714"
+      Type		      "LIBRARY_BLOCK"
+    }
+    ExternalFileReference {
+      Reference		      "sm_lib/Frames and\nTransforms/Rigid\nTransform"
+      Path		      "AT_robotics_replanning/Rigid Transform1"
+      SID		      "723"
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
@@ -537,27 +537,39 @@ Model {
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
+      Reference		      "nesl_utility/Simulink-PS\nConverter"
+      Path		      "AT_robotics_replanning/Simulink-PS Converter7"
+      SID		      "716"
+      Type		      "LIBRARY_BLOCK"
+    }
+    ExternalFileReference {
+      Reference		      "nesl_utility/Simulink-PS\nConverter"
+      Path		      "AT_robotics_replanning/Simulink-PS Converter8"
+      SID		      "717"
+      Type		      "LIBRARY_BLOCK"
+    }
+    ExternalFileReference {
+      Reference		      "nesl_utility/Simulink-PS\nConverter"
+      Path		      "AT_robotics_replanning/Simulink-PS Converter9"
+      SID		      "718"
+      Type		      "LIBRARY_BLOCK"
+    }
+    ExternalFileReference {
       Reference		      "nesl_utility/Solver\nConfiguration"
       Path		      "AT_robotics_replanning/Solver Configuration1"
       SID		      "292"
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
-      Reference		      "nesl_utility/Solver\nConfiguration"
-      Path		      "AT_robotics_replanning/Solver Configuration2"
-      SID		      "707"
+      Reference		      "sm_lib/Body Elements/Variable Mass/Variable\nCylindrical Solid"
+      Path		      "AT_robotics_replanning/Variable Cylindrical Solid"
+      SID		      "713"
       Type		      "LIBRARY_BLOCK"
     }
     ExternalFileReference {
       Reference		      "sm_lib/Frames and\nTransforms/World Frame"
       Path		      "AT_robotics_replanning/World Frame1"
       SID		      "393"
-      Type		      "LIBRARY_BLOCK"
-    }
-    ExternalFileReference {
-      Reference		      "sm_lib/Frames and\nTransforms/World Frame"
-      Path		      "AT_robotics_replanning/World Frame2"
-      SID		      "708"
       Type		      "LIBRARY_BLOCK"
     }
     OrderedModelArguments   1
@@ -620,7 +632,7 @@ Model {
       }
       Array {
 	Type			"Simulink.EditorInfo"
-	Dimension		5
+	Dimension		6
 	Object {
 	  $ObjectID		  6
 	  IsActive		  [1]
@@ -628,16 +640,16 @@ Model {
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
 	  Extents		  [1882.0, 821.0]
-	  ZoomFactor		  [0.8]
-	  Offset		  [1375.9326001318868, 1129.2248553864385]
-	  SceneRectInView	  [1375.9326001318868, 1129.2248553864385, 2352.5, 1026.25]
+	  ZoomFactor		  [1.0]
+	  Offset		  [884.2440373507975, 1122.7439656586864]
+	  SceneRectInView	  [884.2440373507975, 1122.7439656586864, 1882.0, 821.0]
 	}
 	Object {
 	  $ObjectID		  7
 	  IsActive		  [0]
 	  IsTabbed		  [0]
 	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "659"
+	  LoadSaveID		  "201"
 	  Extents		  [1882.0, 821.0]
 	  ZoomFactor		  [1.0]
 	  Offset		  [-864.8516125, -314.50005]
@@ -648,22 +660,22 @@ Model {
 	  IsActive		  [0]
 	  IsTabbed		  [0]
 	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "636"
+	  LoadSaveID		  "175"
 	  Extents		  [1882.0, 821.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [-630.21428571428555, -56.495288095237868]
-	  SceneRectInView	  [-630.21428571428555, -56.495288095237868, 1882.0, 821.0]
+	  ZoomFactor		  [1.5]
+	  Offset		  [331.64246031746359, -196.42939756478015]
+	  SceneRectInView	  [331.64246031746359, -196.42939756478015, 1254.6666666666667, 547.33333333333337]
 	}
 	Object {
 	  $ObjectID		  9
 	  IsActive		  [0]
 	  IsTabbed		  [0]
 	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "175"
+	  LoadSaveID		  "659"
 	  Extents		  [1882.0, 821.0]
-	  ZoomFactor		  [0.8]
-	  Offset		  [-239.91706349206015, -397.44130232668522]
-	  SceneRectInView	  [-239.91706349206015, -397.44130232668522, 2352.5, 1026.25]
+	  ZoomFactor		  [1.0]
+	  Offset		  [-864.8516125, -314.50005]
+	  SceneRectInView	  [-864.8516125, -314.50005, 1882.0, 821.0]
 	}
 	Object {
 	  $ObjectID		  10
@@ -676,11 +688,22 @@ Model {
 	  Offset		  [-243.89322916666686, -327.16666666666634]
 	  SceneRectInView	  [-243.89322916666686, -327.16666666666634, 1882.0, 821.0]
 	}
+	Object {
+	  $ObjectID		  11
+	  IsActive		  [0]
+	  IsTabbed		  [0]
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "636"
+	  Extents		  [1882.0, 821.0]
+	  ZoomFactor		  [1.0]
+	  Offset		  [-630.21428571428555, -56.495288095237868]
+	  SceneRectInView	  [-630.21428571428555, -56.495288095237868, 1882.0, 821.0]
+	}
 	PropName		"EditorsInfo"
       }
       Object {
 	$PropName		"DockComponentsInfo"
-	$ObjectID		11
+	$ObjectID		12
 	$ClassName		"Simulink.DockComponentInfo"
 	Type			"GLUE2:PropertyInspector"
 	ID			"Property Inspector"
@@ -708,8 +731,8 @@ Model {
     BDUuid		    "456d48de-369b-418f-851b-936441726d0b"
   }
   HideAutomaticNames	  on
-  PhysicalModelingChecksum "715726870"
-  PhysicalModelingParameterChecksum "335338114"
+  PhysicalModelingChecksum "212469802"
+  PhysicalModelingParameterChecksum "3340666214"
   PhysicalModelingProducts "SimMechanics|Simscape"
   Created		  "Mon May 13 19:39:12 2019"
   Creator		  "30cec"
@@ -717,9 +740,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "cesare"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Apr 25 20:13:40 2020"
-  RTWModifiedTimeStamp	  509746419
-  ModelVersionFormat	  "1.%<AutoIncrement:157>"
+  LastModifiedDate	  "Wed Apr 29 19:37:34 2020"
+  RTWModifiedTimeStamp	  510089846
+  ModelVersionFormat	  "1.%<AutoIncrement:166>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "disabled"
@@ -779,7 +802,7 @@ Model {
   TryForcingSFcnDF	  off
   Object {
     $PropName		    "DataLoggingOverride"
-    $ObjectID		    12
+    $ObjectID		    13
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "AT_robotics_replanning"
     overrideMode_	    [0.0]
@@ -824,7 +847,7 @@ Model {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      13
+      $ObjectID		      14
       Version		      "19.1.1"
       DisabledProps	      []
       Description	      ""
@@ -832,7 +855,7 @@ Model {
 	Type			"Handle"
 	Dimension		11
 	Simulink.SolverCC {
-	  $ObjectID		  14
+	  $ObjectID		  15
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  ""
@@ -875,7 +898,7 @@ Model {
 	  SolverOrder		  3
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  15
+	  $ObjectID		  16
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  ""
@@ -917,7 +940,7 @@ Model {
 	  LoggingIntervals	  "[-inf, inf]"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  16
+	  $ObjectID		  17
 	  Version		  "19.1.1"
 	  Array {
 	    Type		    "Cell"
@@ -990,7 +1013,7 @@ Model {
 	  EfficientTunableParamExpr off
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  17
+	  $ObjectID		  18
 	  Version		  "19.1.1"
 	  Array {
 	    Type		    "Cell"
@@ -1112,7 +1135,7 @@ Model {
 	  ArithmeticOperatorsInVariantConditions "warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  18
+	  $ObjectID		  19
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  ""
@@ -1162,7 +1185,7 @@ Model {
 	  HardwareBoardFeatureSet "EmbeddedCoderHSP"
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  19
+	  $ObjectID		  20
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  ""
@@ -1182,7 +1205,7 @@ Model {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  20
+	  $ObjectID		  21
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  ""
@@ -1217,7 +1240,7 @@ Model {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  21
+	  $ObjectID		  22
 	  Version		  "19.1.1"
 	  Array {
 	    Type		    "Cell"
@@ -1306,7 +1329,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      22
+	      $ObjectID		      23
 	      Version		      "19.1.1"
 	      Array {
 		Type			"Cell"
@@ -1397,7 +1420,7 @@ Model {
 	    }
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      23
+	      $ObjectID		      24
 	      Version		      "19.1.1"
 	      Array {
 		Type			"Cell"
@@ -1505,7 +1528,7 @@ Model {
 	  }
 	}
 	SlCovCC.ConfigComp {
-	  $ObjectID		  24
+	  $ObjectID		  25
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  "Simulink Coverage Configuration Component"
@@ -1546,7 +1569,7 @@ Model {
 	  CovMcdcMode		  "Masking"
 	}
 	hdlcoderui.hdlcc {
-	  $ObjectID		  25
+	  $ObjectID		  26
 	  Version		  "19.1.1"
 	  DisabledProps		  []
 	  Description		  "HDL Coder custom configuration component"
@@ -1561,7 +1584,7 @@ Model {
 	  HDLCActiveTab		  "0"
 	}
 	SSC.SimscapeCC {
-	  $ObjectID		  26
+	  $ObjectID		  27
 	  Version		  "19.1.0"
 	  Array {
 	    Type		    "Cell"
@@ -1574,7 +1597,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    MECH.SimMechanicsCC {
-	      $ObjectID		      27
+	      $ObjectID		      28
 	      Version		      "19.1.1"
 	      DisabledProps	      []
 	      Description	      ""
@@ -1612,7 +1635,7 @@ Model {
 	      VisConfigFile	      ""
 	    }
 	    simmechanics.ConfigurationSet {
-	      $ObjectID		      28
+	      $ObjectID		      29
 	      Version		      "19.1.1"
 	      DisabledProps	      []
 	      Description	      "SimMechanics 2G"
@@ -1620,7 +1643,7 @@ Model {
 		Type			"Handle"
 		Dimension		2
 		simmechanics.DiagnosticsConfigSet {
-		  $ObjectID		  29
+		  $ObjectID		  30
 		  Version		  "19.1.1"
 		  DisabledProps		  []
 		  Description		  "Diagnostics"
@@ -1637,7 +1660,7 @@ Model {
 		  SimMechanicsJointTargetOverSpecification "error"
 		}
 		simmechanics.ExplorerConfigSet {
-		  $ObjectID		  30
+		  $ObjectID		  31
 		  Version		  "19.1.1"
 		  DisabledProps		  []
 		  Description		  "Explorer"
@@ -1695,11 +1718,11 @@ Model {
   }
   Simulink.ConfigSet {
     $PropName		    "ActiveConfigurationSet"
-    $ObjectID		    13
+    $ObjectID		    14
   }
   Object {
     $PropName		    "DataTransfer"
-    $ObjectID		    31
+    $ObjectID		    32
     $ClassName		    "Simulink.GlobalDataTransfer"
     DefaultTransitionBetweenSyncTasks "Ensure deterministic transfer (maximum delay)"
     DefaultTransitionBetweenAsyncTasks "Ensure data integrity only"
@@ -1765,6 +1788,30 @@ Model {
   }
   BlockParameterDefaults {
     Block {
+      BlockType		      Clock
+      DisplayTime	      off
+      Decimation	      "10"
+    }
+    Block {
+      BlockType		      Constant
+      Value		      "1"
+      VectorParams1D	      on
+      SamplingMode	      "Sample based"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Inherit from 'Constant value'"
+      LockScale		      off
+      SampleTime	      "inf"
+      FramePeriod	      "inf"
+      PreserveConstantTs      off
+    }
+    Block {
+      BlockType		      Demux
+      Outputs		      "4"
+      DisplayOption	      "none"
+      BusSelectionMode	      off
+    }
+    Block {
       BlockType		      FromWorkspace
       VariableName	      "simulink_input"
       OutDataTypeStr	      "Inherit: auto"
@@ -1774,8 +1821,57 @@ Model {
       OutputAfterFinalValue   "Extrapolation"
     }
     Block {
+      BlockType		      Inport
+      Port		      "1"
+      OutputFunctionCall      off
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
+      BusOutputAsStruct	      off
+      Unit		      "inherit"
+      PortDimensions	      "-1"
+      VarSizeSig	      "Inherit"
+      SampleTime	      "-1"
+      SignalType	      "auto"
+      SamplingMode	      "auto"
+      LatchByDelayingOutsideSignal off
+      LatchInputForFeedbackSignals off
+      Interpolate	      on
+    }
+    Block {
+      BlockType		      Outport
+      Port		      "1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
+      BusOutputAsStruct	      off
+      Unit		      "inherit"
+      PortDimensions	      "-1"
+      VarSizeSig	      "Inherit"
+      SampleTime	      "-1"
+      SignalType	      "auto"
+      SamplingMode	      "auto"
+      EnsureOutportIsVirtual  off
+      SourceOfInitialOutputValue "Dialog"
+      OutputWhenDisabled      "held"
+      InitialOutput	      "[]"
+      MustResolveToSignalObject	off
+      OutputWhenUnConnected   off
+      OutputWhenUnconnectedValue "0"
+      VectorParamsAs1DForOutWhenUnconnected on
+    }
+    Block {
       BlockType		      PMIOPort
       Port		      "1"
+    }
+    Block {
+      BlockType		      S-Function
+      FunctionName	      "system"
+      SFunctionModules	      "''"
+      PortCounts	      "[]"
+      MultiThreadCoSim	      "auto"
     }
     Block {
       BlockType		      SubSystem
@@ -1817,6 +1913,9 @@ Model {
       AutoFrameSizeCalculation off
       IsWebBlockPanel	      off
     }
+    Block {
+      BlockType		      Terminator
+    }
   }
   System {
     Name		    "AT_robotics_replanning"
@@ -1835,9 +1934,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "80"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "710"
+    SIDHighWatermark	    "726"
     SimulinkSubDomain	    "Simulink"
     Block {
       BlockType		      SubSystem
@@ -1849,7 +1948,7 @@ Model {
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		32
+	$ObjectID		33
 	$ClassName		"Simulink.Mask"
 	Display			"\n          "
 	RunInitForIconRedraw	"off"
@@ -1857,18 +1956,11 @@ Model {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  8
 	  Object {
-	    $ObjectID		    33
+	    $ObjectID		    34
 	    Type		    "edit"
 	    Name		    "l0"
 	    Prompt		    "l0 [m]"
 	    Value		    "l0"
-	  }
-	  Object {
-	    $ObjectID		    34
-	    Type		    "edit"
-	    Name		    "l1z"
-	    Prompt		    "l1z [m]"
-	    Value		    "l1z"
 	  }
 	  Object {
 	    $ObjectID		    35
@@ -1896,14 +1988,14 @@ Model {
 	    Type		    "edit"
 	    Name		    "m_gripper"
 	    Prompt		    "massa gripper [kg]"
-	    Value		    "m_gripper"
+	    Value		    "0"
 	  }
 	  Object {
 	    $ObjectID		    39
 	    Type		    "edit"
 	    Name		    "m_oggetto"
 	    Prompt		    "massa oggetto [kg]"
-	    Value		    "m_oggetto"
+	    Value		    "0"
 	  }
 	  Object {
 	    $ObjectID		    40
@@ -1912,17 +2004,24 @@ Model {
 	    Prompt		    "RGB"
 	    Value		    "[0.2 0.2 1.0]"
 	  }
+	  Object {
+	    $ObjectID		    41
+	    Type		    "edit"
+	    Name		    "radius"
+	    Prompt		    "radius"
+	    Value		    "radius"
+	  }
 	  PropName		  "Parameters"
 	}
 	Array {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    41
+	    $ObjectID		    42
 	    Prompt		    "ATRobotics"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      42
+	      $ObjectID		      43
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "Robot Seriale a 3 d.o.f. Ingegneri Tonola e Antonini"
 	      Name		      "DescTextVar"
@@ -1930,20 +2029,15 @@ Model {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    43
+	    $ObjectID		    44
 	    Prompt		    "Simulink:studio:ToolBarParametersMenu"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      8
 	      Object {
-		$ObjectID		44
-		PromptLocation		"left"
-		Name			"l0"
-	      }
-	      Object {
 		$ObjectID		45
 		PromptLocation		"left"
-		Name			"l1z"
+		Name			"l0"
 	      }
 	      Object {
 		$ObjectID		46
@@ -1975,6 +2069,11 @@ Model {
 		PromptLocation		"left"
 		Name			"rgb"
 	      }
+	      Object {
+		$ObjectID		52
+		PromptLocation		"left"
+		Name			"radius"
+	      }
 	      PropName		      "DialogControls"
 	    }
 	    Name		    "ParameterGroupVar"
@@ -1999,7 +2098,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"150"
 	SimulinkSubDomain	"Simulink"
 	Block {
 	  BlockType		  SubSystem
@@ -3696,13 +3795,13 @@ Model {
 	  RequestExecContextInheritance	off
 	  Object {
 	    $PropName		    "MaskObject"
-	    $ObjectID		    52
+	    $ObjectID		    53
 	    $ClassName		    "Simulink.Mask"
 	    Display		    "image('Gripper.jpeg');"
 	  }
 	  System {
 	    Name		    "Gripper"
-	    Location		    [-8, -8, 1374, 736]
+	    Location		    [0, 27, 1920, 1080]
 	    Open		    off
 	    PortBlocksUseCompactNotation off
 	    SetExecutionDomain	    off
@@ -3771,8 +3870,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -3848,8 +3947,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -3910,8 +4009,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -3979,8 +4078,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -4070,231 +4169,6 @@ Model {
 	  }
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "Gripper1_puntale"
-	  SID			  "208"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [1290, 84, 1350, 126]
-	  ZOrder		  272
-	  Commented		  "on"
-	  RequestExecContextInheritance	off
-	  Object {
-	    $PropName		    "MaskObject"
-	    $ObjectID		    53
-	    $ClassName		    "Simulink.Mask"
-	  }
-	  System {
-	    Name		    "Gripper1_puntale"
-	    Location		    [-8, -8, 1374, 736]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    SetExecutionDomain	    off
-	    ExecutionDomainType	    "Deduce"
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SimulinkSubDomain	    "Simulink"
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Interfaccia"
-	      SID		      "209"
-	      Ports		      [0, 0, 0, 0, 0, 1, 1]
-	      Position		      [-10, 15, 30, 55]
-	      ZOrder		      63
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Cylindrical Solid"
-	      SourceType	      "Cylindrical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Density"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[0.2 0.2 0.2]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      CylinderLength	      "0.015"
-	      CylinderLengthUnits     "m"
-	      CylinderLength_conf     "compiletime"
-	      CylinderRadius	      "0.06"
-	      CylinderRadiusUnits     "m"
-	      CylinderRadius_conf     "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "off"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedFrames	      "<Frames><Frame><Id>Frame1</Id><Value><Name>F1</Name><Origin><Source>GeometricFeature</S"
-	      "ource><FeatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Y</DefinedDirection><So"
-	      "urce>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Seco"
-	      "ndaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDire"
-	      "ction><FeatureName></FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame2</Id><Value><Name>F2</Name><O"
-	      "rigin><Source>GeometricFeature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDire"
-	      "ction>+Y</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></F"
-	      "eatureName></PrimaryAxis><SecondaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><"
-	      "SourceDirection>+X</SourceDirection><FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		2
-		PortNumber		1
-		Position		[-14, 35]
-	      }
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[34, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Puntale"
-	      SID		      "210"
-	      Ports		      [0, 0, 0, 0, 0, 1, 1]
-	      Position		      [75, 15, 115, 55]
-	      ZOrder		      65
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Cylindrical Solid"
-	      SourceType	      "Cylindrical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Density"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[0.2 0.2 0.2]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      CylinderLength	      "0.08"
-	      CylinderLengthUnits     "m"
-	      CylinderLength_conf     "compiletime"
-	      CylinderRadius	      "0.01"
-	      CylinderRadiusUnits     "m"
-	      CylinderRadius_conf     "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "off"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedFrames	      "<Frames><Frame><Id>Frame1</Id><Value><Name>F1</Name><Origin><Source>GeometricFeature</S"
-	      "ource><FeatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Y</DefinedDirection><So"
-	      "urce>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Seco"
-	      "ndaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDire"
-	      "ction><FeatureName></FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame2</Id><Value><Name>F2</Name><O"
-	      "rigin><Source>GeometricFeature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDire"
-	      "ction>+Y</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></F"
-	      "eatureName></PrimaryAxis><SecondaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><"
-	      "SourceDirection>+X</SourceDirection><FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		2
-		PortNumber		1
-		Position		[71, 35]
-	      }
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[119, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn1"
-	      SID		      "211"
-	      Position		      [-80, 28, -50, 42]
-	      ZOrder		      60
-	      Side		      "Left"
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn2"
-	      SID		      "212"
-	      Position		      [165, 28, 195, 42]
-	      ZOrder		      67
-	      BlockMirror	      on
-	      Port		      "2"
-	      Side		      "Right"
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      1
-	      SrcBlock		      "Puntale"
-	      SrcPort		      LConn1
-	      DstBlock		      "Interfaccia"
-	      DstPort		      RConn1
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      2
-	      SrcBlock		      "Interfaccia"
-	      SrcPort		      LConn1
-	      DstBlock		      "Conn1"
-	      DstPort		      RConn1
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      3
-	      SrcBlock		      "Conn2"
-	      SrcPort		      RConn1
-	      DstBlock		      "Puntale"
-	      DstPort		      RConn1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "Protezione giunto 1"
 	  SID			  "213"
@@ -4363,7 +4237,7 @@ Model {
 	  Name			  "Protezione giunto 2"
 	  SID			  "214"
 	  Ports			  [0, 0, 0, 0, 0, 0, 1]
-	  Position		  [340, -80, 380, -40]
+	  Position		  [285, -80, 325, -40]
 	  ZOrder		  52
 	  BlockRotation		  270
 	  BlockMirror		  on
@@ -4419,7 +4293,7 @@ Model {
 	    PortType		    3
 	    PortNumber		    1
 	    Rotation		    -1.5707963267948966
-	    Position		    [360, -36]
+	    Position		    [305, -36]
 	  }
 	}
 	Block {
@@ -4548,137 +4422,6 @@ Model {
 	    PortNumber		    1
 	    Rotation		    -1.5707963267948966
 	    Position		    [830, -36]
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "Punto_rosso\n"
-	  SID			  "217"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [1290, 149, 1350, 191]
-	  ZOrder		  274
-	  Commented		  "on"
-	  RequestExecContextInheritance	off
-	  Object {
-	    $PropName		    "MaskObject"
-	    $ObjectID		    54
-	    $ClassName		    "Simulink.Mask"
-	    Display		    "image('Gripper.jpeg');"
-	  }
-	  System {
-	    Name		    "Punto_rosso\n"
-	    Location		    [-7, -7, 1543, 831]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    SetExecutionDomain	    off
-	    ExecutionDomainType	    "Deduce"
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SimulinkSubDomain	    "Simulink"
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Ditosx1"
-	      SID		      "218"
-	      Ports		      [0, 0, 0, 0, 0, 0, 1]
-	      Position		      [0, 15, 40, 55]
-	      ZOrder		      65
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Spherical Solid"
-	      SourceType	      "Spherical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Mass"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[1.0 0.0 0.0]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "on"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedExposedGeometries "<ExposedGeometries/>"
-	      SerializedFrames	      "<Frames/>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "PointMass"
-	      Mass		      "m_gripper"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      SphereRadius	      "0.01"
-	      SphereRadiusUnits	      "m"
-	      SphereRadius_conf	      "compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[44, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn1"
-	      SID		      "219"
-	      Position		      [-80, 28, -50, 42]
-	      ZOrder		      60
-	      Side		      "Left"
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Connection Port"
-	      SID		      "220"
-	      Position		      [80, 28, 110, 42]
-	      ZOrder		      66
-	      BlockMirror	      on
-	      Port		      "2"
-	      Side		      "Right"
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      1
-	      SrcBlock		      "Conn1"
-	      SrcPort		      RConn1
-	      Points		      [10, 0; 0, -34; 80, 0; 0, 34]
-	      Branch {
-		ConnectType		"DEST_DEST"
-		SrcBlock		"Connection Port"
-		SrcPort			RConn1
-		Points			[-10, 0]
-	      }
-	      Branch {
-		ConnectType		"DEST_SRC"
-		DstBlock		"Ditosx1"
-		DstPort			RConn1
-	      }
-	    }
 	  }
 	}
 	Block {
@@ -5118,7 +4861,7 @@ Model {
 	  CylinderLength	  "l0"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "2700"
@@ -5141,8 +4884,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l0*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -5192,7 +4935,7 @@ Model {
 	  CylinderLength	  "l1y"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -5215,8 +4958,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l1y*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -5245,80 +4988,6 @@ Model {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "l1z"
-	  SID			  "230"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [260, 40, 310, 80]
-	  ZOrder		  36
-	  LibraryVersion	  "7.01"
-	  SourceBlock		  "sm_lib/Body Elements/Cylindrical Solid"
-	  SourceType		  "Cylindrical Solid"
-	  SourceProductBaseCode	  "MS"
-	  LogSimulationData	  off
-	  GraphicAmbientColor	  "[0.15 0.15 0.15 1.0]"
-	  GraphicAmbientColor_conf "compiletime"
-	  BasedOnType		  "Mass"
-	  CenterOfMass		  "[0 0 0]"
-	  CenterOfMassUnits	  "m"
-	  CenterOfMass_conf	  "compiletime"
-	  GraphicDiffuseColor	  "rgb"
-	  GraphicDiffuseColor_conf "compiletime"
-	  CylinderLength	  "l1z"
-	  CylinderLengthUnits	  "m"
-	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
-	  CylinderRadiusUnits	  "m"
-	  CylinderRadius_conf	  "compiletime"
-	  Density		  "1000"
-	  DensityUnits		  "kg/m^3"
-	  Density_conf		  "compiletime"
-	  DoExposeReferenceFrame  "off"
-	  GraphicEmissiveColor	  "[0.0 0.0 0.0 1.0]"
-	  GraphicEmissiveColor_conf "compiletime"
-	  ExportEntireGeometry	  "off"
-	  SerializedFrames	  "<Frames><Frame><Id>Frame2</Id><Value><Name>F0</Name><Origin><Source>GeometricFeature</Source><F"
-	  "eatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Z</DefinedDirection><Source>Referen"
-	  "ceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><SecondaryAxis><Defin"
-	  "edDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDirection><FeatureName><"
-	  "/FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame3</Id><Value><Name>F1</Name><Origin><Source>GeometricF"
-	  "eature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Z</DefinedDirection><"
-	  "Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Second"
-	  "aryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDirection>"
-	  "<FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	  MarkerShape		  "Sphere"
-	  MarkerSize		  "10"
-	  MarkerSize_conf	  "compiletime"
-	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l1z*10"
-	  MassUnits		  "kg"
-	  Mass_conf		  "compiletime"
-	  MomentsOfInertia	  "[1 1 1]"
-	  MomentsOfInertiaUnits	  "kg*m^2"
-	  MomentsOfInertia_conf	  "compiletime"
-	  GraphicOpacity	  "1.0"
-	  GraphicOpacity_conf	  "compiletime"
-	  ProductsOfInertia	  "[1 1 1]"
-	  ProductsOfInertiaUnits  "kg*m^2"
-	  ProductsOfInertia_conf  "compiletime"
-	  GraphicShininess	  "75"
-	  GraphicShininess_conf	  "compiletime"
-	  GraphicSpecularColor	  "[0.5 0.5 0.5 1.0]"
-	  GraphicSpecularColor_conf "compiletime"
-	  GraphicVisPropType	  "SimpleVisualProperties"
-	  Port {
-	    PortType		    2
-	    PortNumber		    1
-	    Position		    [256, 60]
-	  }
-	  Port {
-	    PortType		    3
-	    PortNumber		    1
-	    Position		    [314, 60]
-	  }
-	}
-	Block {
-	  BlockType		  Reference
 	  Name			  "l2"
 	  SID			  "232"
 	  Ports			  [0, 0, 0, 0, 0, 1, 1]
@@ -5340,7 +5009,7 @@ Model {
 	  CylinderLength	  "l2"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -5363,8 +5032,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l2*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -5414,7 +5083,7 @@ Model {
 	  CylinderLength	  "l3"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -5438,7 +5107,7 @@ Model {
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
 	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l3*10"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -5512,11 +5181,21 @@ Model {
 	}
 	Line {
 	  LineType		  "Connection"
-	  ZOrder		  1
-	  SrcBlock		  "l1z"
+	  ZOrder		  5
+	  SrcBlock		  "l1y"
 	  SrcPort		  LConn1
-	  DstBlock		  "alpha"
-	  DstPort		  RConn1
+	  Points		  [-55, 0]
+	  Branch {
+	    ConnectType		    "DEST_DEST"
+	    SrcBlock		    "Protezione giunto 2"
+	    SrcPort		    RConn1
+	    Points		    [0, 85]
+	  }
+	  Branch {
+	    ConnectType		    "DEST_SRC"
+	    DstBlock		    "alpha"
+	    DstPort		    RConn1
+	  }
 	}
 	Line {
 	  LineType		  "Connection"
@@ -5534,24 +5213,6 @@ Model {
 	    ConnectType		    "DEST_SRC"
 	    DstBlock		    "alpha"
 	    DstPort		    LConn1
-	  }
-	}
-	Line {
-	  LineType		  "Connection"
-	  ZOrder		  5
-	  SrcBlock		  "l1y"
-	  SrcPort		  LConn1
-	  Points		  [0, 0]
-	  Branch {
-	    ConnectType		    "DEST_DEST"
-	    SrcBlock		    "Protezione giunto 2"
-	    SrcPort		    RConn1
-	    Points		    [0, 85]
-	  }
-	  Branch {
-	    ConnectType		    "DEST_SRC"
-	    DstBlock		    "l1z"
-	    DstPort		    RConn1
 	  }
 	}
 	Line {
@@ -5687,12 +5348,12 @@ Model {
       Name		      "ATRobotics2"
       SID		      "635"
       Ports		      [0, 0, 0, 0, 0, 4, 1]
-      Position		      [2710, 1196, 2980, 1499]
+      Position		      [2415, 1186, 2685, 1489]
       ZOrder		      514
       RequestExecContextInheritance off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		55
+	$ObjectID		54
 	$ClassName		"Simulink.Mask"
 	Display			"\n          "
 	RunInitForIconRedraw	"off"
@@ -5700,60 +5361,60 @@ Model {
 	  Type			  "Simulink.MaskParameter"
 	  Dimension		  8
 	  Object {
-	    $ObjectID		    56
+	    $ObjectID		    55
 	    Type		    "edit"
 	    Name		    "l0"
 	    Prompt		    "l0 [m]"
 	    Value		    "l0"
 	  }
 	  Object {
-	    $ObjectID		    57
-	    Type		    "edit"
-	    Name		    "l1z"
-	    Prompt		    "l1z [m]"
-	    Value		    "l1z"
-	  }
-	  Object {
-	    $ObjectID		    58
+	    $ObjectID		    56
 	    Type		    "edit"
 	    Name		    "l1y"
 	    Prompt		    "l1y [m]"
 	    Value		    "l1y"
 	  }
 	  Object {
-	    $ObjectID		    59
+	    $ObjectID		    57
 	    Type		    "edit"
 	    Name		    "l2"
 	    Prompt		    "l2 [m]"
 	    Value		    "l2"
 	  }
 	  Object {
-	    $ObjectID		    60
+	    $ObjectID		    58
 	    Type		    "edit"
 	    Name		    "l3"
 	    Prompt		    "l3 [m]"
 	    Value		    "l3"
 	  }
 	  Object {
-	    $ObjectID		    61
+	    $ObjectID		    59
 	    Type		    "edit"
 	    Name		    "m_gripper"
 	    Prompt		    "massa gripper [kg]"
-	    Value		    "m_gripper"
+	    Value		    "0"
 	  }
 	  Object {
-	    $ObjectID		    62
+	    $ObjectID		    60
 	    Type		    "edit"
 	    Name		    "m_oggetto"
 	    Prompt		    "massa oggetto [kg]"
-	    Value		    "m_oggetto"
+	    Value		    "0"
 	  }
 	  Object {
-	    $ObjectID		    63
+	    $ObjectID		    61
 	    Type		    "edit"
 	    Name		    "rgb"
 	    Prompt		    "RGB"
 	    Value		    "[0.2 0.2 1.0]"
+	  }
+	  Object {
+	    $ObjectID		    62
+	    Type		    "edit"
+	    Name		    "radius"
+	    Prompt		    "radius"
+	    Value		    "radius"
 	  }
 	  PropName		  "Parameters"
 	}
@@ -5761,11 +5422,11 @@ Model {
 	  Type			  "Simulink.dialog.Group"
 	  Dimension		  2
 	  Object {
-	    $ObjectID		    64
+	    $ObjectID		    63
 	    Prompt		    "ATRobotics"
 	    Object {
 	      $PropName		      "DialogControls"
-	      $ObjectID		      65
+	      $ObjectID		      64
 	      $ClassName	      "Simulink.dialog.Text"
 	      Prompt		      "Robot Seriale a 3 d.o.f. Ingegneri Tonola e Antonini"
 	      Name		      "DescTextVar"
@@ -5773,50 +5434,50 @@ Model {
 	    Name		    "DescGroupVar"
 	  }
 	  Object {
-	    $ObjectID		    66
+	    $ObjectID		    65
 	    Prompt		    "Simulink:studio:ToolBarParametersMenu"
 	    Array {
 	      Type		      "Simulink.dialog.parameter.Edit"
 	      Dimension		      8
 	      Object {
-		$ObjectID		67
+		$ObjectID		66
 		PromptLocation		"left"
 		Name			"l0"
 	      }
 	      Object {
-		$ObjectID		68
-		PromptLocation		"left"
-		Name			"l1z"
-	      }
-	      Object {
-		$ObjectID		69
+		$ObjectID		67
 		PromptLocation		"left"
 		Name			"l1y"
 	      }
 	      Object {
-		$ObjectID		70
+		$ObjectID		68
 		PromptLocation		"left"
 		Name			"l2"
 	      }
 	      Object {
-		$ObjectID		71
+		$ObjectID		69
 		PromptLocation		"left"
 		Name			"l3"
 	      }
 	      Object {
-		$ObjectID		72
+		$ObjectID		70
 		PromptLocation		"left"
 		Name			"m_gripper"
 	      }
 	      Object {
-		$ObjectID		73
+		$ObjectID		71
 		PromptLocation		"left"
 		Name			"m_oggetto"
 	      }
 	      Object {
-		$ObjectID		74
+		$ObjectID		72
 		PromptLocation		"left"
 		Name			"rgb"
+	      }
+	      Object {
+		$ObjectID		73
+		PromptLocation		"left"
+		Name			"radius"
 	      }
 	      PropName		      "DialogControls"
 	    }
@@ -7539,7 +7200,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  Object {
 	    $PropName		    "MaskObject"
-	    $ObjectID		    75
+	    $ObjectID		    74
 	    $ClassName		    "Simulink.Mask"
 	    Display		    "image('Gripper.jpeg');"
 	  }
@@ -7614,8 +7275,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -7691,8 +7352,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -7753,8 +7414,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -7822,8 +7483,8 @@ Model {
 	      MarkerSize	      "10"
 	      MarkerSize_conf	      "compiletime"
 	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
+	      InertiaType	      "PointMass"
+	      Mass		      "0"
 	      MassUnits		      "kg"
 	      Mass_conf		      "compiletime"
 	      MomentsOfInertia	      "[1 1 1]"
@@ -7913,231 +7574,6 @@ Model {
 	  }
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "Gripper1_puntale"
-	  SID			  "666"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [1290, 84, 1350, 126]
-	  ZOrder		  272
-	  Commented		  "on"
-	  RequestExecContextInheritance	off
-	  Object {
-	    $PropName		    "MaskObject"
-	    $ObjectID		    76
-	    $ClassName		    "Simulink.Mask"
-	  }
-	  System {
-	    Name		    "Gripper1_puntale"
-	    Location		    [-8, -8, 1374, 736]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    SetExecutionDomain	    off
-	    ExecutionDomainType	    "Deduce"
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SimulinkSubDomain	    "Simulink"
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Interfaccia"
-	      SID		      "667"
-	      Ports		      [0, 0, 0, 0, 0, 1, 1]
-	      Position		      [-10, 15, 30, 55]
-	      ZOrder		      63
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Cylindrical Solid"
-	      SourceType	      "Cylindrical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Density"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[0.2 0.2 0.2]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      CylinderLength	      "0.015"
-	      CylinderLengthUnits     "m"
-	      CylinderLength_conf     "compiletime"
-	      CylinderRadius	      "0.06"
-	      CylinderRadiusUnits     "m"
-	      CylinderRadius_conf     "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "off"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedFrames	      "<Frames><Frame><Id>Frame1</Id><Value><Name>F1</Name><Origin><Source>GeometricFeature</S"
-	      "ource><FeatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Y</DefinedDirection><So"
-	      "urce>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Seco"
-	      "ndaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDire"
-	      "ction><FeatureName></FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame2</Id><Value><Name>F2</Name><O"
-	      "rigin><Source>GeometricFeature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDire"
-	      "ction>+Y</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></F"
-	      "eatureName></PrimaryAxis><SecondaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><"
-	      "SourceDirection>+X</SourceDirection><FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		2
-		PortNumber		1
-		Position		[-14, 35]
-	      }
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[34, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Puntale"
-	      SID		      "668"
-	      Ports		      [0, 0, 0, 0, 0, 1, 1]
-	      Position		      [75, 15, 115, 55]
-	      ZOrder		      65
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Cylindrical Solid"
-	      SourceType	      "Cylindrical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Density"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[0.2 0.2 0.2]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      CylinderLength	      "0.08"
-	      CylinderLengthUnits     "m"
-	      CylinderLength_conf     "compiletime"
-	      CylinderRadius	      "0.01"
-	      CylinderRadiusUnits     "m"
-	      CylinderRadius_conf     "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "off"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedFrames	      "<Frames><Frame><Id>Frame1</Id><Value><Name>F1</Name><Origin><Source>GeometricFeature</S"
-	      "ource><FeatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Y</DefinedDirection><So"
-	      "urce>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Seco"
-	      "ndaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDire"
-	      "ction><FeatureName></FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame2</Id><Value><Name>F2</Name><O"
-	      "rigin><Source>GeometricFeature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDire"
-	      "ction>+Y</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></F"
-	      "eatureName></PrimaryAxis><SecondaryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><"
-	      "SourceDirection>+X</SourceDirection><FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "CalculateFromGeometry"
-	      Mass		      "1"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		2
-		PortNumber		1
-		Position		[71, 35]
-	      }
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[119, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn1"
-	      SID		      "669"
-	      Position		      [-80, 28, -50, 42]
-	      ZOrder		      60
-	      Side		      "Left"
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn2"
-	      SID		      "670"
-	      Position		      [165, 28, 195, 42]
-	      ZOrder		      67
-	      BlockMirror	      on
-	      Port		      "2"
-	      Side		      "Right"
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      1
-	      SrcBlock		      "Puntale"
-	      SrcPort		      LConn1
-	      DstBlock		      "Interfaccia"
-	      DstPort		      RConn1
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      2
-	      SrcBlock		      "Interfaccia"
-	      SrcPort		      LConn1
-	      DstBlock		      "Conn1"
-	      DstPort		      RConn1
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      3
-	      SrcBlock		      "Conn2"
-	      SrcPort		      RConn1
-	      DstBlock		      "Puntale"
-	      DstPort		      RConn1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "Protezione giunto 1"
 	  SID			  "671"
@@ -8206,7 +7642,7 @@ Model {
 	  Name			  "Protezione giunto 2"
 	  SID			  "672"
 	  Ports			  [0, 0, 0, 0, 0, 0, 1]
-	  Position		  [340, -80, 380, -40]
+	  Position		  [285, -80, 325, -40]
 	  ZOrder		  52
 	  BlockRotation		  270
 	  BlockMirror		  on
@@ -8262,7 +7698,7 @@ Model {
 	    PortType		    3
 	    PortNumber		    1
 	    Rotation		    -1.5707963267948966
-	    Position		    [360, -36]
+	    Position		    [305, -36]
 	  }
 	}
 	Block {
@@ -8391,137 +7827,6 @@ Model {
 	    PortNumber		    1
 	    Rotation		    -1.5707963267948966
 	    Position		    [830, -36]
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "Punto_rosso\n"
-	  SID			  "675"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [1290, 149, 1350, 191]
-	  ZOrder		  274
-	  Commented		  "on"
-	  RequestExecContextInheritance	off
-	  Object {
-	    $PropName		    "MaskObject"
-	    $ObjectID		    77
-	    $ClassName		    "Simulink.Mask"
-	    Display		    "image('Gripper.jpeg');"
-	  }
-	  System {
-	    Name		    "Punto_rosso\n"
-	    Location		    [-7, -7, 1543, 831]
-	    Open		    off
-	    PortBlocksUseCompactNotation off
-	    SetExecutionDomain	    off
-	    ExecutionDomainType	    "Deduce"
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SimulinkSubDomain	    "Simulink"
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Ditosx1"
-	      SID		      "676"
-	      Ports		      [0, 0, 0, 0, 0, 0, 1]
-	      Position		      [0, 15, 40, 55]
-	      ZOrder		      65
-	      LibraryVersion	      "7.01"
-	      SourceBlock	      "sm_lib/Body Elements/Spherical Solid"
-	      SourceType	      "Spherical Solid"
-	      SourceProductBaseCode   "MS"
-	      LogSimulationData	      off
-	      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
-	      GraphicAmbientColor_conf "compiletime"
-	      BasedOnType	      "Mass"
-	      CenterOfMass	      "[0 0 0]"
-	      CenterOfMassUnits	      "m"
-	      CenterOfMass_conf	      "compiletime"
-	      GraphicDiffuseColor     "[1.0 0.0 0.0]"
-	      GraphicDiffuseColor_conf "compiletime"
-	      Density		      "1000"
-	      DensityUnits	      "kg/m^3"
-	      Density_conf	      "compiletime"
-	      DoExposeReferenceFrame  "on"
-	      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
-	      GraphicEmissiveColor_conf	"compiletime"
-	      ExportEntireGeometry    "off"
-	      SerializedExposedGeometries "<ExposedGeometries/>"
-	      SerializedFrames	      "<Frames/>"
-	      MarkerShape	      "Sphere"
-	      MarkerSize	      "10"
-	      MarkerSize_conf	      "compiletime"
-	      GraphicType	      "FromGeometry"
-	      InertiaType	      "PointMass"
-	      Mass		      "m_gripper"
-	      MassUnits		      "kg"
-	      Mass_conf		      "compiletime"
-	      MomentsOfInertia	      "[1 1 1]"
-	      MomentsOfInertiaUnits   "kg*m^2"
-	      MomentsOfInertia_conf   "compiletime"
-	      GraphicOpacity	      "1.0"
-	      GraphicOpacity_conf     "compiletime"
-	      ProductsOfInertia	      "[1 1 1]"
-	      ProductsOfInertiaUnits  "kg*m^2"
-	      ProductsOfInertia_conf  "compiletime"
-	      GraphicShininess	      "75"
-	      GraphicShininess_conf   "compiletime"
-	      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
-	      GraphicSpecularColor_conf	"compiletime"
-	      SphereRadius	      "0.01"
-	      SphereRadiusUnits	      "m"
-	      SphereRadius_conf	      "compiletime"
-	      GraphicVisPropType      "SimpleVisualProperties"
-	      Port {
-		PortType		3
-		PortNumber		1
-		Position		[44, 35]
-	      }
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Conn1"
-	      SID		      "677"
-	      Position		      [-80, 28, -50, 42]
-	      ZOrder		      60
-	      Side		      "Left"
-	    }
-	    Block {
-	      BlockType		      PMIOPort
-	      Name		      "Connection Port"
-	      SID		      "678"
-	      Position		      [80, 28, 110, 42]
-	      ZOrder		      66
-	      BlockMirror	      on
-	      Port		      "2"
-	      Side		      "Right"
-	    }
-	    Line {
-	      LineType		      "Connection"
-	      ZOrder		      1
-	      SrcBlock		      "Conn1"
-	      SrcPort		      RConn1
-	      Points		      [10, 0; 0, -34; 80, 0; 0, 34]
-	      Branch {
-		ConnectType		"DEST_DEST"
-		SrcBlock		"Connection Port"
-		SrcPort			RConn1
-		Points			[-10, 0]
-	      }
-	      Branch {
-		ConnectType		"DEST_SRC"
-		DstBlock		"Ditosx1"
-		DstPort			RConn1
-	      }
-	    }
 	  }
 	}
 	Block {
@@ -8961,7 +8266,7 @@ Model {
 	  CylinderLength	  "l0"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "2700"
@@ -8984,8 +8289,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l0*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -9017,7 +8322,7 @@ Model {
 	  Name			  "l1y"
 	  SID			  "685"
 	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [375, 40, 425, 80]
+	  Position		  [335, 40, 385, 80]
 	  ZOrder		  39
 	  LibraryVersion	  "7.01"
 	  SourceBlock		  "sm_lib/Body Elements/Cylindrical Solid"
@@ -9035,7 +8340,7 @@ Model {
 	  CylinderLength	  "l1y"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -9058,8 +8363,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l1y*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -9078,86 +8383,12 @@ Model {
 	  Port {
 	    PortType		    2
 	    PortNumber		    1
-	    Position		    [371, 60]
+	    Position		    [331, 60]
 	  }
 	  Port {
 	    PortType		    3
 	    PortNumber		    1
-	    Position		    [429, 60]
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "l1z"
-	  SID			  "686"
-	  Ports			  [0, 0, 0, 0, 0, 1, 1]
-	  Position		  [260, 40, 310, 80]
-	  ZOrder		  36
-	  LibraryVersion	  "7.01"
-	  SourceBlock		  "sm_lib/Body Elements/Cylindrical Solid"
-	  SourceType		  "Cylindrical Solid"
-	  SourceProductBaseCode	  "MS"
-	  LogSimulationData	  off
-	  GraphicAmbientColor	  "[0.15 0.15 0.15 1.0]"
-	  GraphicAmbientColor_conf "compiletime"
-	  BasedOnType		  "Mass"
-	  CenterOfMass		  "[0 0 0]"
-	  CenterOfMassUnits	  "m"
-	  CenterOfMass_conf	  "compiletime"
-	  GraphicDiffuseColor	  "rgb"
-	  GraphicDiffuseColor_conf "compiletime"
-	  CylinderLength	  "l1z"
-	  CylinderLengthUnits	  "m"
-	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
-	  CylinderRadiusUnits	  "m"
-	  CylinderRadius_conf	  "compiletime"
-	  Density		  "1000"
-	  DensityUnits		  "kg/m^3"
-	  Density_conf		  "compiletime"
-	  DoExposeReferenceFrame  "off"
-	  GraphicEmissiveColor	  "[0.0 0.0 0.0 1.0]"
-	  GraphicEmissiveColor_conf "compiletime"
-	  ExportEntireGeometry	  "off"
-	  SerializedFrames	  "<Frames><Frame><Id>Frame2</Id><Value><Name>F0</Name><Origin><Source>GeometricFeature</Source><F"
-	  "eatureName>bottom surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Z</DefinedDirection><Source>Referen"
-	  "ceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><SecondaryAxis><Defin"
-	  "edDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDirection><FeatureName><"
-	  "/FeatureName></SecondaryAxis></Value></Frame><Frame><Id>Frame3</Id><Value><Name>F1</Name><Origin><Source>GeometricF"
-	  "eature</Source><FeatureName>top surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Z</DefinedDirection><"
-	  "Source>ReferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><Second"
-	  "aryAxis><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDirection>"
-	  "<FeatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
-	  MarkerShape		  "Sphere"
-	  MarkerSize		  "10"
-	  MarkerSize_conf	  "compiletime"
-	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l1z*10"
-	  MassUnits		  "kg"
-	  Mass_conf		  "compiletime"
-	  MomentsOfInertia	  "[1 1 1]"
-	  MomentsOfInertiaUnits	  "kg*m^2"
-	  MomentsOfInertia_conf	  "compiletime"
-	  GraphicOpacity	  "opacita"
-	  GraphicOpacity_conf	  "compiletime"
-	  ProductsOfInertia	  "[1 1 1]"
-	  ProductsOfInertiaUnits  "kg*m^2"
-	  ProductsOfInertia_conf  "compiletime"
-	  GraphicShininess	  "75"
-	  GraphicShininess_conf	  "compiletime"
-	  GraphicSpecularColor	  "[0.5 0.5 0.5 1.0]"
-	  GraphicSpecularColor_conf "compiletime"
-	  GraphicVisPropType	  "SimpleVisualProperties"
-	  Port {
-	    PortType		    2
-	    PortNumber		    1
-	    Position		    [256, 60]
-	  }
-	  Port {
-	    PortType		    3
-	    PortNumber		    1
-	    Position		    [314, 60]
+	    Position		    [389, 60]
 	  }
 	}
 	Block {
@@ -9183,7 +8414,7 @@ Model {
 	  CylinderLength	  "l2"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -9206,8 +8437,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l2*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -9257,7 +8488,7 @@ Model {
 	  CylinderLength	  "l3"
 	  CylinderLengthUnits	  "m"
 	  CylinderLength_conf	  "compiletime"
-	  CylinderRadius	  "0.05"
+	  CylinderRadius	  "radius"
 	  CylinderRadiusUnits	  "m"
 	  CylinderRadius_conf	  "compiletime"
 	  Density		  "1000"
@@ -9280,8 +8511,8 @@ Model {
 	  MarkerSize		  "10"
 	  MarkerSize_conf	  "compiletime"
 	  GraphicType		  "FromGeometry"
-	  InertiaType		  "CalculateFromGeometry"
-	  Mass			  "l3*10"
+	  InertiaType		  "PointMass"
+	  Mass			  "0"
 	  MassUnits		  "kg"
 	  Mass_conf		  "compiletime"
 	  MomentsOfInertia	  "[1 1 1]"
@@ -9355,11 +8586,21 @@ Model {
 	}
 	Line {
 	  LineType		  "Connection"
-	  ZOrder		  1
-	  SrcBlock		  "l1z"
+	  ZOrder		  5
+	  SrcBlock		  "l1y"
 	  SrcPort		  LConn1
-	  DstBlock		  "alpha"
-	  DstPort		  RConn1
+	  Points		  [-15, 0]
+	  Branch {
+	    ConnectType		    "DEST_DEST"
+	    SrcBlock		    "Protezione giunto 2"
+	    SrcPort		    RConn1
+	    Points		    [0, 85]
+	  }
+	  Branch {
+	    ConnectType		    "DEST_SRC"
+	    DstBlock		    "alpha"
+	    DstPort		    RConn1
+	  }
 	}
 	Line {
 	  LineType		  "Connection"
@@ -9377,24 +8618,6 @@ Model {
 	    ConnectType		    "DEST_SRC"
 	    DstBlock		    "alpha"
 	    DstPort		    LConn1
-	  }
-	}
-	Line {
-	  LineType		  "Connection"
-	  ZOrder		  5
-	  SrcBlock		  "l1y"
-	  SrcPort		  LConn1
-	  Points		  [0, 0]
-	  Branch {
-	    ConnectType		    "DEST_DEST"
-	    SrcBlock		    "Protezione giunto 2"
-	    SrcPort		    RConn1
-	    Points		    [0, 85]
-	  }
-	  Branch {
-	    ConnectType		    "DEST_SRC"
-	    DstBlock		    "l1z"
-	    DstPort		    RConn1
 	  }
 	}
 	Line {
@@ -9526,10 +8749,118 @@ Model {
       }
     }
     Block {
+      BlockType		      Reference
+      Name		      "Brick Solid"
+      SID		      "711"
+      Ports		      [0, 0, 0, 0, 0, 1, 1]
+      Position		      [1560, 1665, 1790, 1931]
+      ZOrder		      527
+      LibraryVersion	      "7.01"
+      SourceBlock	      "sm_lib/Body Elements/Brick Solid"
+      SourceType	      "Brick Solid"
+      SourceProductName	      "Simscape Multibody"
+      SourceProductBaseCode   "MS"
+      LogSimulationData	      off
+      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
+      GraphicAmbientColor_conf "compiletime"
+      BasedOnType	      "Density"
+      BrickDimensions	      "[l_cube l_cube h_cube]"
+      BrickDimensionUnits     "m"
+      BrickDimensions_conf    "compiletime"
+      CenterOfMass	      "[0 0 0]"
+      CenterOfMassUnits	      "m"
+      CenterOfMass_conf	      "compiletime"
+      GraphicDiffuseColor     "[1.0 0.0 0.0]"
+      GraphicDiffuseColor_conf "compiletime"
+      Density		      "1000"
+      DensityUnits	      "kg/m^3"
+      Density_conf	      "compiletime"
+      DoExposeReferenceFrame  "on"
+      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
+      GraphicEmissiveColor_conf	"compiletime"
+      ExportEntireGeometry    "off"
+      SerializedFrames	      "<Frames><Frame><Id>Frame1</Id><Value><Name>F1</Name><Origin><Source>GeometricFeature</So"
+      "urce><FeatureName>-z surface</FeatureName></Origin><PrimaryAxis><DefinedDirection>+Z</DefinedDirection><Source>R"
+      "eferenceFrame</Source><SourceDirection>+Z</SourceDirection><FeatureName></FeatureName></PrimaryAxis><SecondaryAx"
+      "is><DefinedDirection>+X</DefinedDirection><Source>ReferenceFrame</Source><SourceDirection>+X</SourceDirection><F"
+      "eatureName></FeatureName></SecondaryAxis></Value></Frame></Frames>"
+      MarkerShape	      "Sphere"
+      MarkerSize	      "10"
+      MarkerSize_conf	      "compiletime"
+      GraphicType	      "FromGeometry"
+      InertiaType	      "PointMass"
+      Mass		      "0"
+      MassUnits		      "kg"
+      Mass_conf		      "compiletime"
+      MomentsOfInertia	      "[1 1 1]"
+      MomentsOfInertiaUnits   "kg*m^2"
+      MomentsOfInertia_conf   "compiletime"
+      GraphicOpacity	      "1.0"
+      GraphicOpacity_conf     "compiletime"
+      ProductsOfInertia	      "[0 0 0]"
+      ProductsOfInertiaUnits  "kg*m^2"
+      ProductsOfInertia_conf  "compiletime"
+      GraphicShininess	      "75"
+      GraphicShininess_conf   "compiletime"
+      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
+      GraphicSpecularColor_conf	"compiletime"
+      GraphicVisPropType      "SimpleVisualProperties"
+      Port {
+	PortType		2
+	PortNumber		1
+	Position		[1556, 1800]
+      }
+      Port {
+	PortType		3
+	PortNumber		1
+	Position		[1794, 1800]
+      }
+    }
+    Block {
+      BlockType		      Clock
+      Name		      "Clock"
+      SID		      "719"
+      Position		      [2020, 1865, 2040, 1885]
+      ZOrder		      535
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant"
+      SID		      "724"
+      Position		      [1950, 1705, 1990, 1745]
+      ZOrder		      540
+      HideAutomaticName	      off
+      Value		      "l_cyl"
+      VectorParams1D	      off
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant1"
+      SID		      "725"
+      Position		      [1950, 1755, 1990, 1795]
+      ZOrder		      541
+      HideAutomaticName	      off
+      Value		      "r_cyl"
+      VectorParams1D	      off
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant2"
+      SID		      "726"
+      Position		      [1950, 1805, 1990, 1845]
+      ZOrder		      542
+      HideAutomaticName	      off
+      Value		      "t_cyl"
+      VectorParams1D	      off
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace1"
       SID		      "694"
-      Position		      [2285, 1578, 2350, 1602]
+      Position		      [2045, 1363, 2110, 1387]
       ZOrder		      519
       VariableName	      "q2"
       SampleTime	      "0"
@@ -9539,7 +8870,7 @@ Model {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace10"
       SID		      "397"
-      Position		      [1115, 1568, 1180, 1592]
+      Position		      [1245, 1363, 1310, 1387]
       ZOrder		      503
       VariableName	      "Q2"
       SampleTime	      "0"
@@ -9549,7 +8880,7 @@ Model {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace11"
       SID		      "398"
-      Position		      [1115, 1703, 1180, 1727]
+      Position		      [1245, 1438, 1310, 1462]
       ZOrder		      504
       VariableName	      "Q3"
       SampleTime	      "0"
@@ -9557,75 +8888,9 @@ Model {
     }
     Block {
       BlockType		      FromWorkspace
-      Name		      "From\nWorkspace12"
-      SID		      "399"
-      Position		      [1115, 1463, 1180, 1487]
-      ZOrder		      505
-      Commented		      "on"
-      VariableName	      "Qp1"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace13"
-      SID		      "400"
-      Position		      [1115, 1498, 1180, 1522]
-      ZOrder		      506
-      Commented		      "on"
-      VariableName	      "Qpp1"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace14"
-      SID		      "401"
-      Position		      [1115, 1598, 1180, 1622]
-      ZOrder		      507
-      Commented		      "on"
-      VariableName	      "Qp2"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace15"
-      SID		      "402"
-      Position		      [1115, 1633, 1180, 1657]
-      ZOrder		      508
-      Commented		      "on"
-      VariableName	      "Qpp2"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace16"
-      SID		      "403"
-      Position		      [1115, 1733, 1180, 1757]
-      ZOrder		      509
-      Commented		      "on"
-      VariableName	      "Qp3"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace17"
-      SID		      "404"
-      Position		      [1115, 1768, 1180, 1792]
-      ZOrder		      510
-      Commented		      "on"
-      VariableName	      "Qpp3"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
       Name		      "From\nWorkspace18"
       SID		      "702"
-      Position		      [2285, 1443, 2350, 1467]
+      Position		      [2045, 1288, 2110, 1312]
       ZOrder		      518
       VariableName	      "q1"
       SampleTime	      "0"
@@ -9635,7 +8900,7 @@ Model {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace2"
       SID		      "695"
-      Position		      [2285, 1713, 2350, 1737]
+      Position		      [2045, 1438, 2110, 1462]
       ZOrder		      520
       VariableName	      "q3"
       SampleTime	      "0"
@@ -9643,79 +8908,220 @@ Model {
     }
     Block {
       BlockType		      FromWorkspace
-      Name		      "From\nWorkspace3"
-      SID		      "696"
-      Position		      [2285, 1473, 2350, 1497]
-      ZOrder		      521
-      Commented		      "on"
-      VariableName	      "Qp1"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace4"
-      SID		      "697"
-      Position		      [2285, 1508, 2350, 1532]
-      ZOrder		      522
-      Commented		      "on"
-      VariableName	      "Qpp1"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace5"
-      SID		      "698"
-      Position		      [2285, 1608, 2350, 1632]
-      ZOrder		      523
-      Commented		      "on"
-      VariableName	      "Qp2"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace6"
-      SID		      "699"
-      Position		      [2285, 1643, 2350, 1667]
-      ZOrder		      524
-      Commented		      "on"
-      VariableName	      "Qpp2"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace7"
-      SID		      "700"
-      Position		      [2285, 1743, 2350, 1767]
-      ZOrder		      525
-      Commented		      "on"
-      VariableName	      "Qp3"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
-      Name		      "From\nWorkspace8"
-      SID		      "701"
-      Position		      [2285, 1778, 2350, 1802]
-      ZOrder		      526
-      Commented		      "on"
-      VariableName	      "Qpp3"
-      SampleTime	      "0"
-      ZeroCross		      on
-    }
-    Block {
-      BlockType		      FromWorkspace
       Name		      "From\nWorkspace9"
       SID		      "396"
-      Position		      [1115, 1433, 1180, 1457]
+      Position		      [1245, 1288, 1310, 1312]
       ZOrder		      502
       VariableName	      "Q1"
       SampleTime	      "0"
       ZeroCross		      on
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "MATLAB Function"
+      SID		      "715"
+      Ports		      [4, 3]
+      Position		      [2125, 1698, 2215, 1902]
+      ZOrder		      531
+      ErrorFcn		      "Stateflow.Translate.translate"
+      PermitHierarchicalResolution "ExplicitOnly"
+      TreatAsAtomicUnit	      on
+      RequestExecContextInheritance off
+      SFBlockType	      "MATLAB Function"
+      ContentPreviewEnabled   on
+      System {
+	Name			"MATLAB Function"
+	Location		[223, 338, 826, 833]
+	Open			off
+	PortBlocksUseCompactNotation off
+	SetExecutionDomain	off
+	ExecutionDomainType	"Deduce"
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	SIDHighWatermark	"26"
+	SimulinkSubDomain	"Simulink"
+	Block {
+	  BlockType		  Inport
+	  Name			  "l_cyl"
+	  SID			  "715::1"
+	  Position		  [20, 101, 40, 119]
+	  ZOrder		  -1
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "r_cyl"
+	  SID			  "715::22"
+	  Position		  [20, 136, 40, 154]
+	  ZOrder		  13
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "t_cyl"
+	  SID			  "715::23"
+	  Position		  [20, 171, 40, 189]
+	  ZOrder		  14
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "time"
+	  SID			  "715::24"
+	  Position		  [20, 206, 40, 224]
+	  ZOrder		  15
+	  Port			  "4"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  " Demux "
+	  SID			  "715::20"
+	  Ports			  [1, 1]
+	  Position		  [270, 245, 320, 285]
+	  ZOrder		  11
+	  Outputs		  "1"
+	}
+	Block {
+	  BlockType		  S-Function
+	  Name			  " SFunction "
+	  SID			  "715::19"
+	  Tag			  "Stateflow S-Function 2"
+	  Ports			  [4, 4]
+	  Position		  [180, 102, 230, 203]
+	  ZOrder		  10
+	  FunctionName		  "sf_sfun"
+	  PortCounts		  "[4 4]"
+	  SFunctionDeploymentMode off
+	  EnableBusSupport	  on
+	  SFcnIsStateOwnerBlock	  off
+	  Port {
+	    PortNumber		    2
+	    Name		    "l"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "r"
+	  }
+	  Port {
+	    PortNumber		    4
+	    Name		    "m"
+	  }
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  " Terminator "
+	  SID			  "715::21"
+	  Position		  [460, 256, 480, 274]
+	  ZOrder		  12
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "l"
+	  SID			  "715::5"
+	  Position		  [460, 101, 480, 119]
+	  ZOrder		  -5
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "r"
+	  SID			  "715::25"
+	  Position		  [460, 136, 480, 154]
+	  ZOrder		  16
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "m"
+	  SID			  "715::26"
+	  Position		  [460, 171, 480, 189]
+	  ZOrder		  17
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  35
+	  SrcBlock		  "l_cyl"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  36
+	  SrcBlock		  "r_cyl"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  37
+	  SrcBlock		  "t_cyl"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  38
+	  SrcBlock		  "time"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  4
+	}
+	Line {
+	  Name			  "l"
+	  ZOrder		  39
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  2
+	  DstBlock		  "l"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "r"
+	  ZOrder		  40
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  3
+	  DstBlock		  "r"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "m"
+	  ZOrder		  41
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  4
+	  DstBlock		  "m"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  42
+	  SrcBlock		  " Demux "
+	  SrcPort		  1
+	  DstBlock		  " Terminator "
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  43
+	  SrcBlock		  " SFunction "
+	  SrcPort		  1
+	  DstBlock		  " Demux "
+	  DstPort		  1
+	}
+      }
     }
     Block {
       BlockType		      Reference
@@ -9730,7 +9136,7 @@ Model {
       SourceProductBaseCode   "MS"
       LogSimulationData	      off
       UniformGravity	      "Constant"
-      GravityVector	      "[0 0 -9.80665]"
+      GravityVector	      "[0 0 0]"
       GravityUnits	      "m/s^2"
       GravityVector_conf      "compiletime"
       LinearizationDelta      "0.001"
@@ -9742,25 +9148,118 @@ Model {
     }
     Block {
       BlockType		      Reference
-      Name		      "Mechanism\nConfiguration2"
-      SID		      "703"
-      Ports		      [0, 0, 0, 0, 0, 0, 1]
-      Position		      [2230, 1355, 2270, 1395]
-      ZOrder		      513
+      Name		      "Rigid\nTransform"
+      SID		      "714"
+      Ports		      [0, 0, 0, 0, 0, 1, 1]
+      Position		      [1385, 1780, 1425, 1820]
+      ZOrder		      530
       LibraryVersion	      "7.01"
-      SourceBlock	      "sm_lib/Utilities/Mechanism\nConfiguration"
-      SourceType	      "Mechanism\nConfiguration"
+      SourceBlock	      "sm_lib/Frames and\nTransforms/Rigid\nTransform"
+      SourceType	      "Rigid\nTransform"
+      SourceProductName	      "Simscape Multibody"
       SourceProductBaseCode   "MS"
       LogSimulationData	      off
-      UniformGravity	      "Constant"
-      GravityVector	      "[0 0 -9.80665]"
-      GravityUnits	      "m/s^2"
-      GravityVector_conf      "compiletime"
-      LinearizationDelta      "0.001"
+      TranslationMethod	      "Cartesian"
+      TranslationStandardOffset	"0"
+      TranslationLengthUnit   "m"
+      TranslationStandardOffset_conf "compiletime"
+      TranslationStandardAxis "+Z"
+      TranslationCartesianOffset "[xcube ycube zcube]"
+      TranslationCartesianOffset_conf "compiletime"
+      TranslationROffset      "0"
+      TranslationROffsetUnits "m"
+      TranslationROffset_conf "compiletime"
+      TranslationZOffset      "0"
+      TranslationZOffsetUnits "m"
+      TranslationZOffset_conf "compiletime"
+      TranslationThetaOffset  "0"
+      TranslationThetaOffsetUnits "deg"
+      TranslationThetaOffset_conf "compiletime"
+      RotationMethod	      "None"
+      RotationAngleUnits      "deg"
+      RotationStandardAxis    "+Z"
+      RotationAngle	      "0.0"
+      RotationAngle_conf      "compiletime"
+      RotationArbitraryAxis   "[0 0 1]"
+      RotationArbitraryAxis_conf "compiletime"
+      FollAlignAxisA	      "+X"
+      BaseAlignAxisA	      "+Y"
+      FollAlignAxisB	      "+Y"
+      BaseAlignAxisB	      "+Z"
+      RotationSequenceAxes    "FollowerAxes"
+      RotationSequence	      "XYX"
+      RotationSequenceAngles  "[0 0 0]"
+      RotationSequenceAnglesUnits "deg"
+      RotationSequenceAngles_conf "compiletime"
+      RotationMatrix	      "[1 0 0; 0 1 0; 0 0 1]"
+      RotationMatrix_conf     "compiletime"
+      Port {
+	PortType		2
+	PortNumber		1
+	Position		[1381, 1800]
+      }
       Port {
 	PortType		3
 	PortNumber		1
-	Position		[2274, 1375]
+	Position		[1429, 1800]
+      }
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Rigid\nTransform1"
+      SID		      "723"
+      Ports		      [0, 0, 0, 0, 0, 1, 1]
+      Position		      [1385, 1970, 1425, 2010]
+      ZOrder		      539
+      LibraryVersion	      "7.01"
+      SourceBlock	      "sm_lib/Frames and\nTransforms/Rigid\nTransform"
+      SourceType	      "Rigid\nTransform"
+      SourceProductName	      "Simscape Multibody"
+      SourceProductBaseCode   "MS"
+      LogSimulationData	      off
+      TranslationMethod	      "Cartesian"
+      TranslationStandardOffset	"0"
+      TranslationLengthUnit   "m"
+      TranslationStandardOffset_conf "compiletime"
+      TranslationStandardAxis "+Z"
+      TranslationCartesianOffset "[xcyl ycyl (zcyl)]"
+      TranslationCartesianOffset_conf "compiletime"
+      TranslationROffset      "0"
+      TranslationROffsetUnits "m"
+      TranslationROffset_conf "compiletime"
+      TranslationZOffset      "0"
+      TranslationZOffsetUnits "m"
+      TranslationZOffset_conf "compiletime"
+      TranslationThetaOffset  "0"
+      TranslationThetaOffsetUnits "deg"
+      TranslationThetaOffset_conf "compiletime"
+      RotationMethod	      "None"
+      RotationAngleUnits      "deg"
+      RotationStandardAxis    "+Z"
+      RotationAngle	      "0.0"
+      RotationAngle_conf      "compiletime"
+      RotationArbitraryAxis   "[0 0 1]"
+      RotationArbitraryAxis_conf "compiletime"
+      FollAlignAxisA	      "+X"
+      BaseAlignAxisA	      "+Y"
+      FollAlignAxisB	      "+Y"
+      BaseAlignAxisB	      "+Z"
+      RotationSequenceAxes    "FollowerAxes"
+      RotationSequence	      "XYX"
+      RotationSequenceAngles  "[0 0 0]"
+      RotationSequenceAnglesUnits "deg"
+      RotationSequenceAngles_conf "compiletime"
+      RotationMatrix	      "[1 0 0; 0 1 0; 0 0 1]"
+      RotationMatrix_conf     "compiletime"
+      Port {
+	PortType		2
+	PortNumber		1
+	Position		[1381, 1990]
+      }
+      Port {
+	PortType		3
+	PortNumber		1
+	Position		[1429, 1990]
       }
     }
     Block {
@@ -9768,7 +9267,7 @@ Model {
       Name		      "Simulink-PS\nConverter1"
       SID		      "704"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [2595, 1467, 2625, 1503]
+      Position		      [2295, 1282, 2325, 1318]
       ZOrder		      515
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9795,7 +9294,7 @@ Model {
       Name		      "Simulink-PS\nConverter2"
       SID		      "705"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [2595, 1602, 2625, 1638]
+      Position		      [2285, 1357, 2315, 1393]
       ZOrder		      516
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9822,7 +9321,7 @@ Model {
       Name		      "Simulink-PS\nConverter3"
       SID		      "706"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [2585, 1737, 2615, 1773]
+      Position		      [2270, 1432, 2300, 1468]
       ZOrder		      517
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9849,7 +9348,7 @@ Model {
       Name		      "Simulink-PS\nConverter4"
       SID		      "405"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [1425, 1457, 1455, 1493]
+      Position		      [1435, 1282, 1465, 1318]
       ZOrder		      499
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9876,7 +9375,7 @@ Model {
       Name		      "Simulink-PS\nConverter5"
       SID		      "406"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [1425, 1592, 1455, 1628]
+      Position		      [1435, 1357, 1465, 1393]
       ZOrder		      500
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9903,7 +9402,7 @@ Model {
       Name		      "Simulink-PS\nConverter6"
       SID		      "407"
       Ports		      [1, 0, 0, 0, 0, 0, 1]
-      Position		      [1415, 1727, 1445, 1763]
+      Position		      [1435, 1432, 1465, 1468]
       ZOrder		      501
       LibraryVersion	      "5.0"
       SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
@@ -9924,6 +9423,90 @@ Model {
       SimscapeFilterOrder     "2"
       InputFilterTimeConstant "0.001"
       UdotUserProvided	      "2"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Simulink-PS\nConverter7"
+      SID		      "716"
+      Ports		      [1, 0, 0, 0, 0, 0, 1]
+      Position		      [2415, 1677, 2430, 1693]
+      ZOrder		      532
+      LibraryVersion	      "5.0"
+      SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
+      SourceType	      "Simulink-PS\nConverter"
+      SourceProductName	      "Simscape"
+      SourceProductBaseCode   "SS"
+      ContentPreviewEnabled   on
+      PhysicalDomain	      "network_engine_domain"
+      SubClassName	      "ps_input"
+      LeftPortType	      "input"
+      RightPortType	      "output"
+      PseudoPeriodic	      off
+      Frequencies	      "[]"
+      NoiseDistribution	      "none"
+      NoiseParameters	      "[]"
+      Unit		      "1"
+      AffineConversion	      off
+      FilteringAndDerivatives "provide"
+      SimscapeFilterOrder     "1"
+      InputFilterTimeConstant "0.001"
+      UdotUserProvided	      "0"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Simulink-PS\nConverter8"
+      SID		      "717"
+      Ports		      [1, 0, 0, 0, 0, 0, 1]
+      Position		      [2415, 1792, 2430, 1808]
+      ZOrder		      533
+      LibraryVersion	      "5.0"
+      SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
+      SourceType	      "Simulink-PS\nConverter"
+      SourceProductName	      "Simscape"
+      SourceProductBaseCode   "SS"
+      ContentPreviewEnabled   on
+      PhysicalDomain	      "network_engine_domain"
+      SubClassName	      "ps_input"
+      LeftPortType	      "input"
+      RightPortType	      "output"
+      PseudoPeriodic	      off
+      Frequencies	      "[]"
+      NoiseDistribution	      "none"
+      NoiseParameters	      "[]"
+      Unit		      "1"
+      AffineConversion	      off
+      FilteringAndDerivatives "provide"
+      SimscapeFilterOrder     "1"
+      InputFilterTimeConstant "0.001"
+      UdotUserProvided	      "0"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Simulink-PS\nConverter9"
+      SID		      "718"
+      Ports		      [1, 0, 0, 0, 0, 0, 1]
+      Position		      [2425, 1907, 2440, 1923]
+      ZOrder		      534
+      LibraryVersion	      "5.0"
+      SourceBlock	      "nesl_utility/Simulink-PS\nConverter"
+      SourceType	      "Simulink-PS\nConverter"
+      SourceProductName	      "Simscape"
+      SourceProductBaseCode   "SS"
+      ContentPreviewEnabled   on
+      PhysicalDomain	      "network_engine_domain"
+      SubClassName	      "ps_input"
+      LeftPortType	      "input"
+      RightPortType	      "output"
+      PseudoPeriodic	      off
+      Frequencies	      "[]"
+      NoiseDistribution	      "none"
+      NoiseParameters	      "[]"
+      Unit		      "1"
+      AffineConversion	      off
+      FilteringAndDerivatives "provide"
+      SimscapeFilterOrder     "1"
+      InputFilterTimeConstant "0.001"
+      UdotUserProvided	      "0"
     }
     Block {
       BlockType		      Reference
@@ -9976,52 +9559,74 @@ Model {
     }
     Block {
       BlockType		      Reference
-      Name		      "Solver\nConfiguration2"
-      SID		      "707"
-      Ports		      [0, 0, 0, 0, 0, 0, 1]
-      Position		      [2230, 1194, 2270, 1226]
-      ZOrder		      511
-      LibraryVersion	      "5.0"
-      SourceBlock	      "nesl_utility/Solver\nConfiguration"
-      SourceType	      "Solver\nConfiguration"
-      SourceProductBaseCode   "SS"
-      ContentPreviewEnabled   off
-      PhysicalDomain	      "network_engine_domain"
-      SubClassName	      "solver"
-      LeftPortType	      "input"
-      RightPortType	      "generic"
-      Tones		      "[]"
-      Harmonics		      "[]"
-      SimulateNoise	      off
-      Profile		      off
-      UseLocalSampling	      off
-      EnableSwitchedLinearOptims on
-      FrequencyDomain	      off
-      UseCCode		      off
-      RelTol		      "0.001"
-      AbsTol		      "1e-06"
-      MinStep		      "1e-09"
-      ToWorkspace	      off
-      RevertToSquareIcSolve   off
-      NumHomotopyIterations   "100"
-      PhasorMode	      off
-      PhasorModeNumHarmonics  "1"
-      DoDC		      off
-      ResidualTolerance	      "1e-05"
-      UseLocalSolver	      off
-      LocalSolverChoice	      "NE_BACKWARD_EULER_ADVANCER"
-      LocalSolverSampleTime   "0.001"
-      DoFixedCost	      off
-      MaxNonlinIter	      "3"
-      MaxModeIter	      "2"
-      LinearAlgebra	      "Sparse"
-      EquationFormulation     "NE_TIME_EF"
-      DelaysMemoryBudget      "1024"
-      AutomaticFiltering      on
-      FilteringTimeConstant   "0.001"
-      PartitionStorageMethod  "AS_NEEDED"
-      PartitionMemoryBudget   "1024"
-      PartitionMethod	      "FAST"
+      Name		      "Variable\nCylindrical Solid"
+      SID		      "713"
+      Ports		      [0, 0, 0, 0, 0, 3, 1]
+      Position		      [2475, 1630, 2685, 1970]
+      ZOrder		      529
+      LibraryVersion	      "7.01"
+      SourceBlock	      "sm_lib/Body Elements/Variable Mass/Variable\nCylindrical Solid"
+      SourceType	      "Variable\nCylindrical Solid"
+      SourceProductName	      "Simscape Multibody"
+      SourceProductBaseCode   "MS"
+      LogSimulationData	      off
+      LengthType	      "ProvidedByInput"
+      Length		      "1"
+      LengthUnits	      "m"
+      Length_conf	      "compiletime"
+      RadiusType	      "ProvidedByInput"
+      Radius		      "1"
+      RadiusUnits	      "m"
+      Radius_conf	      "compiletime"
+      MassType		      "ProvidedByInput"
+      InitialMassType	      "Specified"
+      InitialMass	      "1"
+      InitialMassUnits	      "kg"
+      Density		      "1000"
+      DensityUnits	      "kg/m^3"
+      Density_conf	      "compiletime"
+      SenseRadius	      "off"
+      SenseLength	      "off"
+      SenseMass		      "off"
+      SenseCenterOfMass	      "off"
+      SenseInertiaMatrix      "off"
+      GraphicType	      "FromGeometry"
+      MarkerShape	      "Sphere"
+      MarkerSize	      "10"
+      MarkerSize_conf	      "compiletime"
+      GraphicVisPropType      "SimpleVisualProperties"
+      GraphicDiffuseColor     "[0.0 0.8 0.0]"
+      GraphicDiffuseColor_conf "compiletime"
+      GraphicSpecularColor    "[0.5 0.5 0.5 1.0]"
+      GraphicSpecularColor_conf	"compiletime"
+      GraphicAmbientColor     "[0.15 0.15 0.15 1.0]"
+      GraphicAmbientColor_conf "compiletime"
+      GraphicEmissiveColor    "[0.0 0.0 0.0 1.0]"
+      GraphicEmissiveColor_conf	"compiletime"
+      GraphicShininess	      "75"
+      GraphicShininess_conf   "compiletime"
+      GraphicOpacity	      "1.0"
+      GraphicOpacity_conf     "compiletime"
+      Port {
+	PortType		2
+	PortNumber		1
+	Position		[2471, 1685]
+      }
+      Port {
+	PortType		2
+	PortNumber		2
+	Position		[2471, 1800]
+      }
+      Port {
+	PortType		2
+	PortNumber		3
+	Position		[2471, 1915]
+      }
+      Port {
+	PortType		3
+	PortNumber		1
+	Position		[2689, 1800]
+      }
     }
     Block {
       BlockType		      Reference
@@ -10041,24 +9646,6 @@ Model {
 	Position		[1104, 1285]
       }
     }
-    Block {
-      BlockType		      Reference
-      Name		      "World Frame2"
-      SID		      "708"
-      Ports		      [0, 0, 0, 0, 0, 0, 1]
-      Position		      [2230, 1275, 2270, 1315]
-      ZOrder		      512
-      LibraryVersion	      "7.01"
-      SourceBlock	      "sm_lib/Frames and\nTransforms/World Frame"
-      SourceType	      "World Frame"
-      SourceProductBaseCode   "MS"
-      LogSimulationData	      off
-      Port {
-	PortType		3
-	PortNumber		1
-	Position		[2274, 1295]
-      }
-    }
     Line {
       LineType		      "Connection"
       ZOrder		      55
@@ -10067,25 +9654,55 @@ Model {
       Points		      [52, 0]
       Branch {
 	ConnectType		"DEST_DEST"
+	Points			[1167, 1365; 0, -80]
+	Branch {
+	  ConnectType		  "SRC_DEST"
+	  Points		  [1167, 1800; 0, -435]
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "Rigid\nTransform1"
+	    SrcPort		    LConn1
+	    Points		    [-203, 0; 0, -190]
+	  }
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "Rigid\nTransform"
+	    SrcPort		    LConn1
+	    Points		    [-203, 0]
+	  }
+	}
+	Branch {
+	  ConnectType		  "SRC_DEST"
+	  SrcBlock		  "Mechanism\nConfiguration1"
+	  SrcPort		  RConn1
+	  Points		  [52, 0]
+	}
+      }
+      Branch {
+	ConnectType		"DEST_DEST"
 	Points			[1167, 1225; 0, 60]
+	Branch {
+	  ConnectType		  "SRC_DEST"
+	  Points		  [1373, 1225; -206, 0]
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "ATRobotics1"
+	    SrcPort		    LConn1
+	    Points		    [-152, 0]
+	  }
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "ATRobotics2"
+	    SrcPort		    LConn1
+	    Points		    [-287, 0; 0, -157; -740, 0; 0, 157]
+	  }
+	}
 	Branch {
 	  ConnectType		  "SRC_SRC"
 	  Points		  [0, -25]
 	  DstBlock		  "Solver\nConfiguration1"
 	  DstPort		  RConn1
 	}
-	Branch {
-	  ConnectType		  "SRC_DEST"
-	  SrcBlock		  "ATRobotics1"
-	  SrcPort		  LConn1
-	  Points		  [-358, 0]
-	}
-      }
-      Branch {
-	ConnectType		"DEST_DEST"
-	SrcBlock		"Mechanism\nConfiguration1"
-	SrcPort			RConn1
-	Points			[52, 0; 0, -80]
       }
     }
     Line {
@@ -10093,7 +9710,6 @@ Model {
       ZOrder		      164
       SrcBlock		      "Simulink-PS\nConverter6"
       SrcPort		      RConn1
-      Points		      [60, 0; 0, -295]
       DstBlock		      "ATRobotics1"
       DstPort		      LConn4
     }
@@ -10102,7 +9718,6 @@ Model {
       ZOrder		      165
       SrcBlock		      "Simulink-PS\nConverter5"
       SrcPort		      RConn1
-      Points		      [33, 0; 0, -235]
       DstBlock		      "ATRobotics1"
       DstPort		      LConn3
     }
@@ -10111,7 +9726,6 @@ Model {
       ZOrder		      166
       SrcBlock		      "Simulink-PS\nConverter4"
       SrcPort		      RConn1
-      Points		      [17, 0; 0, -175]
       DstBlock		      "ATRobotics1"
       DstPort		      LConn2
     }
@@ -10119,7 +9733,6 @@ Model {
       ZOrder		      271
       SrcBlock		      "From\nWorkspace9"
       SrcPort		      1
-      Points		      [118, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter4"
       DstPort		      1
     }
@@ -10127,7 +9740,6 @@ Model {
       ZOrder		      273
       SrcBlock		      "From\nWorkspace10"
       SrcPort		      1
-      Points		      [118, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter5"
       DstPort		      1
     }
@@ -10135,45 +9747,14 @@ Model {
       ZOrder		      276
       SrcBlock		      "From\nWorkspace11"
       SrcPort		      1
-      Points		      [113, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter6"
       DstPort		      1
-    }
-    Line {
-      LineType		      "Connection"
-      ZOrder		      12
-      SrcBlock		      "Mechanism\nConfiguration2"
-      SrcPort		      RConn1
-      Points		      [52, 0; 0, -80]
-      Branch {
-	ConnectType		"DEST_DEST"
-	SrcBlock		"World Frame2"
-	SrcPort			RConn1
-	Points			[52, 0]
-      }
-      Branch {
-	ConnectType		"DEST_DEST"
-	Points			[2337, 1235; 0, 60]
-	Branch {
-	  ConnectType		  "SRC_SRC"
-	  Points		  [0, -25]
-	  DstBlock		  "Solver\nConfiguration2"
-	  DstPort		  RConn1
-	}
-	Branch {
-	  ConnectType		  "SRC_DEST"
-	  SrcBlock		  "ATRobotics2"
-	  SrcPort		  LConn1
-	  Points		  [-358, 0]
-	}
-      }
     }
     Line {
       LineType		      "Connection"
       ZOrder		      277
       SrcBlock		      "Simulink-PS\nConverter3"
       SrcPort		      RConn1
-      Points		      [60, 0; 0, -295]
       DstBlock		      "ATRobotics2"
       DstPort		      LConn4
     }
@@ -10182,7 +9763,6 @@ Model {
       ZOrder		      278
       SrcBlock		      "Simulink-PS\nConverter2"
       SrcPort		      RConn1
-      Points		      [33, 0; 0, -235]
       DstBlock		      "ATRobotics2"
       DstPort		      LConn3
     }
@@ -10191,7 +9771,6 @@ Model {
       ZOrder		      279
       SrcBlock		      "Simulink-PS\nConverter1"
       SrcPort		      RConn1
-      Points		      [17, 0; 0, -175]
       DstBlock		      "ATRobotics2"
       DstPort		      LConn2
     }
@@ -10199,7 +9778,6 @@ Model {
       ZOrder		      280
       SrcBlock		      "From\nWorkspace2"
       SrcPort		      1
-      Points		      [113, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter3"
       DstPort		      1
     }
@@ -10207,7 +9785,6 @@ Model {
       ZOrder		      281
       SrcBlock		      "From\nWorkspace18"
       SrcPort		      1
-      Points		      [118, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter1"
       DstPort		      1
     }
@@ -10215,14 +9792,105 @@ Model {
       ZOrder		      282
       SrcBlock		      "From\nWorkspace1"
       SrcPort		      1
-      Points		      [118, 0; 0, 30]
       DstBlock		      "Simulink-PS\nConverter2"
       DstPort		      1
+    }
+    Line {
+      LineType		      "Connection"
+      ZOrder		      294
+      SrcBlock		      "Rigid\nTransform"
+      SrcPort		      RConn1
+      DstBlock		      "Brick Solid"
+      DstPort		      LConn1
+    }
+    Line {
+      ZOrder		      299
+      SrcBlock		      "MATLAB Function"
+      SrcPort		      1
+      Points		      [90, 0; 0, -45]
+      DstBlock		      "Simulink-PS\nConverter7"
+      DstPort		      1
+    }
+    Line {
+      LineType		      "Connection"
+      ZOrder		      296
+      SrcBlock		      "Simulink-PS\nConverter9"
+      SrcPort		      RConn1
+      DstBlock		      "Variable\nCylindrical Solid"
+      DstPort		      LConn3
+    }
+    Line {
+      LineType		      "Connection"
+      ZOrder		      297
+      SrcBlock		      "Simulink-PS\nConverter8"
+      SrcPort		      RConn1
+      DstBlock		      "Variable\nCylindrical Solid"
+      DstPort		      LConn2
+    }
+    Line {
+      LineType		      "Connection"
+      ZOrder		      298
+      SrcBlock		      "Simulink-PS\nConverter7"
+      SrcPort		      RConn1
+      DstBlock		      "Variable\nCylindrical Solid"
+      DstPort		      LConn1
+    }
+    Line {
+      ZOrder		      300
+      SrcBlock		      "MATLAB Function"
+      SrcPort		      2
+      DstBlock		      "Simulink-PS\nConverter8"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      301
+      SrcBlock		      "MATLAB Function"
+      SrcPort		      3
+      Points		      [90, 0; 0, 45]
+      DstBlock		      "Simulink-PS\nConverter9"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      302
+      SrcBlock		      "Clock"
+      SrcPort		      1
+      DstBlock		      "MATLAB Function"
+      DstPort		      4
+    }
+    Line {
+      ZOrder		      311
+      SrcBlock		      "Constant"
+      SrcPort		      1
+      DstBlock		      "MATLAB Function"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      312
+      SrcBlock		      "Constant1"
+      SrcPort		      1
+      DstBlock		      "MATLAB Function"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      313
+      SrcBlock		      "Constant2"
+      SrcPort		      1
+      DstBlock		      "MATLAB Function"
+      DstPort		      3
+    }
+    Line {
+      LineType		      "Connection"
+      ZOrder		      307
+      SrcBlock		      "Rigid\nTransform1"
+      SrcPort		      RConn1
+      Points		      [1260, 0]
+      DstBlock		      "Variable\nCylindrical Solid"
+      DstPort		      RConn1
     }
     Annotation {
       SID		      "710"
       Name		      "planning robot"
-      Position		      [2553, 1061, 2618, 1076]
+      Position		      [2503, 1141, 2568, 1156]
       InternalMargins	      [0, 0, 0, 0]
       HorizontalAlignment     "left"
       VerticalAlignment	      "top"
@@ -10231,7 +9899,7 @@ Model {
     Annotation {
       SID		      "709"
       Name		      "replannning robot"
-      Position		      [1464, 1081, 1543, 1096]
+      Position		      [1629, 1141, 1708, 1156]
       InternalMargins	      [0, 0, 0, 0]
       HorizontalAlignment     "left"
       VerticalAlignment	      "top"
@@ -10249,10 +9917,259 @@ Stateflow {
     id			    1
     name		    "AT_robotics_replanning"
     sfVersion		    80000019
-    firstTarget		    2
+    firstTarget		    14
+  }
+  chart {
+    id			    2
+    machine		    1
+    name		    "MATLAB Function"
+    windowPosition	    [422 539.941 189 413]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3600 1200 1.180555555555556]
+    treeNode		    [0 3 0 0]
+    viewObj		    2
+    ssIdHighWaterMark	    10
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    chartFileNumber	    2
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+    firstData		    4
+    firstTransition	    12
+    firstJunction	    11
+  }
+  state {
+    id			    3
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    2
+    treeNode		    [2 0 0 0]
+    superState		    SUBCHART
+    subviewer		    2
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function [l,r,m] = fcn(l_cyl,r_cyl,t_cyl,time)\n\nif(time<t_cyl)\n    l=0;\n    r=0;\n    m=0;\ne"
+      "lse\n    l=l_cyl;\n    r=r_cyl;\n    m=0;\nend\n    \n\n\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  data {
+    id			    4
+    ssIdNumber		    4
+    name		    "l_cyl"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 0 5]
+  }
+  data {
+    id			    5
+    ssIdNumber		    5
+    name		    "l"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 4 6]
+  }
+  data {
+    id			    6
+    ssIdNumber		    6
+    name		    "r_cyl"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 5 7]
+  }
+  data {
+    id			    7
+    ssIdNumber		    7
+    name		    "t_cyl"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 6 8]
+  }
+  data {
+    id			    8
+    ssIdNumber		    8
+    name		    "time"
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 7 9]
+  }
+  data {
+    id			    9
+    ssIdNumber		    9
+    name		    "r"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 8 10]
+  }
+  data {
+    id			    10
+    ssIdNumber		    10
+    name		    "m"
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+      unit {
+	name			"inherit"
+      }
+    }
+    dataType		    "Inherit: Same as Simulink"
+    linkNode		    [2 9 0]
+  }
+  junction {
+    id			    11
+    position		    [23.5747 49.5747 7]
+    chart		    2
+    subviewer		    2
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+    linkNode		    [2 0 0]
+  }
+  transition {
+    id			    12
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [28.125 13.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      11
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    2
+    dataLimits		    [21.175 25.975 14.625 42.575]
+    subviewer		    2
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    2
+    linkNode		    [2 0 0]
+  }
+  instance {
+    id			    13
+    machine		    1
+    name		    "MATLAB Function"
+    chart		    2
   }
   target {
-    id			    2
+    id			    14
     machine		    1
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
