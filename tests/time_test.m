@@ -1,9 +1,13 @@
 clearvars; close all; clc; warning off;
 
+%20 coppie start-goal fisse, ogni volta viene prelevata una coppia, creati
+%5 paths ed eseguito il replanning per valutare il tempo di esecuzione. La
+%procedura viene eseguita 10 volte per un totale di 200 iterazioni.
+
 matrix = [];
 
-succ_node = 0;
-informed = 0;
+succ_node = 1;
+informed = 2;
 
 connection_max_length=0.5;
 obstacle='snowman';
@@ -67,11 +71,12 @@ for j = 1:1:10 %10
     close all
     
     folder_name = ['test_' num2str(j) '_succNode_informed_' num2str(succ_node) num2str(informed)];
-    mkdir(['/home/cesare/TESI/test_18_4_2020/' folder],folder_name);
-    folder_path = ['/home/cesare/TESI/test_18_4_2020/' folder folder_name];
+    mkdir(['/home/cesare/TESI/test_tempoEsecuzione/' folder],folder_name);
+    folder_path = ['/home/cesare/TESI/test_tempoEsecuzione/' folder folder_name];
    
     time = [];
     time_vector = [];
+    time_first_sol_vector = [];
     
     for i=1:1:length(start_conf(1,:))
         close all
@@ -175,13 +180,14 @@ for j = 1:1:10 %10
         %  plot3(path3_nodes(1,:)',path3_nodes(2,:)',path3_nodes(3,:)','*g','LineWidth',0.5)
         
         tic
-        [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose);
+        [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning,time_first_sol] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose);
         time = toc;
         
         time_vector = [time_vector,time]; %#ok<*AGROW>
-        disp(['success: ' num2str(success) ' test n: ' num2str(j) ' coppia s-g: ' num2str(i) ' time: ' num2str(toc) ' nodes:' num2str(number_replanning) ' cost:' num2str(replanned_path_cost)]);
+        time_first_sol_vector = [time_first_sol_vector,time_first_sol]; %#ok<*AGROW>
+        disp(['success: ' num2str(success) ' test n: ' num2str(j) ' coppia s-g: ' num2str(i) ' time: ' num2str(toc) ' time_fs: ' num2str(time_first_sol) ' nodes:' num2str(number_replanning) ' cost:' num2str(replanned_path_cost)]);
         
-        vector = [j i time number_replanning replanned_path_cost];
+        vector = [j i time time_first_sol number_replanning replanned_path_cost];
         matrix = [matrix; vector];
         
         if(isa(replanned_path,'Path'))

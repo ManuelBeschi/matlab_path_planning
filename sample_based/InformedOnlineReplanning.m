@@ -1,10 +1,12 @@
-function [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
-%function [replanned_path,replanned_path_cost,success,replanned_path_vector] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
+function [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning, time_first_sol] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
+% [replanned_path,replanned_path_cost,success,replanned_path_vector,number_replanning, time_first_sol] = InformedOnlineReplanning(current_path,other_paths,q,lb,ub,max_distance,checker,metrics,opt_type,succ_node,informed,verbose)
 % OUTPUT:
 %> replanned_path: the calculated path that minimizes the cost
-%>replanned_path_cost: the cost of the new planned path
-%> success: 1 if the algorithm succeeds, 0 otherwise.
-%>replanned_path_vector: the vector containing the 10 best paths found.
+%> replanned_path_cost: the cost of the new planned path
+%> success: 1 if the algorithm succeeds, 0 otherwise
+%> replanned_path_vector: the vector containing the 10 best paths found.
+%> numbert_replanning: set of examined nodes (i.e nodes from which the replanning has been started)
+%> time_first_sol: time required to find a first feasible solution
 % INPUT:
 %> current_path: the path currently traveled
 %> other_paths: vector of the other available paths
@@ -17,11 +19,11 @@ function [replanned_path,replanned_path_cost,success,replanned_path_vector,numbe
 %> succ_node: if 1, the PathSwitch function looks for the best node of
 % all the other paths to connect to, oherwise it considers, for any other
 % path, the closest node.
-%>informed: if 0, the algorithm is not informed (always current_path in
+%> informed: if 0, the algorithm is not informed (always current_path in
 %PathSwitch). If 1, the algorithm is informed (replanned_path in PathSwitch)
 %but the node_vector analyzed is not updated with the new nodes of the new
 %path. If 2, the node vector is updated with the new nodes added.
-%>verbose: if 0, no comments displayed, if 1 comment displayed, if 2
+%> verbose: if 0, no comments displayed, if 1 comment displayed, if 2
 %comment and updated graph for each iteration displayed. Red square: actual
 %node analyzed; cyan square: last starting node for replanning; cyan path:
 %last replanned path
@@ -39,10 +41,10 @@ cont = 0;
 number_replanning = 0;
 
 index = [];
-idx = current_path.findConnection(q);
+idx = current_path.findConnection(q); %the connectiong of the robot current configuration
 admissible_current_path = [];
 
-%verbose =2; %ELIMINA
+first_sol = 1; %flag to calculate the first solution time
 
 if(verbose > 0)
     previous_joints = [];
@@ -59,15 +61,12 @@ if(verbose > 0)
     end
 end
 
-%verbose = 0; %ELIMINA
-
 if(idx>0)
-    
     path1_node_vector = [];
     parent = current_path.connections(idx).getParent;
     child = current_path.connections(idx).getChild;
     
-    if(norm(parent.q-q,2)<1e-6)
+    if(norm(parent.q-q,2)<1e-6) %if the current conf is too close to the parent or to the child, it is approximated with the parent/child
         actual_node = parent;
     elseif(norm(child.q-q,2)<1e-6)
         actual_node = child;
@@ -75,12 +74,12 @@ if(idx>0)
         actual_node = Node(q);
     end
     
-    if(current_path.cost == inf)
-        z = length(current_path.connections);  %Ora individuo la parte di current_path percorribile e dunque da non scartare
-        while(z>idx)  %arrivo massimo alla connessione successiva a quella attuale
+    if(current_path.cost == inf) %if the path is obstructed by an obstacle, the connection obstructed cost is infinte
+        z = length(current_path.connections);  
+        while(z>idx) %to find the savable part of current_path, the subpath after the connection obstruced by the obstacle
             if(current_path.connections(z).getCost == inf)
                 if(z == length(current_path.connections))
-                    admissible_current_path = [];
+                    admissible_current_path = []; %no savable subpath available
                 else
                     admissible_current_path = current_path.getSubpathFromNode(current_path.connections(z).getChild);
                 end
@@ -91,13 +90,13 @@ if(idx>0)
         end
         
         if(isa(admissible_current_path,'Path'))
-            other_paths = [admissible_current_path,other_paths];  %aggiungo ai possibili path il tratto finale con costo non infinito di current_path
+            other_paths = [admissible_current_path,other_paths];  %adding the savable subpath of the current_path to the set of available paths
         end
     end
     
-    reset_other_paths = other_paths; %serve piu avantu per tornare al vettore completo 
+    reset_other_paths = other_paths; %it will be useful later to reset the set of available paths to the initial set 
     
-    if(current_path.connections(idx).getCost == inf || idx == length(current_path.connections))
+    if(current_path.connections(idx).getCost == inf || idx == length(current_path.connections)) %if the obstacle is obstructing the current connection or the current ocnnection is the last one, the replanning must start from the current configuration, so a node corresponding to the config is added
         node = actual_node;
         cost_parent = metrics.cost(parent,node);
         conn_parent=Connection(parent,node,cost_parent);
@@ -109,20 +108,20 @@ if(idx>0)
         node_conn = [conn_parent,conn_child];
         current_path = Path([subpath_parent.connections,node_conn,subpath_child.connections]);
         
-        replanned_path = current_path.getSubpathFromNode(node);  %inizializzo replanned path con la porzione di current_path che devo percorrere, poi lo aggiornerò volta per volta con il migliore trovato
+        replanned_path = current_path.getSubpathFromNode(node);  %at the start, the replanned path is initialized with the subpath of the current path from the current config to the goal
         replanned_path_cost = replanned_path.cost;
-
+        
         available_nodes = 0;
         limit = 1;
         path1_node_vector = node;
-    else
+    else %if the current connection is free, all the nodes between the current child to the parent of the connection obstructed are considered as starting points for the replanning
         node = child; 
         actual_node_conn_cost = metrics.cost(actual_node,node);
         actual_node_conn = Connection(actual_node,node,actual_node_conn_cost);
         subpath1 = current_path.getSubpathFromNode(node);
         subpath1_conn = subpath1.connections;
 
-        replanned_path = Path([actual_node_conn,subpath1_conn]);
+        replanned_path = Path([actual_node_conn,subpath1_conn]); %at the start, the replanned path is initialized with the subpath of the current path from the current config to the goal
         replanned_path_cost = replanned_path.cost;
         
         for i=1:length(subpath1_conn)
@@ -134,7 +133,7 @@ if(idx>0)
         if isempty(index)
             limit = length(path1_node_vector);
         else
-            limit = index(1);  %escludo dalla connessione con costo infinito in poi
+            limit = index(1);  %to descard the subpath from the connection with infinite cost to the goal
         end
         
         available_nodes = 1;
@@ -147,40 +146,36 @@ if(idx>0)
     change_j = 0;
     j = limit;
     
-    %verbose = 2; %ELIMINA
     if(verbose > 0)
         node_number = limit+idx;
         for n=1:length(replanned_path.connections)
             nodesPlot_vector = [nodesPlot_vector,replanned_path.connections(n).getParent]; %#ok<AGROW>
         end
     end
-    %verbose = 0; %ELIMINA
     
-    while (j>0)  %il FOR non mi permette di modificare l'indice di iterazione in corso
-        j = j+change_j;
-        change_j = 0;
+    while (j>0)
         
         if(informed>0)
             other_paths = reset_other_paths;
-            if(flag_other_paths == 1) %flag_other_paths == 1 per essere sicuro che almeno una volta son riuscito a ripianificare per cui mi sono collegato ad un path..altrimenti questi calcoli non servono
+            if(flag_other_paths == 1) %if almost one replanned path has been found, the number of nodes of the subpath of the path2 to which the replaned path is connected are calculated
                 n = length(confirmed_subpath_from_path2.connections);
                 if(n == 0)
                     flag_other_paths = 0;
                 end
                 
-                while(n > 0)
+                while(n > 0) 
                     if(n == 1)
                         flag_other_paths = 0;
                     end
-                    if(isequal(path1_node_vector(j),confirmed_subpath_from_path2.connections(n).getParent))
+                    if(isequal(path1_node_vector(j),confirmed_subpath_from_path2.connections(n).getParent)) %if the node analyzed is on the subpath2..(it happens only if informed == 2)
                         if(confirmed_connected2path_number<length(reset_other_paths))
                             other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent),reset_other_paths(confirmed_connected2path_number+1:end)];
                         else
-                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent)]; %modificato confirmed_subpath_from_path2 con confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent) qui e la riga sopra
+                            other_paths = [reset_other_paths(1:confirmed_connected2path_number-1),confirmed_subpath_from_path2.getSubpathFromNode(confirmed_subpath_from_path2.connections(n).getParent)];
                         end
                         n = 0;
                     else
-                        other_paths = reset_other_paths;
+                        other_paths = reset_other_paths; %if informed == 1 there are "n" while iterations unnecessary..you should correct it
                         n = n-1;
                     end
                 end
@@ -191,10 +186,8 @@ if(idx>0)
             [new_path,new_path_cost,solved,connected2PathNumber,subpathFromPath2] = PathSwitch(current_path,other_paths,path1_node_vector(j),lb,ub,max_distance,checker,metrics,opt_type,succ_node);
         end
         
-        path1_node_vector(j).setAnalyzed(1); %segnalo che il nodo è stato utilizzato per il replanning così non lo riutilizzero in futuro   ANALYZED FALSO NO ANALIZZATO
+        path1_node_vector(j).setAnalyzed(1); %to set as ANALYZED the node just analyzed. In this way, it will not be analyzed again in this replanning procedure
         examined_nodes = [examined_nodes,path1_node_vector(j)]; %#ok<AGROW>
-        
-        %verbose = 2; %ELIMINA
         
         if(verbose == 2)
             examined_nodes_plot = [examined_nodes(1,:).q];
@@ -208,12 +201,10 @@ if(idx>0)
             end
         end
         
-        %verbose = 0; %ELIMINA
-        
         if(solved==1)
-            if(available_nodes==1)
+            if(available_nodes==1) %calculating the cost of the replanned path found
                 if(j>1)
-                    subpath = subpath1.getSubpathToNode(path1_node_vector(j)); %path che va dal nodo più vicino a me fino al nodo da cui inizio lo switch
+                    subpath = subpath1.getSubpathToNode(path1_node_vector(j)); %the subpath that goes from the closest node to the robot conf, to the node from which the replanning has started
                     subpath_cost = subpath.cost;
                     path=Path([actual_node_conn,subpath.connections,new_path.connections]);    
                 else
@@ -238,7 +229,15 @@ if(idx>0)
                 disp('-------------------')
             end
 
-            if(path_cost<replanned_path_cost)
+            if(path_cost<replanned_path_cost) %if the cost of the new solution found is better than the cost of the best solution found so far
+                
+                if(nargout>5)
+                    if(first_sol)
+                        time_first_sol = toc;
+                        first_sol = 0; %0 when the time of the first solution found has been already saved
+                    end
+                end
+                
                 previous_cost = replanned_path_cost;
                 replanned_path = path;
                 replanned_path_cost = path_cost;
@@ -247,7 +246,6 @@ if(idx>0)
                 success = 1;
                 flag_other_paths = 1;
                 
-                %verbose = 2; %ELIMINA
                 if(verbose > 0)
                     nodesPlot_vector = [];
                     for n=1:length(replanned_path.connections)
@@ -255,22 +253,17 @@ if(idx>0)
                     end
                     number = j;
                 end
-                %verbose = 0; %ELIMINA
                 
-                if(length(replanned_path_vector)<10) %li inserisco in modo che siano già ordinati
+                if(length(replanned_path_vector)<10) %the algorithm gives as output the vector of the best 10 solutions found, oredered by their cost
                     replanned_path_vector = [replanned_path,replanned_path_vector]; %#ok<AGROW>
                 else
                     replanned_path_vector = [replanned_path,replanned_path_vector(1:end-1)];
                 end
                 
                 if(informed==2 && available_nodes==1)   
-%                     if(toc>25) %ELIMINA
-%                         verbose = 2;
-%                     else
-%                         verbose = 0;
-%                     end
+
                     if(verbose == 2) %To plot the graph at each iteration
-                        PlotEnv
+                        PlotEnv %it is a script to plot the environment
                         if(~isempty(previous_joints))
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','--c','LineWidth',0.5)
                             plot3(previous_joints(1,:)',previous_joints(2,:)',previous_joints(3,:)','*c','LineWidth',0.5)
@@ -284,29 +277,23 @@ if(idx>0)
                         pause
                     end
 
-                    support = path1_node_vector(1:j-1); %i nodi fino a j-1 sicuramente non sono stati ancora analizzati
+                    support = path1_node_vector(1:j-1); % the first j-1 nodes surely have not yet been analyzed
                     for r=1:length(new_path.connections)
-                        if(new_path.connections(r).getParent.getAnalyzed == 0 && new_path.connections(r).getParent.getNonOptimal == 0)
-                            support = [support,new_path.connections(r).getParent]; %#ok<AGROW>
+                        if(new_path.connections(r).getParent.getAnalyzed == 0 && new_path.connections(r).getParent.getNonOptimal == 0) %Analyzed to check if they have been already analyzed (if 0 not not analyzed), NonOptimal to check if they are useful to improve the replanning solution (if 0, maybe they can improve the solution)
+                            %the nodes of the new solution found are added to the set of the nodes to be analyzed
+                            support = [support,new_path.connections(r).getParent]; %#ok<AGROW>  
                             change_j = change_j+1;
                         end
                     end
-                    path1_node_vector = support;
                     
+                    path1_node_vector = support;
                     subpath1 = replanned_path.getSubpathFromNode(node);
-%                    change_j = length(new_path.connections)-1; %corrisponde al numero di nodi aggiunti dal newpath
                 end
                     
             end
                 
         else
             if(available_nodes==1 && verbose>0)
-                
-%                 if(toc>25) %ELIMINA
-%                     verbose = 2;
-%                 else
-%                     verbose = 0;
-%                 end
                 
                 disp('Replanning not possible/convenient from node number:')
                 disp(node_number)
@@ -321,13 +308,13 @@ if(idx>0)
             end
         end
         
-        if(toc>30)
+        if(toc>30) %stopping conditions
             j = 0;
         else
-            if(toc>25 && cont>=5) %definisco condizione limite per evitare soluzioni troppo costose in termini di tempo
+            if(toc>25 && cont>=5) 
                 j = 0;    
             else
-                if((previous_cost-replanned_path_cost) < 0.05*previous_cost)
+                if((previous_cost-replanned_path_cost) < 0.05*previous_cost) %note that replanned_path_cost is always lower than previous_cost
                     cont = cont+1;
                 else
                     cont = 0;
@@ -335,10 +322,12 @@ if(idx>0)
             end
         end  
         j = j-1;
+        j = j+change_j;
+        change_j = 0;
     end
     
     for i=1:length(examined_nodes)
-        examined_nodes(i).setAnalyzed(0);   %eventualmente, questa cosa la puoi fare mentre il robot sta percorrendo il path che hai trovato così risparmi tempo
+        examined_nodes(i).setAnalyzed(0);
     end
     
     number_replanning = length(examined_nodes);
@@ -366,8 +355,3 @@ if(verbose == 2)
 end
 
 end
-
-
-%VALUTA LA POSSIBILITÀ DI RIPIANIFICARE ANCHE A PARTIRE DA ACTUAL NODE
-%SEMPRE, ANCHE SE IL COSTO DELL'AUTTALE CONNESSIONE NON È INF. SE SI EVITA
-%SI RISPARMIA CALCOLO E TEMPO
