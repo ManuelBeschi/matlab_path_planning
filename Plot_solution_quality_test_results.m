@@ -45,7 +45,8 @@ xlabel('Time [s]','FontSize',18);
 ylabel('(newCost - oldCost) / oldCost','FontSize',18);
 axis([-0.1 27 -0.2 0.4])
 grid on
-savefig(['/home/cesare/TESI/test_bonta_soluzione/' 'Solution_quality_and_time'])
+%xticks([1 2 3 4 5 6])
+%savefig(['/home/cesare/TESI/test_bonta_soluzione/' 'Solution_quality_and_time'])
 
 figure(2)
 title('Algorithms comparison: Solution quality','FontSize',18)
@@ -55,4 +56,5 @@ xlabel('Algorithm version','FontSize',18);
 ylabel('(newCost - oldCost) / oldCost','FontSize',18);
 axis([0 8 -0.2 0.4])
 grid on
-savefig(['/home/cesare/TESI/test_bonta_soluzione/' 'Solution_quality'])
+xticks([1 2 3 4 5 6])
+%savefig(['/home/cesare/TESI/test_bonta_soluzione/' 'Solution_quality'])

@@ -25,18 +25,20 @@ for j=1:1:6
         total_time_first_sol = [total_time_first_sol,time_first_sol_vector];%#ok<*AGROW>
     end
     
-figure(1)
+n1 = 1;
+figure(n1)
 hold on
-[p1,p2] = plotPercentile(j,total_time,1,color(j));
+[p1,p2] = plotPercentile(j,total_time,n1,color(j));
 P = [P,p1];
 
-figure(2)
+n2 = 2;
+figure(n2)
 hold on
-[p1_first_sol,p2_first_sol] = plotPercentile(j,total_time_first_sol,2,color(j));
+[p1_first_sol,p2_first_sol] = plotPercentile(j,total_time_first_sol,n2,color(j));
 P_first_sol = [P_first_sol,p1_first_sol];
 end
 
-figure(1)
+figure(n1)
 title('Algorithms comparison: computational time','FontSize',18)
 lgd=legend ([P(1) P(2) P(3) P(4) P(5) P(6)],{'00','01','02','10','11','12'},'FontSize',18);
 title(lgd,'Algorithm version','FontSize',18)
@@ -44,9 +46,10 @@ xlabel('Algorithm version','FontSize',18);
 ylabel('Computational Time[s]','FontSize',18);
 axis([0 8 -1 28])
 grid on
-savefig(['/home/cesare/TESI/test_tempo_esecuzione/' 'Execution_Time'])
+xticks([1 2 3 4 5 6])
+%savefig(['/home/cesare/TESI/test_tempo_esecuzione/' 'Execution_Time'])
 
-figure(2)
+figure(n2)
 title('Algorithms comparison: computational time to find a first solution','FontSize',18)
 lgd=legend ([P_first_sol(1) P_first_sol(2) P_first_sol(3) P_first_sol(4) P_first_sol(5) P_first_sol(6)],{'00','01','02','10','11','12'},'FontSize',18);
 title(lgd,'Algorithm version','FontSize',18)
@@ -54,5 +57,5 @@ xlabel('Algorithm version','FontSize',18);
 ylabel('Computational Time[s]','FontSize',18);
 axis([0 8 -0.1 1.2])
 grid on
-savefig(['/home/cesare/TESI/test_tempo_esecuzione/' 'Execution_Time_first_sol'])
-    
+xticks([1 2 3 4 5 6])
+%savefig(['/home/cesare/TESI/test_tempo_esecuzione/' 'Execution_Time_first_sol'])

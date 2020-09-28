@@ -26,7 +26,7 @@ success = 0;
 connected2path_number = 0;
 subpath_from_path2 = [];
 
-%Identifying the subpath of current_ath starting from node
+%Identifying the subpath of current_path starting from node
 path1_node = node;
 path1_node2goal = current_path.getSubpathFromNode(path1_node);
 subpath1_cost = path1_node2goal.cost;
@@ -37,21 +37,38 @@ for j = 1:length(other_paths)
     
     path2 = other_paths(j);
     
+    %Finding the closest node
+    path2_node_vector = path2.findCloserNode(path1_node.q);
+    if(eq(path2_node_vector.q,path2.connections(end).getChild.q)) %if the cloest node is the GOAL, the second closest node is considered
+        path_support = path2.getSubpathToNode(path2.connections(end).getParent);
+        path2_node_vector = path_support.findCloserNode(path1_node.q);
+    end
+    
     if(succ_node == 1)
         path2_conn = path2.connections;
-        path2_node_vector = [path2_conn(1).getParent];
+        path2_node_vector = [path2_node_vector,path2_conn(1).getParent]; %#ok<AGROW> The first node is the closest one, then there are the others. In this way you are trying to exclude the longest paths because you search a path first to the closest node than to the others
         for t=2:length(path2_conn)  %the GOAL is not considered as a node to which directly connecting the path
-            if(norm(path2_conn(t).getParent.q-path2_node_vector(end).q)>1e-03) %when some nodes are too close to each other, only one of them is considered
+            if(norm(path2_conn(t).getParent.q-path2_node_vector(end).q)>1e-03 && eq(path2_conn(t).getParent,path2_node_vector(1)) == 0) %when some nodes are too close to each other, only one of them is considered; the closest node is excluded because already present in the first element of the array 
                 path2_node_vector = [path2_node_vector,path2_conn(t).getParent]; %#ok<AGROW> 
             end
         end
-    else
-        path2_node_vector = path2.findCloserNode(path1_node.q);
-        if(eq(path2_node_vector.q,path2.connections(end).getChild.q)) %if the cloest node is the GOAL, the second closest node is considered
-            path_support = path2.getSubpathToNode(path2.connections(end).getParent);
-            path2_node_vector = path_support.findCloserNode(path1_node.q);
-        end
     end
+    
+%     if(succ_node == 1)     %CON SUCCNODE == 1 NON METTE IL NODO PIU VICINO PRIMO
+%         path2_conn = path2.connections;
+%         path2_node_vector = [path2_conn(1).getParent];
+%         for t=2:length(path2_conn)  %the GOAL is not considered as a node to which directly connecting the path
+%             if(norm(path2_conn(t).getParent.q-path2_node_vector(end).q)>1e-03) %when some nodes are too close to each other, only one of them is considered
+%                 path2_node_vector = [path2_node_vector,path2_conn(t).getParent]; %#ok<AGROW> 
+%             end
+%         end
+%     else
+%         path2_node_vector = path2.findCloserNode(path1_node.q);
+%         if(eq(path2_node_vector.q,path2.connections(end).getChild.q)) %if the cloest node is the GOAL, the second closest node is considered
+%             path_support = path2.getSubpathToNode(path2.connections(end).getParent);
+%             path2_node_vector = path_support.findCloserNode(path1_node.q);
+%         end
+%     end
     
     for k=1:length(path2_node_vector)
  

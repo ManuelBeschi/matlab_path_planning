@@ -96,7 +96,7 @@ if(idx>0)
     
     reset_other_paths = other_paths; %it will be useful later to reset the set of available paths to the initial set 
     
-    if(current_path.connections(idx).getCost == inf || idx == length(current_path.connections)) %if the obstacle is obstructing the current connection or the current ocnnection is the last one, the replanning must start from the current configuration, so a node corresponding to the config is added
+    if(current_path.connections(idx).getCost == inf || idx == length(current_path.connections)) %if the obstacle is obstructing the current connection or the current connection is the last one, the replanning must start from the current configuration, so a node corresponding to the config is added
         node = actual_node;
         cost_parent = metrics.cost(parent,node);
         conn_parent=Connection(parent,node,cost_parent);

@@ -2,8 +2,8 @@ function [p1,p2] = plotPercentile(x,y,n_fig,color)
 
 percentile = 95;
 
-mx = mean(x);
-my = mean(y);
+mx = mean(x);%median(x);
+my = mean(y);%median(y);
 
 px_h = prctile(x,percentile);
 px_l = prctile(x,100-percentile);
