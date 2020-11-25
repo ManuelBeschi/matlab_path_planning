@@ -206,7 +206,11 @@ classdef Tree < handle
         function connections=getConnectionToNode(obj,n)
             connections=[];
             if (obj.direction)
+                
                 while (~isempty(n.parent_connections))
+                    if (isequal(n,obj.root))
+                        break;
+                    end
                     if length(n.parent_connections)>1
                         error('a node of forward-direction tree should have only a parent');
                     end
