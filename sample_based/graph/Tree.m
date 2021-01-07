@@ -179,7 +179,12 @@ classdef Tree < handle
             cost=0;
             if obj.direction
                 % CAMBIA LA STOP CONDITION IN n==Root
+                idx=0;
                 while (~isempty(n.parent_connections))
+                    idx=idx+1;
+                    if mod(idx,5000)==0
+                        fprintf('so many connections??\n');
+                    end
                     if length(n.parent_connections)>1
                         error('a node of forward-direction tree should have only a parent');
                     end
@@ -329,6 +334,9 @@ classdef Tree < handle
                 if isequal(near_nodes(in),nearest_node)
                     continue;
                 end
+                if (new_node==near_nodes(in))
+                    continue
+                end
                 cost_to_near=obj.costToNode(near_nodes(in));
                 if (cost_to_near>cost_to_new)
                     continue;
@@ -350,6 +358,10 @@ classdef Tree < handle
             end
             
             for in=1:length(near_nodes)
+                %fprintf('Node %d of %d\n',in,length(near_nodes));
+                if (new_node==near_nodes(in))
+                    continue
+                end
                 cost_to_near=obj.costToNode(near_nodes(in));
                 if cost_to_new>=cost_to_near
                     continue;
@@ -397,6 +409,12 @@ classdef Tree < handle
                 if isvalid(obj.nodes(in))
                     obj.tree_plot_handles=[obj.tree_plot_handles obj.nodes(in).plot];
                 end
+            end
+        end
+        
+        function deletePlot(obj)
+            for ip=1:length(obj.tree_plot_handles)
+                delete(obj.tree_plot_handles(ip))
             end
         end
         

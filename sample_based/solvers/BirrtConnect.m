@@ -20,23 +20,32 @@ classdef BirrtConnect < Solver
             obj.checker=checker;
             obj.metrics=metrics;
             
-            if isobject(start_conf)
+            if isa(start_conf,'Tree')
+                obj.start_conf=start_conf.root.q;
+                obj.start_tree=start_conf;
+            elseif isa(start_conf,'Node')
                 obj.start_conf=start_conf.q;
                 start_node=start_conf;
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             else 
                 obj.start_conf = start_conf;
                 start_node=Node(start_conf);
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             end
             
-            if isobject(goal_conf)
-                obj.goal_conf=goal_conf.q;
-                goal_node=goal_conf;
+            
+            if isa(goal_conf,'Tree')
+                    obj.goal_conf=goal_conf.root.q;
+                    goal_node=goal_conf.root;
+            elseif isa(goal_conf,'Node')
+                    obj.goal_conf=goal_conf.q;
+                    goal_node=goal_conf;
             else 
                 obj.goal_conf=goal_conf;
                 goal_node=Node(goal_conf);
             end
             
-            obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
+            
             obj.goal_tree=Tree(goal_node,0,max_distance,checker,metrics);
             
             obj.sampler=sampler;

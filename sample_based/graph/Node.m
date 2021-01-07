@@ -106,6 +106,13 @@ classdef Node < handle
                     v=c-obj.q;
                     line_handle=[line_handle plot3(obj.q(1)+[0 v(1)],obj.q(2)+[0 v(2)],obj.q(3)+[0 v(3)],'Color',[1 1 1]*0.5)];
                 end
+            elseif (length(obj.q)==2)
+                %line_handle=[line_handle plot(obj.q(1),obj.q(2),'o','Color',[1 1 1]*0.5)];
+                for ic=1:length(obj.child_connections)
+                    c=obj.child_connections(ic).getChild.q;
+                    v=c-obj.q;
+                    line_handle=[line_handle plot(obj.q(1)+[0 v(1)],obj.q(2)+[0 v(2)],'Color',[1 1 1]*0.5)];
+                end
             end
             
         end

@@ -17,6 +17,7 @@ classdef Connection < handle
         function obj = Connection(parent,child,cost)
             obj.parent= parent;
             obj.child=child;
+            assert(parent~=child);
             obj.register;
             obj.cost=cost;
             

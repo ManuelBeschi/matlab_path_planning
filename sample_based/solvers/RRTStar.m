@@ -19,7 +19,7 @@ classdef RRTStar < Solver
         end
         
         function improved=step(obj)
-            improved=obj.tree.rewire(obj.sampler.sample,obj.checker);
+            improved=obj.tree.rewire(obj.sampler.sample,obj.checker,obj.r_rewire);
         end
         
         function [improved,path] = solve(obj)

@@ -18,13 +18,19 @@ classdef BirrtExtend < Solver
             obj.max_distance=max_distance;
             obj.checker=checker;
             
-            if isobject(start_conf)
+            if isa(start_conf,'Tree')
+                obj.start_conf=start_conf.root.q;
+                obj.start_tree=start_conf;
+            elseif isa(start_conf,'Node')
                 obj.start_conf=start_conf.q;
-                obj.start_node=start_conf;
+                start_node=start_conf;
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             else 
                 obj.start_conf = start_conf;
-                obj.start_node=Node(start_conf);
+                start_node=Node(start_conf);
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             end
+            
             
             if isobject(goal_conf)
                 obj.goal_conf=goal_conf.q;
@@ -34,7 +40,6 @@ classdef BirrtExtend < Solver
                 obj.goal_node=Node(goal_conf);
             end
             
-            obj.start_tree=Tree(obj.start_node,1,max_distance,checker,metrics);
             obj.goal_tree=Tree(obj.goal_node,0,max_distance,checker,metrics);
             
             obj.sampler=sampler;
@@ -52,14 +57,22 @@ classdef BirrtExtend < Solver
             end
             if (add_to_goal && add_to_start && isequal(new_t1_node,new_t2_node))
                 solved=true;
-                connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+                goal_subpath=obj.goal_tree.getConnectionToNode(new_t1_node);
+                obj.goal_tree.keepOnlyThisBranch(goal_subpath);
+                obj.start_tree.addBranch(goal_subpath);
+                connections=obj.start_tree.getConnectionToNode(obj.goal_tree.root);
                 path=Path(connections);
+                
+%                 solved=true;
+%                 connections=[obj.start_tree.getConnectionToNode(new_t1_node) obj.goal_tree.getConnectionToNode(new_t1_node)];
+%                 path=Path(connections);
+                
             end
         end
         
         function [solved,path] = solve(obj)
-            obj.start_tree=Tree(obj.start_node,1,obj.max_distance,obj.checker,obj.metrics);
-            obj.goal_tree=Tree(obj.goal_node,0,obj.max_distance,obj.checker,obj.metrics);
+%            obj.start_tree=Tree(obj.start_node,1,obj.max_distance,obj.checker,obj.metrics);
+ %           obj.goal_tree=Tree(obj.goal_node,0,obj.max_distance,obj.checker,obj.metrics);
             solved=false;
             for idx=1:1000
                 [solved,path]=obj.step;
