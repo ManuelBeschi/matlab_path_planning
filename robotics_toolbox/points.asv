@@ -1,0 +1,26 @@
+clear all;close all;clc;
+
+
+% checker -> collision checker
+checker=Anthropomorphic3d;
+checker.init;
+metrics=Metrics;
+
+% lower and upper bound
+lb=-pi*ones(3,1);
+ub=pi*ones(3,1);
+% velocity bound
+max_vel=2*ones(3,1);
+
+
+nodes(1) = Node([0 0.2 pi/2+0.4]'); % punto di partenza nelle configurazioni
+nodes(2) =  Node([-pi/2 0.2 pi/2+0.4]'); %  punto di partenza nelle configurazioni
+nodes(3) =  Node([-pi/2 0.6 pi/2+0.4]'); %  punto di partenza nelle configurazioni
+nodes(4) = Node([0 0.6 pi/2+0.4]'); % punto di partenza nelle configurazioni
+nodes(5) = Node([0 0 pi/2]'); % punto di partenza nelle configurazioni
+nodes(5) = Node([0 pi/2 0]'); % punto di partenza nelle configurazioni
+
+for idx=1:length(nodes)
+    checker.plot3d(nodes(idx).q)
+    pause(2)
+end

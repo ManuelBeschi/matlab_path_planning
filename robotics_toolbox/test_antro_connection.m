@@ -1,16 +1,22 @@
 clear all;close all;clc;
 
 
-% checker -> collision checker
-checker=Anthropomorphic3d;
-checker.init;
-metrics=Metrics;
+
 
 % lower and upper bound
 lb=-pi*ones(3,1);
 ub=pi*ones(3,1);
 % velocity bound
 max_vel=2*ones(3,1);
+
+
+offset=[0;0;0]; % posizione della base del robot in questo test
+    
+% checker -> collision checker
+checker=Anthropomorphic3d;
+checker.init(lb,ub,offset);
+metrics=Metrics;
+
 
 A = Node([0 0.2 pi/2+0.4]'); % punto di partenza nelle configurazioni
 B =  Node([-pi/2 0.2 pi/2+0.4]'); %  punto di partenza nelle configurazioni
