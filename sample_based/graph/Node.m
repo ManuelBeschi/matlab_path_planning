@@ -7,12 +7,30 @@ classdef Node < handle
         child_connections
         q
         njnt
+        analyzed 
+        nonOptimal
     end
     
     methods
         function obj = Node(q)
             obj.q= q;
             obj.njnt=length(q);
+            obj.analyzed = 0;
+            obj.nonOptimal = 0;
+        end
+        
+        function setAnalyzed(obj,analyzed)
+            obj.analyzed=analyzed;
+        end
+        function analyzed=getAnalyzed(obj)
+            analyzed=obj.analyzed;
+        end
+        
+        function setNonOptimal(obj,nonOptimal)
+            obj.nonOptimal=nonOptimal;
+        end
+        function nonOptimal=getNonOptimal(obj)
+            nonOptimal=obj.nonOptimal;
         end
         
         function success=addParentConnection(obj,connection)
@@ -87,6 +105,13 @@ classdef Node < handle
                     c=obj.child_connections(ic).getChild.q;
                     v=c-obj.q;
                     line_handle=[line_handle plot3(obj.q(1)+[0 v(1)],obj.q(2)+[0 v(2)],obj.q(3)+[0 v(3)],'Color',[1 1 1]*0.5)];
+                end
+            elseif (length(obj.q)==2)
+                %line_handle=[line_handle plot(obj.q(1),obj.q(2),'o','Color',[1 1 1]*0.5)];
+                for ic=1:length(obj.child_connections)
+                    c=obj.child_connections(ic).getChild.q;
+                    v=c-obj.q;
+                    line_handle=[line_handle plot(obj.q(1)+[0 v(1)],obj.q(2)+[0 v(2)],'Color',[1 1 1]*0.5)];
                 end
             end
             

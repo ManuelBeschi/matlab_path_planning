@@ -91,6 +91,14 @@ classdef InformedSampler < handle
                 z=reshape(X(:,3),size(x,1),size(x,2))+obj.ellipse_center(3);
                 
                 s=surf(x,y,z,'FaceAlpha',0.5);
+            else
+                alpha=linspace(-pi,pi)';
+                x=[obj.ellipse_axis(1)*cos(alpha) obj.ellipse_axis(2)*sin(alpha)]*obj.rot_matrix';
+                x(:,1)=x(:,1)+obj.ellipse_center(1);
+                x(:,2)=x(:,2)+obj.ellipse_center(2);
+                
+                s=plot(x(:,1),x(:,2),'-','Color',[0 1 0]*0.5,'LineWidth',2);
+                
             end
             
         end

@@ -19,12 +19,17 @@ classdef RRTConnect < Solver
             obj.checker=checker;
             obj.metrics=metrics;
             
-            if isobject(start_conf)
+            if isa(start_conf,'Tree')
+                obj.start_conf=start_conf.root.q;
+                obj.start_tree=start_conf;
+            elseif isa(start_conf,'Node')
                 obj.start_conf=start_conf.q;
                 start_node=start_conf;
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             else 
                 obj.start_conf = start_conf;
                 start_node=Node(start_conf);
+                obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
             end
             
             if isa(goal_conf,'Node')
@@ -33,7 +38,6 @@ classdef RRTConnect < Solver
                 obj.goal_node=Node(goal_conf);
             end
             
-            obj.start_tree=Tree(start_node,1,max_distance,checker,metrics);
         end
         
         function [solved,path] = step(obj)
